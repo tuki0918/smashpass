@@ -20,25 +20,14 @@ const SmashCounter: FC<{
 
 	const content =
 		data === undefined ? (
-			<span className="text-6xl font-bold text-gray-600">...</span>
+			<span>...</span>
 		) : data === null ? (
-			<span className="text-6xl font-bold text-gray-600">Not found.</span>
+			<span>Not found.</span>
 		) : (
-			<animated.span
-				style={animation}
-				className="text-6xl font-bold text-gray-600"
-			>
-				{data.count}
-			</animated.span>
+			<animated.span style={animation}>{data.count}</animated.span>
 		);
 
-	return (
-		<div className="min-h-screen flex items-center justify-center">
-			<div className="flex items-center justify-center space-x-6 w-32 h-32">
-				{content}
-			</div>
-		</div>
-	);
+	return <div className="text-6xl font-bold text-gray-600">{content}</div>;
 };
 
 export default SmashCounter;
