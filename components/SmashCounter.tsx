@@ -1,9 +1,12 @@
 "use client";
 
+import { useFirestoreDoc } from "@/hooks/useFirestore";
 import type {
 	DBDocument,
 	SmashCounterDocumentData,
 } from "@/types/firebase/firestore";
+import { smashCounterAtom } from "@/utils/atoms";
+import { useAtom } from "jotai";
 import type { FC } from "react";
 import { animated, useSpring } from "react-spring";
 
@@ -31,3 +34,9 @@ const SmashCounter: FC<{
 };
 
 export default SmashCounter;
+
+export const SmashCounterWithAtom: FC<{ docId: string }> = ({ docId }) => {
+	useFirestoreDoc(docId);
+	const [data] = useAtom(smashCounterAtom);
+	return <SmashCounter data={data} />;
+};
