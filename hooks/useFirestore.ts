@@ -18,7 +18,7 @@ export const useFirestoreDoc = (docId: string) => {
 		// TODO: FirestoreDataConverter
 		const unsubscribe = onSnapshot(doc(db, collectionId, docId), (doc) => {
 			const data = !doc.exists()
-				? undefined
+				? null
 				: {
 						...(doc.data() as DBDocument<SmashCounterDocumentData>),
 						id: doc.id,

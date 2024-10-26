@@ -5,5 +5,5 @@ import type {
 import { atom } from "jotai";
 
 export const smashCounterAtom = atom<
-	DBDocument<SmashCounterDocumentData> | undefined
+	DBDocument<SmashCounterDocumentData> | undefined | null
 >(undefined);
