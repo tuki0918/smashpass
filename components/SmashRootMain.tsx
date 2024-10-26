@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { SmashCounterWithAtom } from "./SmashCounter";
 
-const SmashMain: FC<{ docId: string }> = ({ docId }) => {
+const SmashRootMain: FC<{ docId: string }> = ({ docId }) => {
 	return (
 		<div className="min-h-screen flex items-center justify-center">
 			<SmashCounterWithAtom docId={docId} />
@@ -9,4 +9,4 @@ const SmashMain: FC<{ docId: string }> = ({ docId }) => {
 	);
 };
 
-export default SmashMain;
+export default SmashRootMain;
