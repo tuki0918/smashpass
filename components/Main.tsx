@@ -1,10 +1,9 @@
 import type { FC } from "react";
-import SmashCounter from "./SmashCounter";
 
 const Main: FC = () => {
 	return (
 		<>
-			<SmashCounter />
+			<h1>Hello World</h1>
 		</>
 	);
 };
