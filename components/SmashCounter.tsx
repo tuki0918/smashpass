@@ -1,12 +1,16 @@
 "use client";
 
+import type {
+	DBDocument,
+	SmashCounterDocumentData,
+} from "@/types/firebase/firestore";
 import type { FC } from "react";
-import React, { useEffect, useState } from "react";
 import { animated, useSpring } from "react-spring";
 
-const SmashCounter: FC = () => {
-	const [count, setCount] = useState<number | null>(null);
-
+const SmashCounter: FC<{
+	/** undefined: loading, null: not found */
+	data: DBDocument<SmashCounterDocumentData> | undefined | null;
+}> = ({ data }) => {
 	const animation = useSpring({
 		from: { opacity: 0.3, transform: "scale(0.5)" },
 		to: { opacity: 1, transform: "scale(1)" },
@@ -14,22 +18,24 @@ const SmashCounter: FC = () => {
 		config: { tension: 300, friction: 10 },
 	});
 
-	useEffect(() => {
-		// initial count with animation
-		setCount(0);
-	}, []);
+	const content =
+		data === undefined ? (
+			<span className="text-6xl font-bold text-gray-600">...</span>
+		) : data === null ? (
+			<span className="text-6xl font-bold text-gray-600">Not found.</span>
+		) : (
+			<animated.span
+				style={animation}
+				className="text-6xl font-bold text-gray-600"
+			>
+				{data.count}
+			</animated.span>
+		);
 
 	return (
 		<div className="min-h-screen flex items-center justify-center">
-			<div className="bg-white rounded-2xl shadow-lg">
-				<div className="flex items-center justify-center space-x-6 w-32 h-32">
-					<animated.span
-						style={animation}
-						className="counter-value text-6xl font-bold text-gray-600"
-					>
-						{count}
-					</animated.span>
-				</div>
+			<div className="flex items-center justify-center space-x-6 w-32 h-32">
+				{content}
 			</div>
 		</div>
 	);
