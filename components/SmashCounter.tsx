@@ -25,7 +25,7 @@ const SmashCounter: FC<{
 		data === undefined ? (
 			<span>...</span>
 		) : data === null ? (
-			<span>Not found.</span>
+			<span>=</span>
 		) : (
 			<animated.span style={animation}>{data.count}</animated.span>
 		);

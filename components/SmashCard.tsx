@@ -8,6 +8,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useFirestoreDoc } from "@/hooks/useFirestore";
 import type {
 	DBDocument,
@@ -23,11 +24,50 @@ const SmashCard: FC<{
 	data: DBDocument<SmashCounterDocumentData> | undefined | null;
 }> = ({ data }) => {
 	if (data === undefined) {
-		return null;
+		return (
+			<Card className="group overflow-hidden hover:shadow-xl transition-all duration-300">
+				<div className="aspect-video relative overflow-hidden bg-slate-200">
+					<div className="h-full flex items-center justify-center">
+						<SmashCounter data={data} />
+					</div>
+
+					{/* Status badge */}
+					<div className="absolute bottom-4 right-4">
+						<Skeleton className="h-4 w-20" />
+					</div>
+				</div>
+
+				<CardHeader>
+					<CardTitle className="text-2xl">
+						<Skeleton className="h-6 w-full" />
+					</CardTitle>
+					<CardDescription className="text-sm text-gray-500 dark:text-gray-400">
+						<Skeleton className="h-3.5 w-full my-0.5" />
+						<Skeleton className="h-3.5 w-full my-0.5" />
+						<Skeleton className="h-3.5 w-3/4 my-0.5" />
+					</CardDescription>
+				</CardHeader>
+			</Card>
+		);
 	}
 
 	if (data === null) {
-		return null;
+		return (
+			<Card className="group overflow-hidden hover:shadow-xl transition-all duration-300">
+				<div className="aspect-video relative overflow-hidden bg-slate-200">
+					<div className="h-full flex items-center justify-center">
+						<SmashCounter data={data} />
+					</div>
+				</div>
+
+				<CardHeader>
+					<CardTitle className="text-2xl">Error</CardTitle>
+					<CardDescription className="text-sm text-gray-500 dark:text-gray-400">
+						Not found.
+					</CardDescription>
+				</CardHeader>
+			</Card>
+		);
 	}
 
 	return (

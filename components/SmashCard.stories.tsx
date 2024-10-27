@@ -23,3 +23,15 @@ export const Default: Story = {
 		},
 	},
 };
+
+export const Loading: Story = {
+	args: {
+		data: undefined,
+	},
+};
+
+export const NotFound: Story = {
+	args: {
+		data: null,
+	},
+};
