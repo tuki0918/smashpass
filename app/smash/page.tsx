@@ -6,6 +6,7 @@ import type {
 } from "@/types/firebase/firestore";
 import { db } from "@/utils/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import type { FC } from "react";
 
 const getDocsByUserId = async (userId: string) => {
 	const collectionId = "smash-view-counters";
@@ -22,6 +23,20 @@ const getDocsByUserId = async (userId: string) => {
 	return data;
 };
 
+const SmashCardList: FC<{ data: DBDocument<SmashCounterDocumentData>[] }> = ({
+	data,
+}) => {
+	return (
+		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+			{data.map((doc) => (
+				<Providers key={doc.id}>
+					<RealTimeSmashCard key={doc.id} docId={doc.id} />
+				</Providers>
+			))}
+		</div>
+	);
+};
+
 export default async function Page() {
 	const data = await getDocsByUserId("xxxxx");
 
@@ -30,20 +45,14 @@ export default async function Page() {
 			<div className="max-w-7xl mx-auto">
 				<div className="text-center mb-12">
 					<h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-						Featured Projects
+						title
 					</h1>
 					<p className="text-lg text-gray-600 dark:text-gray-300">
-						Discover our latest architectural and design innovations
+						description
 					</p>
 				</div>
 
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					{data.map((doc) => (
-						<Providers key={doc.id}>
-							<RealTimeSmashCard docId={doc.id} />
-						</Providers>
-					))}
-				</div>
+				<SmashCardList data={data} />
 			</div>
 		</div>
 	);
