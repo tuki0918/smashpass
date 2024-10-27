@@ -41,11 +41,11 @@ const SmashCard: FC<{
 					<CardTitle className="text-2xl">
 						<Skeleton className="h-6 w-full" />
 					</CardTitle>
-					<CardDescription className="text-sm text-gray-500 dark:text-gray-400">
+					<div className="text-sm text-gray-500 dark:text-gray-400">
 						<Skeleton className="h-3.5 w-full my-0.5" />
 						<Skeleton className="h-3.5 w-full my-0.5" />
 						<Skeleton className="h-3.5 w-3/4 my-0.5" />
-					</CardDescription>
+					</div>
 				</CardHeader>
 			</Card>
 		);
