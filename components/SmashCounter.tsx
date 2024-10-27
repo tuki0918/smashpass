@@ -35,7 +35,7 @@ const SmashCounter: FC<{
 
 export default SmashCounter;
 
-export const SmashCounterWithAtom: FC<{ docId: string }> = ({ docId }) => {
+export const RealTimeSmashCounter: FC<{ docId: string }> = ({ docId }) => {
 	useFirestoreDoc(docId);
 	const [data] = useAtom(smashCounterAtom);
 	return <SmashCounter data={data} />;
