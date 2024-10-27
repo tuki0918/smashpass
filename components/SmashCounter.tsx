@@ -2,7 +2,7 @@
 
 import { useFirestoreDoc } from "@/hooks/useFirestore";
 import type {
-	DBDocument,
+	DBDocumentWithId,
 	SmashCounterDocumentData,
 } from "@/types/firebase/firestore";
 import { smashCounterAtom } from "@/utils/atoms";
@@ -12,7 +12,7 @@ import { animated, useSpring } from "react-spring";
 
 const SmashCounter: FC<{
 	/** undefined: loading, null: not found */
-	data: DBDocument<SmashCounterDocumentData> | undefined | null;
+	data: DBDocumentWithId<SmashCounterDocumentData> | undefined | null;
 }> = ({ data }) => {
 	const animation = useSpring({
 		from: { opacity: 0.3, transform: "scale(0.5)" },

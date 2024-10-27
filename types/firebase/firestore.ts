@@ -10,8 +10,8 @@ export type DBDocumentDate = {
 	revised_at?: Timestamp;
 };
 
-export type DBDocument<T extends DocumentData> = T &
-	DBDocumentDate &
+export type DBDocument<T extends DocumentData> = T & DBDocumentDate;
+export type DBDocumentWithId<T extends DocumentData> = DBDocument<T> &
 	DBDocumentId;
 export type DBCollection<T extends DocumentData> = DBDocument<T>[];
 

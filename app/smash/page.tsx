@@ -1,12 +1,15 @@
 import { RealTimeSmashCardList } from "@/components/SmashCard";
 import type {
 	DBDocument,
+	DBDocumentWithId,
 	SmashCounterDocumentData,
 } from "@/types/firebase/firestore";
 import { db } from "@/utils/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
-const getDocsByUserId = async (userId: string) => {
+const getDocsByUserId = async (
+	userId: string,
+): Promise<DBDocumentWithId<SmashCounterDocumentData>[]> => {
 	const collectionId = "smash-view-counters";
 	const q = query(
 		collection(db, collectionId),

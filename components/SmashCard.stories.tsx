@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { Timestamp } from "firebase/firestore";
 
 import SmashCard from "./SmashCard";
 
@@ -20,6 +21,8 @@ export const Default: Story = {
 			count: 0,
 			status: "published",
 			created_by_id: "created_by_id",
+			created_at: Timestamp.fromDate(new Date()),
+			updated_at: Timestamp.fromDate(new Date()),
 		},
 	},
 };

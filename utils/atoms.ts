@@ -1,9 +1,9 @@
 import type {
-	DBDocument,
+	DBDocumentWithId,
 	SmashCounterDocumentData,
 } from "@/types/firebase/firestore";
 import { atom } from "jotai";
 
 export const smashCounterAtom = atom<
-	DBDocument<SmashCounterDocumentData> | undefined | null
+	DBDocumentWithId<SmashCounterDocumentData> | undefined | null
 >(undefined);

@@ -12,7 +12,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useFirestoreDoc } from "@/hooks/useFirestore";
 import type {
-	DBDocument,
+	DBDocumentWithId,
 	SmashCounterDocumentData,
 } from "@/types/firebase/firestore";
 import { smashCounterAtom } from "@/utils/atoms";
@@ -23,7 +23,7 @@ import type { FC } from "react";
 
 const SmashCard: FC<{
 	/** undefined: loading, null: not found */
-	data: DBDocument<SmashCounterDocumentData> | undefined | null;
+	data: DBDocumentWithId<SmashCounterDocumentData> | undefined | null;
 }> = ({ data }) => {
 	if (data === undefined) {
 		return (
@@ -124,7 +124,7 @@ export const RealTimeSmashCard: FC<{ docId: string }> = ({ docId }) => {
 };
 
 export const RealTimeSmashCardList: FC<{
-	data: DBDocument<SmashCounterDocumentData>[];
+	data: DBDocumentWithId<SmashCounterDocumentData>[];
 }> = ({ data }) => {
 	// TODO: UI for no data found
 	if (data.length === 0) {
