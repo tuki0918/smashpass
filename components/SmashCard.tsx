@@ -93,14 +93,14 @@ const SmashCard: FC<{
 							type="button"
 							className="p-2 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 						>
-							<Eye className="h-5 w-5 text-gray-800" />
+							<Eye className="h-10 w-10 md:h-6 md:w-6 text-gray-800" />
 						</button>
 					</Link>
 					<button
 						type="button"
 						className="p-2 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 					>
-						<Pencil className="h-5 w-5 text-gray-800" />
+						<Pencil className="h-10 w-10 md:h-6 md:w-6 text-gray-800" />
 					</button>
 				</div>
 			</div>
