@@ -17,6 +17,7 @@ import type {
 import { smashCounterAtom } from "@/utils/atoms";
 import { useAtom } from "jotai";
 import { Eye, Pencil } from "lucide-react";
+import Link from "next/link";
 import type { FC } from "react";
 
 const SmashCard: FC<{
@@ -86,12 +87,14 @@ const SmashCard: FC<{
 
 				{/* Hover overlay with icons */}
 				<div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-8 backdrop-blur-sm">
-					<button
-						type="button"
-						className="p-2 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
-					>
-						<Eye className="h-5 w-5 text-gray-800" />
-					</button>
+					<Link href={`/smash/${data.id}`}>
+						<button
+							type="button"
+							className="p-2 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
+						>
+							<Eye className="h-5 w-5 text-gray-800" />
+						</button>
+					</Link>
 					<button
 						type="button"
 						className="p-2 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
