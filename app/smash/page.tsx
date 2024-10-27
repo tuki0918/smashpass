@@ -1,12 +1,10 @@
-import Providers from "@/components/Providers";
-import { RealTimeSmashCard } from "@/components/SmashCard";
+import { RealTimeSmashCardList } from "@/components/SmashCard";
 import type {
 	DBDocument,
 	SmashCounterDocumentData,
 } from "@/types/firebase/firestore";
 import { db } from "@/utils/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import type { FC } from "react";
 
 const getDocsByUserId = async (userId: string) => {
 	const collectionId = "smash-view-counters";
@@ -21,20 +19,6 @@ const getDocsByUserId = async (userId: string) => {
 	}));
 
 	return data;
-};
-
-const SmashCardList: FC<{ data: DBDocument<SmashCounterDocumentData>[] }> = ({
-	data,
-}) => {
-	return (
-		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-			{data.map((doc) => (
-				<Providers key={doc.id}>
-					<RealTimeSmashCard key={doc.id} docId={doc.id} />
-				</Providers>
-			))}
-		</div>
-	);
 };
 
 export default async function Page() {
@@ -52,7 +36,7 @@ export default async function Page() {
 					</p>
 				</div>
 
-				<SmashCardList data={data} />
+				<RealTimeSmashCardList data={data} />
 			</div>
 		</div>
 	);

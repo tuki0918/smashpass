@@ -1,5 +1,6 @@
 "use client";
 
+import Providers from "@/components/Providers";
 import SmashCounter from "@/components/SmashCounter";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -120,4 +121,18 @@ export const RealTimeSmashCard: FC<{ docId: string }> = ({ docId }) => {
 	useFirestoreDoc(docId);
 	const [data] = useAtom(smashCounterAtom);
 	return <SmashCard data={data} />;
+};
+
+export const RealTimeSmashCardList: FC<{
+	data: DBDocument<SmashCounterDocumentData>[];
+}> = ({ data }) => {
+	return (
+		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+			{data.map((doc) => (
+				<Providers key={doc.id}>
+					<RealTimeSmashCard key={doc.id} docId={doc.id} />
+				</Providers>
+			))}
+		</div>
+	);
 };
