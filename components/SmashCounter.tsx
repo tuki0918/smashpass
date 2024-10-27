@@ -27,7 +27,9 @@ const SmashCounter: FC<{
 		) : data === null ? (
 			<span>=</span>
 		) : (
-			<animated.span style={animation}>{data.count}</animated.span>
+			<animated.span style={animation}>
+				{new Intl.NumberFormat().format(data.count)}
+			</animated.span>
 		);
 
 	return <div className="text-6xl font-bold text-gray-600">{content}</div>;
