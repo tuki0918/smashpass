@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import { RealTimeSmashCardList } from "@/components/SmashCard";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type {
 	DBDocument,
 	DBDocumentWithId,
@@ -45,7 +46,26 @@ export default async function Page() {
 						</p>
 					</div>
 
-					<RealTimeSmashCardList data={data} />
+					<Tabs defaultValue="all">
+						<TabsList>
+							<TabsTrigger value="all">All</TabsTrigger>
+							<TabsTrigger value="published">Published</TabsTrigger>
+							<TabsTrigger value="draft">Draft</TabsTrigger>
+						</TabsList>
+						<TabsContent value="all">
+							<RealTimeSmashCardList data={data} />
+						</TabsContent>
+						<TabsContent value="published">
+							<RealTimeSmashCardList
+								data={data.filter((item) => item.status === "published")}
+							/>
+						</TabsContent>
+						<TabsContent value="draft">
+							<RealTimeSmashCardList
+								data={data.filter((item) => item.status === "draft")}
+							/>
+						</TabsContent>
+					</Tabs>
 				</div>
 			</div>
 		</div>
