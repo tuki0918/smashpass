@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import { RealTimeSmashCardList } from "@/components/SmashCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
 import type {
 	DBDocument,
 	DBDocumentWithId,
@@ -13,7 +14,7 @@ import { Activity } from "lucide-react";
 const getDocsByUserId = async (
 	userId: string,
 ): Promise<DBDocumentWithId<SmashCounterDocumentData>[]> => {
-	const collectionId = "smash-view-counters";
+	const collectionId = DB_FIRESTORE_SMASH_COLLECTION_NAME;
 	const q = query(
 		collection(db, collectionId),
 		where("created_by_id", "==", userId),

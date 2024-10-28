@@ -1,3 +1,4 @@
+import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
 import type {
 	DBDocument,
 	SmashCounterDocumentData,
@@ -10,11 +11,10 @@ import { useEffect } from "react";
 
 // TODO: support for some collection
 export const useFirestoreDoc = (docId: string) => {
-	// TODO: collectionId
-	const collectionId = "smash-view-counters";
 	const setData = useSetAtom(smashCounterAtom);
 
 	useEffect(() => {
+		const collectionId = DB_FIRESTORE_SMASH_COLLECTION_NAME;
 		// TODO: FirestoreDataConverter
 		const unsubscribe = onSnapshot(doc(db, collectionId, docId), (doc) => {
 			const data = !doc.exists()
