@@ -1,6 +1,5 @@
+import Sample from "@/components/Sample";
 import type { Meta, StoryObj } from "@storybook/react";
-
-import Sample from "./Sample";
 
 const meta: Meta<typeof Sample> = {
 	title: "Sample",

@@ -1,7 +1,6 @@
+import SmashCounter from "@/components/SmashCounter";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Timestamp } from "firebase/firestore";
-
-import SmashCounter from "./SmashCounter";
 
 const meta: Meta<typeof SmashCounter> = {
 	title: "Smash/SmashCounter",

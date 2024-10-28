@@ -1,6 +1,5 @@
+import SiteTextLogo from "@/components/SiteTextLogo";
 import type { Meta, StoryObj } from "@storybook/react";
-
-import SiteTextLogo from "./SiteTextLogo";
 
 const meta: Meta<typeof SiteTextLogo> = {
 	title: "Site/SiteTextLogo",

@@ -1,7 +1,6 @@
+import SmashCard from "@/components/SmashCard";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Timestamp } from "firebase/firestore";
-
-import SmashCard from "./SmashCard";
 
 const meta: Meta<typeof SmashCard> = {
 	title: "Smash/SmashCard",
