@@ -42,8 +42,7 @@ export default async function Page() {
 							<Activity color="#333333" size={48} />
 						</h1>
 						<p className="text-lg text-gray-600 dark:text-gray-300">
-							{/* TODO: description */}
-							description
+							My activities
 						</p>
 					</div>
 
