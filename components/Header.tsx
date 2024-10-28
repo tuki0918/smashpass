@@ -1,3 +1,5 @@
+"use client";
+
 import SiteTextLogo from "@/components/SiteTextLogo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -19,8 +21,8 @@ const Header: FC = () => {
 	const handleLogout = () => setIsLoggedIn(false);
 
 	return (
-		<header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-			<div className="container flex h-14 items-center justify-between px-2">
+		<header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex justify-center items-center">
+			<div className="container flex items-center justify-between mx-2 my-2">
 				<div className="flex items-center space-x-2">
 					<Link href={"/"}>
 						<SiteTextLogo />
@@ -39,7 +41,7 @@ const Header: FC = () => {
 								>
 									<Avatar className="h-8 w-8">
 										<AvatarImage src="https://picsum.photos/100" alt="User" />
-										<AvatarFallback>SC</AvatarFallback>
+										<AvatarFallback>00</AvatarFallback>
 									</Avatar>
 								</Button>
 							</DropdownMenuTrigger>
