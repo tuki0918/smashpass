@@ -2,10 +2,13 @@ import type { FC } from "react";
 
 const SiteTextLogo: FC = () => {
 	return (
-		<div className="flex items-center justify-center h-screen">
-			<div className="relative text-2xl font-bold">
-				123
-				<span className="absolute -top-1.5 text-sm">++</span>
+		<div className="flex items-center justify-center">
+			<div className="relative">
+				<span className="font-bold text-2xl text-gray-600">123</span>
+				<div className="absolute inline -top-1.5">
+					<span className="font-bold text-sm text-gray-600">+</span>
+					<span className="font-bold text-sm text-gray-600">+</span>
+				</div>
 			</div>
 		</div>
 	);
