@@ -1,14 +1,27 @@
 import { userAtom } from "@/utils/atoms";
 import {
 	auth,
+	onAuthStateChanged,
 	provider,
 	signInWithPopup,
 	signOut,
 } from "@/utils/firebase-auth";
 import { useAtom } from "jotai";
+import { useEffect, useState } from "react";
 
 export const useAuth = () => {
 	const [user, setUser] = useAtom(userAtom);
+	const [isLoading, setLoading] = useState(true);
+
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			setUser(user);
+			setLoading(false);
+		});
+
+		return unsubscribe;
+	}, [setUser]);
+
 	const login = async () => {
 		try {
 			const result = await signInWithPopup(auth, provider);
@@ -27,5 +40,5 @@ export const useAuth = () => {
 		}
 	};
 
-	return { user, login, logout };
+	return { user, login, logout, isLoading };
 };
