@@ -1,5 +1,6 @@
 import { RealTimeSmashCounter } from "@/components/SmashCounter";
 import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
+import { SITE_DESCRIPTION, SITE_NAME } from "@/config/app";
 import type {
 	DBDocument,
 	SmashCounterDocumentData,
@@ -32,10 +33,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 	if (docSnap.exists()) {
 		const data = docSnap.data() as DBDocument<SmashCounterDocumentData>;
-		// TODO: metadata
 		return {
-			title: data.title || "Default Title",
-			description: data.description || "",
+			title: `${data.title} - ${SITE_NAME}` || SITE_NAME,
+			description: data.description || SITE_DESCRIPTION,
 		};
 	}
 
