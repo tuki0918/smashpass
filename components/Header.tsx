@@ -21,8 +21,8 @@ const Header: FC = () => {
 	const { user, logout, isLoading } = useAuth();
 
 	return (
-		<header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex justify-center items-center">
-			<div className="container h-12 flex items-center justify-between mx-2">
+		<header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex justify-center items-center px-4 sm:px-6 lg:px-8">
+			<div className="container max-w-7xl h-12 flex items-center justify-between">
 				<div className="flex items-center space-x-2">
 					<Link href={"/"}>
 						<SiteTextLogo />
