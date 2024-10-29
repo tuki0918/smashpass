@@ -36,7 +36,7 @@ const SmashCardTabs: FC<{
 }> = ({ data }) => {
 	return (
 		<Tabs defaultValue="all">
-			<TabsList>
+			<TabsList className="mb-2">
 				<TabsTrigger value="all">All</TabsTrigger>
 				<TabsTrigger value="published">Published</TabsTrigger>
 				<TabsTrigger value="draft">Draft</TabsTrigger>

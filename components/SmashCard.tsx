@@ -3,6 +3,7 @@
 import Providers from "@/components/Providers";
 import SmashCounter from "@/components/SmashCounter";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardDescription,
@@ -17,7 +18,7 @@ import type {
 } from "@/types/firebase/firestore";
 import { smashCounterAtom } from "@/utils/atoms";
 import { useAtom } from "jotai";
-import { Eye, Pencil } from "lucide-react";
+import { Eye, Pencil, SquarePlus } from "lucide-react";
 import Link from "next/link";
 import type { FC } from "react";
 
@@ -126,15 +127,6 @@ export const RealTimeSmashCard: FC<{ docId: string }> = ({ docId }) => {
 export const RealTimeSmashCardList: FC<{
 	data: DBDocumentWithId<SmashCounterDocumentData>[];
 }> = ({ data }) => {
-	// TODO: UI for no data found
-	if (data.length === 0) {
-		return (
-			<div className="text-center">
-				<p className="text-gray-600 dark:text-gray-400">No data found.</p>
-			</div>
-		);
-	}
-
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 			{data.map((doc) => (
@@ -142,6 +134,11 @@ export const RealTimeSmashCardList: FC<{
 					<RealTimeSmashCard key={doc.id} docId={doc.id} />
 				</Providers>
 			))}
+			<div className="flex items-center justify-center rounded-md border-dashed text-sm h-96 border-2">
+				<Button>
+					<SquarePlus /> Create a new Item
+				</Button>
+			</div>
 		</div>
 	);
 };
