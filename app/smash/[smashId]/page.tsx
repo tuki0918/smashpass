@@ -6,7 +6,13 @@ import type {
 	SmashCounterDocumentData,
 } from "@/types/firebase/firestore";
 import { db } from "@/utils/firebase";
-import { doc, getDoc, increment, setDoc } from "firebase/firestore";
+import {
+	doc,
+	getDoc,
+	increment,
+	serverTimestamp,
+	setDoc,
+} from "firebase/firestore";
 import type { Metadata } from "next";
 
 type Props = {
@@ -57,6 +63,7 @@ const incrementCount = async (docId: string) => {
 				docRef,
 				{
 					count: increment(1),
+					updated_at: serverTimestamp(),
 				},
 				{ merge: true },
 			);
