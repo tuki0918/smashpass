@@ -1,5 +1,6 @@
 "use client";
 
+import LoginButton from "@/components/LoginButton";
 import SiteTextLogo from "@/components/SiteTextLogo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -12,11 +13,12 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
+import { LogOut } from "lucide-react";
 import Link from "next/link";
 import type { FC } from "react";
 
 const Header: FC = () => {
-	const { user, login, logout, isLoading } = useAuth();
+	const { user, logout, isLoading } = useAuth();
 
 	return (
 		<header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex justify-center items-center">
@@ -29,7 +31,7 @@ const Header: FC = () => {
 
 				<div className="flex items-center space-x-4">
 					{isLoading ? null : user === null ? (
-						<Button onClick={login}>Login</Button>
+						<LoginButton />
 					) : (
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
@@ -59,7 +61,10 @@ const Header: FC = () => {
 									</div>
 								</DropdownMenuLabel>
 								<DropdownMenuSeparator />
-								<DropdownMenuItem onClick={logout}>Sign out</DropdownMenuItem>
+								<DropdownMenuItem onClick={logout}>
+									<LogOut />
+									Sign out
+								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</DropdownMenu>
 					)}

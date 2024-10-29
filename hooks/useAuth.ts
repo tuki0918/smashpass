@@ -7,9 +7,11 @@ import {
 	signOut,
 } from "@/utils/firebase-auth";
 import { useAtom } from "jotai";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const useAuth = () => {
+	const router = useRouter();
 	const [user, setUser] = useAtom(userAtom);
 	const [isLoading, setLoading] = useState(true);
 
@@ -35,6 +37,7 @@ export const useAuth = () => {
 		try {
 			await signOut(auth);
 			setUser(null);
+			router.push("/");
 		} catch (error) {
 			console.error("Logout error:", error);
 		}
