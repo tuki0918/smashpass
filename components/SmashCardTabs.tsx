@@ -1,6 +1,7 @@
 "use client";
 
 import { RealTimeSmashCardList } from "@/components/SmashCard";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
 import { useAuth } from "@/hooks/useAuth";
@@ -11,6 +12,7 @@ import type {
 } from "@/types/firebase/firestore";
 import { db } from "@/utils/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { PlusCircleIcon } from "lucide-react";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
 
@@ -36,11 +38,19 @@ const SmashCardTabs: FC<{
 }> = ({ data }) => {
 	return (
 		<Tabs defaultValue="all">
-			<TabsList className="mb-2">
-				<TabsTrigger value="all">All</TabsTrigger>
-				<TabsTrigger value="published">Published</TabsTrigger>
-				<TabsTrigger value="draft">Draft</TabsTrigger>
-			</TabsList>
+			<div className="space-between flex items-center">
+				<TabsList className="mb-2">
+					<TabsTrigger value="all">All</TabsTrigger>
+					<TabsTrigger value="published">Published</TabsTrigger>
+					<TabsTrigger value="draft">Draft</TabsTrigger>
+				</TabsList>
+				<div className="ml-auto">
+					<Button>
+						<PlusCircleIcon className="mr-2 h-4 w-4" />
+						Create item
+					</Button>
+				</div>
+			</div>
 			<TabsContent value="all">
 				<RealTimeSmashCardList data={data} />
 			</TabsContent>

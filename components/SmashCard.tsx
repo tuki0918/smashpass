@@ -3,7 +3,6 @@
 import Providers from "@/components/Providers";
 import SmashCounter from "@/components/SmashCounter";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardDescription,
@@ -18,7 +17,7 @@ import type {
 } from "@/types/firebase/firestore";
 import { smashCounterAtom } from "@/utils/atoms";
 import { useAtom } from "jotai";
-import { Eye, Pencil, SquarePlus } from "lucide-react";
+import { Eye, Pencil } from "lucide-react";
 import Link from "next/link";
 import type { FC } from "react";
 
@@ -134,11 +133,6 @@ export const RealTimeSmashCardList: FC<{
 					<RealTimeSmashCard key={doc.id} docId={doc.id} />
 				</Providers>
 			))}
-			<div className="flex items-center justify-center rounded-md border-dashed text-sm h-96 border-2">
-				<Button>
-					<SquarePlus /> Create a new Item
-				</Button>
-			</div>
 		</div>
 	);
 };
