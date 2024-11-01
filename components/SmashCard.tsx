@@ -17,7 +17,7 @@ import type {
 } from "@/types/firebase/firestore";
 import { smashCounterAtom } from "@/utils/atoms";
 import { useAtom } from "jotai";
-import { Eye, Pencil } from "lucide-react";
+import { CircleX, Eye, Pencil } from "lucide-react";
 import Link from "next/link";
 import type { FC } from "react";
 
@@ -126,10 +126,12 @@ export const RealTimeSmashCardList: FC<{
 	data: DBDocumentWithId<SmashCounterDocumentData>[];
 }> = ({ data }) => {
 	if (data.length === 0) {
-		// TODO: 404 page
 		return (
-			<div className="text-center">
-				<p>No data</p>
+			<div className="flex h-[450px] shrink-0 items-center justify-center rounded-md border border-dashed">
+				<div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
+					<CircleX color="#999999" size={64} />
+					<h3 className="mt-4 text-lg font-semibold">Not found.</h3>
+				</div>
 			</div>
 		);
 	}
