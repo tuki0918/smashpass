@@ -20,9 +20,20 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
 import { useAuth } from "@/hooks/useAuth";
+import type {
+	DBDocument,
+	SmashCounterDocumentData,
+} from "@/types/firebase/firestore";
 import { db } from "@/utils/firebase";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+	addDoc,
+	collection,
+	doc,
+	serverTimestamp,
+	updateDoc,
+} from "firebase/firestore";
+import type { Timestamp } from "firebase/firestore";
 import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
@@ -34,7 +45,7 @@ const formSchema = z.object({
 	title: z.string().min(2, {
 		message: "Title must be at least 2 characters.",
 	}),
-	description: z.string().optional(),
+	description: z.string(),
 	count: z.preprocess(
 		(v) => Number(v) || 0,
 		z.number().int().nonnegative({
@@ -42,7 +53,7 @@ const formSchema = z.object({
 		}),
 	),
 	status: z.enum(["published", "draft"]),
-	created_by_id: z
+	user_id: z
 		.string({
 			message: "You must be logged in.",
 		})
@@ -51,29 +62,51 @@ const formSchema = z.object({
 		}),
 });
 
-// TODO: Must be restricted by Firestore security rules or server-side logic
-const createNewItem = async (v: z.infer<typeof formSchema>) => {
+const saveItem = async (id: string | null, v: z.infer<typeof formSchema>) => {
 	try {
 		const collectionId = DB_FIRESTORE_SMASH_COLLECTION_NAME;
 		const collectionRef = collection(db, collectionId);
 
-		const data = {
+		const values: Omit<
+			SmashCounterDocumentData,
+			"created_by_id" | "updated_by_id"
+		> = {
 			title: v.title,
 			description: v.description,
 			count: v.count,
 			status: v.status,
-			created_by_id: v.created_by_id,
-			created_at: serverTimestamp(),
-			updated_at: serverTimestamp(),
 		};
 
-		await addDoc(collectionRef, data);
+		if (id) {
+			// update
+			const data: Partial<DBDocument<SmashCounterDocumentData>> = {
+				...values,
+				updated_by_id: v.user_id,
+				updated_at: serverTimestamp() as Timestamp,
+			};
+
+			const docRef = doc(db, collectionId, id);
+			await updateDoc(docRef, data);
+		} else {
+			// create
+			const data: DBDocument<SmashCounterDocumentData> = {
+				...values,
+				created_by_id: v.user_id,
+				updated_by_id: v.user_id,
+				created_at: serverTimestamp() as Timestamp,
+				updated_at: serverTimestamp() as Timestamp,
+			};
+			await addDoc(collectionRef, data);
+		}
 	} catch (err) {
 		console.error(err);
 	}
 };
 
-const SmashCounterCreateForm: FC = () => {
+const SmashCounterForm: FC<{
+	itemId?: string;
+	defaultValues?: Partial<z.infer<typeof formSchema>>;
+}> = ({ itemId = null, defaultValues }) => {
 	const router = useRouter();
 	const { user } = useAuth();
 	const [isLoading, setIsLoading] = useState(false);
@@ -81,29 +114,29 @@ const SmashCounterCreateForm: FC = () => {
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			title: "no title",
-			description: "",
-			count: 0,
-			status: "draft",
-			created_by_id: "",
+			title: defaultValues?.title || "No title",
+			description: defaultValues?.description || "",
+			count: defaultValues?.count || 0,
+			status: defaultValues?.status || "draft",
+			user_id: defaultValues?.user_id || "",
 		},
 	});
 
 	useEffect(() => {
 		if (user) {
-			// fill in the created_by_id field with the user's uid
-			form.setValue("created_by_id", user.uid);
+			// fill in the user_id field with the user's uid
+			form.setValue("user_id", user.uid);
 		}
 	}, [user, form]);
 
 	const onSubmit = useCallback(
 		async (values: z.infer<typeof formSchema>) => {
 			setIsLoading(true);
-			await createNewItem(values);
+			await saveItem(itemId, values);
 			setIsLoading(false);
 			router.push("/smash");
 		},
-		[router],
+		[itemId, router],
 	);
 
 	return (
@@ -179,7 +212,7 @@ const SmashCounterCreateForm: FC = () => {
 
 					<FormField
 						control={form.control}
-						name="created_by_id"
+						name="user_id"
 						render={({ field }) => (
 							<FormItem>
 								<FormControl>
@@ -192,7 +225,7 @@ const SmashCounterCreateForm: FC = () => {
 
 					<Button type="submit" disabled={isLoading}>
 						{isLoading && <LoaderCircle className="animate-spin" />}
-						Create
+						{itemId ? "Update" : "Create"}
 					</Button>
 				</form>
 			</Form>
@@ -200,4 +233,4 @@ const SmashCounterCreateForm: FC = () => {
 	);
 };
 
-export default SmashCounterCreateForm;
+export default SmashCounterForm;

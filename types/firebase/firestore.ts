@@ -22,4 +22,5 @@ export type SmashCounterDocumentData = {
 	count: number;
 	status: SmashCounterStatus;
 	created_by_id: string;
+	updated_by_id: string;
 };

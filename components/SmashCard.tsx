@@ -96,12 +96,14 @@ const SmashCard: FC<{
 							<Eye className="h-10 w-10 md:h-6 md:w-6 text-gray-800" />
 						</button>
 					</Link>
-					<button
-						type="button"
-						className="p-2 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
-					>
-						<Pencil className="h-10 w-10 md:h-6 md:w-6 text-gray-800" />
-					</button>
+					<Link href={`/smash/${data.id}/edit`}>
+						<button
+							type="button"
+							className="p-2 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
+						>
+							<Pencil className="h-10 w-10 md:h-6 md:w-6 text-gray-800" />
+						</button>
+					</Link>
 				</div>
 			</div>
 
