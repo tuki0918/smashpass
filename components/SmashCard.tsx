@@ -128,6 +128,15 @@ export const RealTimeSmashCard: FC<{ docId: string }> = ({ docId }) => {
 export const RealTimeSmashCardList: FC<{
 	data: DBDocumentWithId<SmashCounterDocumentData>[];
 }> = ({ data }) => {
+	if (data.length === 0) {
+		// TODO: 404 page
+		return (
+			<div className="text-center">
+				<p>No data</p>
+			</div>
+		);
+	}
+
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 			{data.map((doc) => (
