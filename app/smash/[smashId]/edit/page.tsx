@@ -6,8 +6,8 @@ import {
 	SITE_NAME,
 } from "@/config/app";
 import type {
+	CSDocumentWithId,
 	DBDocument,
-	DBDocumentWithId,
 	SmashCounterDocumentData,
 } from "@/types/firebase/firestore";
 import { db } from "@/utils/firebase";
@@ -17,14 +17,21 @@ import type { Metadata } from "next";
 
 const getDocById = async (
 	docId: string,
-): Promise<DBDocumentWithId<SmashCounterDocumentData> | null> => {
+): Promise<CSDocumentWithId<SmashCounterDocumentData> | null> => {
 	const collectionId = DB_FIRESTORE_SMASH_COLLECTION_NAME;
 	const docRef = doc(db, collectionId, docId);
 	const docSnap = await getDoc(docRef);
 
 	if (docSnap.exists()) {
+		// TODO: withConverter
+		const { created_at, updated_at, published_at, revised_at, ...rest } =
+			docSnap.data() as DBDocument<SmashCounterDocumentData>;
 		const data = {
-			...(docSnap.data() as DBDocument<SmashCounterDocumentData>),
+			...rest,
+			created_at: created_at.toDate(),
+			updated_at: updated_at.toDate(),
+			published_at: published_at?.toDate(),
+			revised_at: revised_at?.toDate(),
 			id: docSnap.id,
 		};
 		return data;
@@ -48,6 +55,7 @@ export default async function Page({ params }: Props) {
 
 	const data = await getDocById(smashId);
 	if (!data) {
+		// TODO: 404 page
 		return (
 			<div className="min-h-screen flex items-center justify-center">
 				<p>Activity not found</p>

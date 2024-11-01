@@ -24,3 +24,16 @@ export type SmashCounterDocumentData = {
 	created_by_id: string;
 	updated_by_id: string;
 };
+
+export type CSDocumentId = DBDocumentId;
+export type CSDocumentDate = {
+	created_at: Date;
+	updated_at: Date;
+	published_at?: Date;
+	revised_at?: Date;
+};
+
+export type CSDocument<T extends DocumentData> = T & CSDocumentDate;
+export type CSDocumentWithId<T extends DocumentData> = CSDocument<T> &
+	CSDocumentId;
+export type CSCollection<T extends DocumentData> = CSDocument<T>[];
