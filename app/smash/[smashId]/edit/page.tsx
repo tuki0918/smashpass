@@ -15,6 +15,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { Activity } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 const getDocById = async (
 	docId: string,
@@ -56,12 +57,7 @@ export default async function Page({ params }: Props) {
 
 	const data = await getDocById(smashId);
 	if (!data) {
-		// TODO: 404 page
-		return (
-			<div className="min-h-screen flex items-center justify-center">
-				<p>Activity not found</p>
-			</div>
-		);
+		notFound();
 	}
 
 	return (
