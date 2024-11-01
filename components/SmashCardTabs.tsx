@@ -13,8 +13,9 @@ import type {
 import { db } from "@/utils/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { PlusCircleIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import type { FC } from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const getDocsByUserId = async (
 	userId: string,
@@ -36,6 +37,11 @@ const getDocsByUserId = async (
 const SmashCardTabs: FC<{
 	data: DBDocumentWithId<SmashCounterDocumentData>[];
 }> = ({ data }) => {
+	const router = useRouter();
+	const handleCreateItem = useCallback(() => {
+		router.push("/smash/new");
+	}, [router]);
+
 	return (
 		<Tabs defaultValue="all">
 			<div className="space-between flex items-center">
@@ -45,7 +51,7 @@ const SmashCardTabs: FC<{
 					<TabsTrigger value="draft">Draft</TabsTrigger>
 				</TabsList>
 				<div className="ml-auto">
-					<Button>
+					<Button onClick={handleCreateItem}>
 						<PlusCircleIcon className="mr-2 h-4 w-4" />
 						Create item
 					</Button>
