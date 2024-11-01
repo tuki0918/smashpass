@@ -12,7 +12,6 @@ const Main: FC = () => {
 
 	if (user) {
 		router.push("/smash");
-		return null;
 	}
 
 	return (
