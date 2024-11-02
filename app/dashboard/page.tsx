@@ -1,15 +1,6 @@
 import Header from "@/components/Header";
 import { SmashCardTabsForLoggedInUser } from "@/components/SmashCardTabs";
-import { SITE_DESCRIPTION, SITE_NAME } from "@/config/app";
 import { Activity } from "lucide-react";
-import type { Metadata } from "next";
-
-export async function generateMetadata(): Promise<Metadata> {
-	return {
-		title: `My activities - ${SITE_NAME}`,
-		description: SITE_DESCRIPTION,
-	};
-}
 
 export default async function Page() {
 	return (
