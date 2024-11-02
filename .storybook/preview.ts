@@ -9,6 +9,10 @@ const preview: Preview = {
 				date: /Date$/i,
 			},
 		},
+		// https://storybook.js.org/docs/get-started/frameworks/nextjs
+		nextjs: {
+			appDirectory: true,
+		},
 	},
 };
 
