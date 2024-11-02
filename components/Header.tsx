@@ -15,10 +15,19 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
-import type { FC } from "react";
+import { useRouter } from "next/navigation";
+import { type FC, useEffect } from "react";
 
 const Header: FC = () => {
+	const router = useRouter();
 	const { user, logout, isLoading } = useAuth();
+
+	useEffect(() => {
+		// Redirect to home if user is not logged in
+		if (isLoading === false && user === null) {
+			router.replace("/");
+		}
+	}, [router, user, isLoading]);
 
 	return (
 		<header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex justify-center items-center px-4 sm:px-6 lg:px-8">
@@ -31,7 +40,7 @@ const Header: FC = () => {
 
 				<div className="flex items-center space-x-4">
 					{isLoading ? null : user === null ? (
-						<LoginButton />
+						<></>
 					) : (
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
