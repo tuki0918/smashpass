@@ -21,7 +21,7 @@ export default async function Page() {
 				<div className="max-w-7xl mx-auto">
 					<div className="text-center mb-12">
 						<h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 flex justify-center">
-							<Link href={"/smash"}>
+							<Link href={"/dashboard"}>
 								<Activity color="#333333" size={48} />
 							</Link>
 						</h1>

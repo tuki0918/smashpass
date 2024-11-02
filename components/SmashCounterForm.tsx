@@ -134,7 +134,7 @@ const SmashCounterForm: FC<{
 			setIsLoading(true);
 			await saveItem(itemId, values);
 			setIsLoading(false);
-			router.push("/smash");
+			router.push("/dashboard");
 		},
 		[itemId, router],
 	);

@@ -13,7 +13,7 @@ const Main: FC = () => {
 
 	useEffect(() => {
 		if (user) {
-			router.replace("/smash");
+			router.replace("/dashboard");
 		}
 	}, [router, user]);
 
