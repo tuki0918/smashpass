@@ -93,7 +93,11 @@ export const SmashCardTabsForLoggedInUser: FC = () => {
 		const uid = user.uid;
 		const fetchData = async () => {
 			const data = await getDocsByUserId(uid);
-			setData(data);
+			// Sort by updated_at desc (reason: Composite index required on firestore.)
+			const sortedData = data.sort(
+				(a, b) => b.updated_at.toMillis() - a.updated_at.toMillis(),
+			);
+			setData(sortedData);
 		};
 		fetchData();
 	}, [user]);
