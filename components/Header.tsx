@@ -1,6 +1,5 @@
 "use client";
 
-import LoginButton from "@/components/LoginButton";
 import SiteTextLogo from "@/components/SiteTextLogo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -12,22 +11,13 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAuth } from "@/hooks/useAuth";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { type FC, useEffect } from "react";
+import type { FC } from "react";
+import { useAuthSession } from "./AuthSessionProvider";
 
 const Header: FC = () => {
-	const router = useRouter();
-	const { user, logout, isLoading } = useAuth();
-
-	useEffect(() => {
-		// Redirect to home if user is not logged in
-		if (isLoading === false && user === null) {
-			router.replace("/");
-		}
-	}, [router, user, isLoading]);
+	const { user, logout } = useAuthSession();
 
 	return (
 		<header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex justify-center items-center px-4 sm:px-6 lg:px-8">
@@ -39,9 +29,7 @@ const Header: FC = () => {
 				</div>
 
 				<div className="flex items-center space-x-4">
-					{isLoading ? null : user === null ? (
-						<></>
-					) : (
+					{user && (
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
 								<Button

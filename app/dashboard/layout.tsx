@@ -1,3 +1,4 @@
+import { AuthSessionProvider } from "@/components/AuthSessionProvider";
 import { SITE_DESCRIPTION, SITE_NAME } from "@/config/app";
 import type { Metadata } from "next";
 
@@ -11,5 +12,9 @@ export default function PageLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	return <>{children}</>;
+	return (
+		<>
+			<AuthSessionProvider>{children}</AuthSessionProvider>
+		</>
+	);
 }
