@@ -17,7 +17,7 @@ import type {
 } from "@/types/firebase/firestore";
 import { smashCounterAtom } from "@/utils/atoms";
 import { useAtom } from "jotai";
-import { CircleX, Eye, Pencil } from "lucide-react";
+import { Eye, Pencil, SearchX } from "lucide-react";
 import Link from "next/link";
 import type { FC } from "react";
 
@@ -137,8 +137,10 @@ export const RealTimeSmashCardList: FC<{
 		return (
 			<div className="flex h-[450px] shrink-0 items-center justify-center rounded-md border border-dashed">
 				<div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
-					<CircleX color="#999999" size={64} />
-					<h3 className="mt-4 text-lg font-semibold">Not found.</h3>
+					<SearchX color="#999999" size={64} />
+					<h3 className="mt-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+						No items found.
+					</h3>
 				</div>
 			</div>
 		);
