@@ -28,14 +28,14 @@ const Main: FC = () => {
 			<div className="my-4">
 				<p className="px-8 text-center text-sm text-muted-foreground">
 					<Link
-						href="/terms"
+						href="/"
 						className="underline underline-offset-4 hover:text-primary"
 					>
 						Terms of Service
 					</Link>{" "}
 					<span className="mx-2">|</span>{" "}
 					<Link
-						href="/privacy"
+						href="/"
 						className="underline underline-offset-4 hover:text-primary"
 					>
 						Privacy Policy
