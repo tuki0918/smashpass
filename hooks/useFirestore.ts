@@ -6,12 +6,12 @@ import type {
 import { smashCounterAtom } from "@/utils/atoms";
 import { db } from "@/utils/firebase";
 import { doc, onSnapshot } from "firebase/firestore";
-import { useSetAtom } from "jotai";
+import { useAtom } from "jotai";
 import { useEffect } from "react";
 
 // TODO: support for some collection
-export const useFirestoreDoc = (docId: string) => {
-	const setData = useSetAtom(smashCounterAtom);
+export const useFirestoreSyncDocWithAtom = (docId: string) => {
+	const [data, setData] = useAtom(smashCounterAtom);
 
 	useEffect(() => {
 		const collectionId = DB_FIRESTORE_SMASH_COLLECTION_NAME;
@@ -28,4 +28,6 @@ export const useFirestoreDoc = (docId: string) => {
 
 		return () => unsubscribe();
 	}, [docId, setData]);
+
+	return data;
 };
