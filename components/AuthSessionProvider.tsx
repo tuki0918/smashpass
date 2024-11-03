@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect } from "react";
 import type { PropsWithChildren } from "react";
 
-const AuthSessionContext = createContext<
+export const AuthSessionContext = createContext<
 	| {
 			user: UserInfo | null;
 			login: () => Promise<void>;
