@@ -1,14 +1,12 @@
 import Header from "@/components/Header";
 import SmashCounterForm from "@/components/SmashCounterForm";
-import { SITE_DESCRIPTION, SITE_NAME } from "@/config/app";
 import { Activity } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
 export async function generateMetadata(): Promise<Metadata> {
 	return {
-		title: `Create activity - ${SITE_NAME}`,
-		description: SITE_DESCRIPTION,
+		title: "Create activity",
 	};
 }
 

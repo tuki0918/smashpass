@@ -3,7 +3,10 @@ import { SITE_DESCRIPTION, SITE_NAME } from "@/config/app";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-	title: `Dashboard - ${SITE_NAME}`,
+	title: {
+		template: `%s - ${SITE_NAME}`,
+		default: "Dashboard",
+	},
 	description: SITE_DESCRIPTION,
 };
 

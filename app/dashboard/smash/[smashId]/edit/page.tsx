@@ -1,10 +1,6 @@
 import Header from "@/components/Header";
 import SmashCounterForm from "@/components/SmashCounterForm";
-import {
-	DB_FIRESTORE_SMASH_COLLECTION_NAME,
-	SITE_DESCRIPTION,
-	SITE_NAME,
-} from "@/config/app";
+import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
 import type {
 	CSDocumentWithId,
 	DBDocument,
@@ -43,8 +39,7 @@ const getDocById = async (
 
 export async function generateMetadata(): Promise<Metadata> {
 	return {
-		title: `Edit activity - ${SITE_NAME}`,
-		description: SITE_DESCRIPTION,
+		title: "Edit activity",
 	};
 }
 
