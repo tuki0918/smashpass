@@ -1,6 +1,7 @@
 "use client";
 
 import { useFirestoreSyncDocWithAtom } from "@/hooks/useFirestore";
+import { cn } from "@/lib/utils";
 import type {
 	DBDocumentWithId,
 	SmashCounterDocumentData,
@@ -19,6 +20,8 @@ const SmashCounter: FC<{
 		config: { tension: 300, friction: 10 },
 	});
 
+	const isPublished = data?.status === "published";
+
 	const content =
 		data === undefined ? (
 			<span>...</span>
@@ -30,10 +33,16 @@ const SmashCounter: FC<{
 			</animated.span>
 		);
 
-	const textColor =
-		data?.status === "published" ? "text-gray-600" : "text-gray-400";
-
-	return <div className={`text-6xl font-bold ${textColor}`}>{content}</div>;
+	return (
+		<div
+			className={cn("text-6xl font-bold", {
+				"text-gray-600": isPublished, // active
+				"text-gray-400": !isPublished, // inactive
+			})}
+		>
+			{content}
+		</div>
+	);
 };
 
 export default SmashCounter;
