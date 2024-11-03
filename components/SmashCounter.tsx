@@ -30,7 +30,10 @@ const SmashCounter: FC<{
 			</animated.span>
 		);
 
-	return <div className="text-6xl font-bold text-gray-600">{content}</div>;
+	const textColor =
+		data?.status === "published" ? "text-gray-600" : "text-gray-400";
+
+	return <div className={`text-6xl font-bold ${textColor}`}>{content}</div>;
 };
 
 export default SmashCounter;
