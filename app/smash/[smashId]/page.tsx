@@ -57,6 +57,12 @@ const incrementCount = async (docId: string) => {
 		const docSnap = await getDoc(docRef);
 
 		if (docSnap.exists()) {
+			const data = docSnap.data() as DBDocument<SmashCounterDocumentData>;
+			// Only increment if the document is published
+			if (data.status !== "published") {
+				return;
+			}
+
 			await setDoc(
 				docRef,
 				{
