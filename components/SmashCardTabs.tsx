@@ -85,7 +85,7 @@ export const SmashCardTabsForLoggedInUser: FC = () => {
 	const { user } = useAuth();
 
 	useEffect(() => {
-		if (user === null) {
+		if (!user) {
 			setData([]);
 			return;
 		}

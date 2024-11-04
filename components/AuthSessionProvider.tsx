@@ -8,7 +8,7 @@ import type { PropsWithChildren } from "react";
 
 export const AuthSessionContext = createContext<
 	| {
-			user: UserInfo | null;
+			user: UserInfo | null | undefined;
 			login: () => Promise<void>;
 			logout: () => Promise<void>;
 	  }
