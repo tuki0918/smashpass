@@ -1,10 +1,10 @@
 import Header from "@/components/Header";
 import SmashCounterForm from "@/components/SmashCounterForm";
 import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
-import type { CSDocumentWithId, DBDocument } from "@/types/firebase/firestore";
+import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
-import { db } from "@/utils/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { docRef } from "@/utils/firestore";
+import { getDoc } from "firebase/firestore";
 import { Activity } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -14,13 +14,14 @@ const getDocById = async (
 	docId: string,
 ): Promise<CSDocumentWithId<SmashCounterDocumentData> | null> => {
 	const collectionId = DB_FIRESTORE_SMASH_COLLECTION_NAME;
-	const docRef = doc(db, collectionId, docId);
-	const docSnap = await getDoc(docRef);
+	const docSnap = await getDoc(
+		docRef<SmashCounterDocumentData>(collectionId, docId),
+	);
 
 	if (docSnap.exists()) {
 		// TODO: withConverter
 		const { created_at, updated_at, published_at, revised_at, ...rest } =
-			docSnap.data() as DBDocument<SmashCounterDocumentData>;
+			docSnap.data();
 		const data = {
 			...rest,
 			created_at: created_at.toDate(),

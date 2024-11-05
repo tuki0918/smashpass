@@ -23,6 +23,7 @@ import { useAuth } from "@/hooks/useAuth";
 import type { DBDocument } from "@/types/firebase/firestore";
 import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
 import { db } from "@/utils/firebase";
+import { docRef } from "@/utils/firestore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	addDoc,
@@ -82,9 +83,7 @@ const saveItem = async (id: string | null, v: z.infer<typeof formSchema>) => {
 				updated_by_id: v.user_id,
 				updated_at: serverTimestamp() as Timestamp,
 			};
-
-			const docRef = doc(db, collectionId, id);
-			await updateDoc(docRef, data);
+			await updateDoc(docRef<SmashCounterDocumentData>(collectionId, id), data);
 		} else {
 			// create
 			const data: DBDocument<SmashCounterDocumentData> = {
