@@ -1,6 +1,5 @@
 "use client";
 
-import Providers from "@/components/Providers";
 import SmashCounter from "@/components/SmashCounter";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -157,9 +156,7 @@ export const RealTimeSmashCardList: FC<{
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 			{data.map((doc) => (
-				<Providers key={doc.id}>
-					<RealTimeSmashCard key={doc.id} docId={doc.id} />
-				</Providers>
+				<RealTimeSmashCard key={doc.id} docId={doc.id} />
 			))}
 		</div>
 	);
