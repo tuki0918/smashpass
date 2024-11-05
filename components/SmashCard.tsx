@@ -12,7 +12,10 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
 import { useFirestoreDocumentSync } from "@/hooks/useFirestore";
-import type { DBDocumentWithId } from "@/types/firebase/firestore";
+import type {
+	CSDocumentWithId,
+	DBDocumentWithId,
+} from "@/types/firebase/firestore";
 import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
 import { docRef } from "@/utils/firestore";
 import { Eye, Pencil, SearchX } from "lucide-react";
@@ -21,7 +24,7 @@ import { type FC, useMemo } from "react";
 
 const SmashCard: FC<{
 	/** undefined: loading, null: not found */
-	data: DBDocumentWithId<SmashCounterDocumentData> | undefined | null;
+	data: CSDocumentWithId<SmashCounterDocumentData> | undefined | null;
 }> = ({ data }) => {
 	if (data === undefined) {
 		return (

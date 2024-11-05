@@ -3,7 +3,7 @@
 import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
 import { useFirestoreDocumentSync } from "@/hooks/useFirestore";
 import { cn } from "@/lib/utils";
-import type { DBDocumentWithId } from "@/types/firebase/firestore";
+import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
 import { docRef } from "@/utils/firestore";
 import { type FC, useMemo } from "react";
@@ -11,7 +11,7 @@ import { animated, useSpring } from "react-spring";
 
 const SmashCounter: FC<{
 	/** undefined: loading, null: not found */
-	data: DBDocumentWithId<SmashCounterDocumentData> | undefined | null;
+	data: CSDocumentWithId<SmashCounterDocumentData> | undefined | null;
 }> = ({ data }) => {
 	const animation = useSpring({
 		from: { opacity: 0.3, transform: "scale(0.5)" },

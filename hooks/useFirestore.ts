@@ -1,13 +1,13 @@
-import type { DBDocument, DBDocumentWithId } from "@/types/firebase/firestore";
+import type { CSDocumentWithId, DBDocument } from "@/types/firebase/firestore";
 import { onSnapshot } from "firebase/firestore";
 import type { DocumentData, DocumentReference } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 export const useFirestoreDocumentSync = <T extends DocumentData>(
-	docRef: DocumentReference<DBDocumentWithId<T>, DBDocument<T>>,
+	docRef: DocumentReference<CSDocumentWithId<T>, DBDocument<T>>,
 ) => {
 	/** T: data, null: not found, undefined: loading data */
-	const [data, setData] = useState<DBDocumentWithId<T> | null | undefined>(
+	const [data, setData] = useState<CSDocumentWithId<T> | null | undefined>(
 		undefined,
 	);
 

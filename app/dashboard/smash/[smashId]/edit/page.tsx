@@ -1,39 +1,12 @@
 import Header from "@/components/Header";
 import SmashCounterForm from "@/components/SmashCounterForm";
 import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
-import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
-import { docRef } from "@/utils/firestore";
-import { getDoc } from "firebase/firestore";
+import { docRef, getDocByRef } from "@/utils/firestore";
 import { Activity } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
-const getDocById = async (
-	docId: string,
-): Promise<CSDocumentWithId<SmashCounterDocumentData> | null> => {
-	const collectionId = DB_FIRESTORE_SMASH_COLLECTION_NAME;
-	const docSnap = await getDoc(
-		docRef<SmashCounterDocumentData>(collectionId, docId),
-	);
-
-	if (docSnap.exists()) {
-		// TODO: withConverter
-		const { created_at, updated_at, published_at, revised_at, ...rest } =
-			docSnap.data();
-		const data = {
-			...rest,
-			created_at: created_at.toDate(),
-			updated_at: updated_at.toDate(),
-			published_at: published_at?.toDate(),
-			revised_at: revised_at?.toDate(),
-			id: docSnap.id,
-		};
-		return data;
-	}
-	return null;
-};
 
 export async function generateMetadata(): Promise<Metadata> {
 	return {
@@ -47,8 +20,11 @@ type Props = {
 
 export default async function Page({ params }: Props) {
 	const { smashId } = params;
+	const collectionId = DB_FIRESTORE_SMASH_COLLECTION_NAME;
+	const data = await getDocByRef(
+		docRef<SmashCounterDocumentData>(collectionId, smashId),
+	);
 
-	const data = await getDocById(smashId);
 	if (!data) {
 		notFound();
 	}

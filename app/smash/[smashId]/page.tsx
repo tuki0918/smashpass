@@ -1,8 +1,8 @@
 import { RealTimeSmashCounter } from "@/components/SmashCounter";
 import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
 import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
-import { docRef } from "@/utils/firestore";
-import { getDoc, increment, serverTimestamp, setDoc } from "firebase/firestore";
+import { docRef, getDocByRef } from "@/utils/firestore";
+import { increment, serverTimestamp, setDoc } from "firebase/firestore";
 import type { Metadata } from "next";
 
 type Props = {
@@ -24,12 +24,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const docId = smashId;
 
 	const collectionId = DB_FIRESTORE_SMASH_COLLECTION_NAME;
-	const docSnap = await getDoc(
+	const data = await getDocByRef(
 		docRef<SmashCounterDocumentData>(collectionId, docId),
 	);
 
-	if (docSnap.exists()) {
-		const data = docSnap.data();
+	if (data) {
 		return {
 			title: data.title,
 			description: data.description,
@@ -45,19 +44,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const incrementCount = async (docId: string) => {
 	try {
 		const collectionId = DB_FIRESTORE_SMASH_COLLECTION_NAME;
-		const docSnap = await getDoc(
-			docRef<SmashCounterDocumentData>(collectionId, docId),
-		);
+		const ref = docRef<SmashCounterDocumentData>(collectionId, docId);
+		const data = await getDocByRef(ref);
 
-		if (docSnap.exists()) {
-			const data = docSnap.data();
+		if (data) {
 			// Only increment if the document is published
 			if (data.status !== "published") {
 				return;
 			}
 
 			await setDoc(
-				docSnap.ref,
+				ref,
 				{
 					count: increment(1),
 					updated_at: serverTimestamp(),

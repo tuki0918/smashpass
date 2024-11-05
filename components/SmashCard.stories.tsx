@@ -21,8 +21,8 @@ export const Default: Story = {
 			status: "published",
 			created_by_id: "created_by_id",
 			updated_by_id: "updated_by_id",
-			created_at: Timestamp.fromDate(new Date()),
-			updated_at: Timestamp.fromDate(new Date()),
+			created_at: new Date(),
+			updated_at: new Date(),
 		},
 	},
 };
@@ -49,8 +49,8 @@ export const LargeInt: Story = {
 			status: "published",
 			created_by_id: "created_by_id",
 			updated_by_id: "updated_by_id",
-			created_at: Timestamp.fromDate(new Date()),
-			updated_at: Timestamp.fromDate(new Date()),
+			created_at: new Date(),
+			updated_at: new Date(),
 		},
 	},
 };
