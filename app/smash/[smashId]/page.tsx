@@ -2,13 +2,7 @@ import { RealTimeSmashCounter } from "@/components/SmashCounter";
 import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
 import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
 import { docRef } from "@/utils/firestore";
-import {
-	doc,
-	getDoc,
-	increment,
-	serverTimestamp,
-	setDoc,
-} from "firebase/firestore";
+import { getDoc, increment, serverTimestamp, setDoc } from "firebase/firestore";
 import type { Metadata } from "next";
 
 type Props = {

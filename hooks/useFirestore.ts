@@ -1,34 +1,30 @@
-import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
-import type { DBDocumentWithId } from "@/types/firebase/firestore";
-import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
-import { docRef } from "@/utils/firestore";
+import type { DBDocument, DBDocumentWithId } from "@/types/firebase/firestore";
 import { onSnapshot } from "firebase/firestore";
+import type { DocumentData, DocumentReference } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
-// TODO: support for some collection
-export const useFirestoreDocumentSync = (docId: string) => {
-	const [data, setData] = useState<
-		DBDocumentWithId<SmashCounterDocumentData> | undefined | null
-	>(undefined);
+export const useFirestoreDocumentSync = <T extends DocumentData>(
+	docRef: DocumentReference<DBDocumentWithId<T>, DBDocument<T>>,
+) => {
+	/** T: data, null: not found, undefined: loading data */
+	const [data, setData] = useState<DBDocumentWithId<T> | null | undefined>(
+		undefined,
+	);
 
 	useEffect(() => {
-		const collectionId = DB_FIRESTORE_SMASH_COLLECTION_NAME;
 		// TODO: FirestoreDataConverter
-		const unsubscribe = onSnapshot(
-			docRef<SmashCounterDocumentData>(collectionId, docId),
-			(doc) => {
-				const data = !doc.exists()
-					? null
-					: {
-							...doc.data(),
-							id: doc.id,
-						};
-				setData(data);
-			},
-		);
+		const unsubscribe = onSnapshot(docRef, (doc) => {
+			const data = !doc.exists()
+				? null
+				: {
+						...doc.data(),
+						id: doc.id,
+					};
+			setData(data);
+		});
 
 		return () => unsubscribe();
-	}, [docId]);
+	}, [docRef]);
 
 	return data;
 };

@@ -1,10 +1,12 @@
 "use client";
 
+import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
 import { useFirestoreDocumentSync } from "@/hooks/useFirestore";
 import { cn } from "@/lib/utils";
 import type { DBDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
-import type { FC } from "react";
+import { docRef } from "@/utils/firestore";
+import { type FC, useMemo } from "react";
 import { animated, useSpring } from "react-spring";
 
 const SmashCounter: FC<{
@@ -46,6 +48,14 @@ const SmashCounter: FC<{
 export default SmashCounter;
 
 export const RealTimeSmashCounter: FC<{ docId: string }> = ({ docId }) => {
-	const data = useFirestoreDocumentSync(docId);
+	const ref = useMemo(
+		() =>
+			docRef<SmashCounterDocumentData>(
+				DB_FIRESTORE_SMASH_COLLECTION_NAME,
+				docId,
+			),
+		[docId],
+	);
+	const data = useFirestoreDocumentSync(ref);
 	return <SmashCounter data={data} />;
 };
