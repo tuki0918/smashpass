@@ -12,14 +12,8 @@ export const useFirestoreDocumentSync = <T extends DocumentData>(
 	);
 
 	useEffect(() => {
-		// TODO: FirestoreDataConverter
 		const unsubscribe = onSnapshot(docRef, (doc) => {
-			const data = !doc.exists()
-				? null
-				: {
-						...doc.data(),
-						id: doc.id,
-					};
+			const data = doc.exists() ? doc.data() : null;
 			setData(data);
 		});
 
