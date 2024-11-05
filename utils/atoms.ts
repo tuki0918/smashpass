@@ -1,7 +1,5 @@
-import type {
-	DBDocumentWithId,
-	SmashCounterDocumentData,
-} from "@/types/firebase/firestore";
+import type { DBDocumentWithId } from "@/types/firebase/firestore";
+import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
 import type { UserInfo } from "firebase/auth";
 import { atom } from "jotai";
 

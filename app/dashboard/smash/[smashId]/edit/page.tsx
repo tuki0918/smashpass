@@ -1,11 +1,8 @@
 import Header from "@/components/Header";
 import SmashCounterForm from "@/components/SmashCounterForm";
 import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
-import type {
-	CSDocumentWithId,
-	DBDocument,
-	SmashCounterDocumentData,
-} from "@/types/firebase/firestore";
+import type { CSDocumentWithId, DBDocument } from "@/types/firebase/firestore";
+import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
 import { db } from "@/utils/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { Activity } from "lucide-react";

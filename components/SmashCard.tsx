@@ -11,10 +11,8 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useFirestoreSyncDocWithAtom } from "@/hooks/useFirestore";
-import type {
-	DBDocumentWithId,
-	SmashCounterDocumentData,
-} from "@/types/firebase/firestore";
+import type { DBDocumentWithId } from "@/types/firebase/firestore";
+import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
 import { Eye, Pencil, SearchX } from "lucide-react";
 import Link from "next/link";
 import type { FC } from "react";

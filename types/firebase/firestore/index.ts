@@ -15,16 +15,6 @@ export type DBDocumentWithId<T extends DocumentData> = DBDocument<T> &
 	DBDocumentId;
 export type DBCollection<T extends DocumentData> = DBDocument<T>[];
 
-export type SmashCounterStatus = "published" | "draft";
-export type SmashCounterDocumentData = {
-	title: string;
-	description: string;
-	count: number;
-	status: SmashCounterStatus;
-	created_by_id: string;
-	updated_by_id: string;
-};
-
 export type CSDocumentId = DBDocumentId;
 export type CSDocumentDate = {
 	created_at: Date;

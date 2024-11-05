@@ -2,10 +2,8 @@
 
 import { useFirestoreSyncDocWithAtom } from "@/hooks/useFirestore";
 import { cn } from "@/lib/utils";
-import type {
-	DBDocumentWithId,
-	SmashCounterDocumentData,
-} from "@/types/firebase/firestore";
+import type { DBDocumentWithId } from "@/types/firebase/firestore";
+import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
 import type { FC } from "react";
 import { animated, useSpring } from "react-spring";
 

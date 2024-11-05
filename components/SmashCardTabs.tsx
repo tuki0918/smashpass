@@ -5,11 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
 import { useAuth } from "@/hooks/useAuth";
-import type {
-	DBDocument,
-	DBDocumentWithId,
-	SmashCounterDocumentData,
-} from "@/types/firebase/firestore";
+import type { DBDocument, DBDocumentWithId } from "@/types/firebase/firestore";
+import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
 import { db } from "@/utils/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { PlusCircleIcon } from "lucide-react";
