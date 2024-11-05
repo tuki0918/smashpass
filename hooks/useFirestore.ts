@@ -1,15 +1,15 @@
 import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
-import type { DBDocument } from "@/types/firebase/firestore";
+import type { DBDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
-import { smashCounterAtom } from "@/utils/atoms";
 import { docRef } from "@/utils/firestore";
 import { onSnapshot } from "firebase/firestore";
-import { useAtom } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // TODO: support for some collection
-export const useFirestoreSyncDocWithAtom = (docId: string) => {
-	const [data, setData] = useAtom(smashCounterAtom);
+export const useFirestoreDocumentSync = (docId: string) => {
+	const [data, setData] = useState<
+		DBDocumentWithId<SmashCounterDocumentData> | undefined | null
+	>(undefined);
 
 	useEffect(() => {
 		const collectionId = DB_FIRESTORE_SMASH_COLLECTION_NAME;
@@ -20,7 +20,7 @@ export const useFirestoreSyncDocWithAtom = (docId: string) => {
 				const data = !doc.exists()
 					? null
 					: {
-							...(doc.data() as DBDocument<SmashCounterDocumentData>),
+							...doc.data(),
 							id: doc.id,
 						};
 				setData(data);
@@ -28,7 +28,7 @@ export const useFirestoreSyncDocWithAtom = (docId: string) => {
 		);
 
 		return () => unsubscribe();
-	}, [docId, setData]);
+	}, [docId]);
 
 	return data;
 };

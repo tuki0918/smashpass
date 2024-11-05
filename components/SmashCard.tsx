@@ -10,7 +10,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useFirestoreSyncDocWithAtom } from "@/hooks/useFirestore";
+import { useFirestoreDocumentSync } from "@/hooks/useFirestore";
 import type { DBDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
 import { Eye, Pencil, SearchX } from "lucide-react";
@@ -121,7 +121,7 @@ const SmashCard: FC<{
 export default SmashCard;
 
 export const RealTimeSmashCard: FC<{ docId: string }> = ({ docId }) => {
-	const data = useFirestoreSyncDocWithAtom(docId);
+	const data = useFirestoreDocumentSync(docId);
 	return <SmashCard data={data} />;
 };
 

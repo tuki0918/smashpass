@@ -1,6 +1,6 @@
 "use client";
 
-import { useFirestoreSyncDocWithAtom } from "@/hooks/useFirestore";
+import { useFirestoreDocumentSync } from "@/hooks/useFirestore";
 import { cn } from "@/lib/utils";
 import type { DBDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
@@ -46,6 +46,6 @@ const SmashCounter: FC<{
 export default SmashCounter;
 
 export const RealTimeSmashCounter: FC<{ docId: string }> = ({ docId }) => {
-	const data = useFirestoreSyncDocWithAtom(docId);
+	const data = useFirestoreDocumentSync(docId);
 	return <SmashCounter data={data} />;
 };
