@@ -20,6 +20,11 @@ export const docRef = <
 	docId: string,
 ) => {
 	const name = DB_FIRESTORE_COLLECTION_NAMES[collectionId];
+
+	if (!name) {
+		throw new Error(`Collection name not found for ${collectionId}`);
+	}
+
 	return _docRef<V>(name, docId);
 };
 
