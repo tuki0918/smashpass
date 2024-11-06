@@ -3,7 +3,7 @@
 import { RealTimeSmashCardList } from "@/components/SmashCard";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
+import { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
 import { useAuth } from "@/hooks/useAuth";
 import type { DBDocument, DBDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
@@ -17,7 +17,7 @@ import { useCallback, useEffect, useState } from "react";
 const getDocsByUserId = async (
 	userId: string,
 ): Promise<DBDocumentWithId<SmashCounterDocumentData>[]> => {
-	const collectionId = DB_FIRESTORE_SMASH_COLLECTION_NAME;
+	const collectionId = DB_FIRESTORE_COLLECTION_NAMES.smash;
 	const q = query(
 		collection(db, collectionId),
 		where("created_by_id", "==", userId),

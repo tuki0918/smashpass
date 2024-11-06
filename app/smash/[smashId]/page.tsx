@@ -1,5 +1,5 @@
 import { RealTimeSmashCounter } from "@/components/SmashCounter";
-import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
+import { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
 import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
 import { docRef, getDocByRef } from "@/utils/firestore";
 import { increment, serverTimestamp, setDoc } from "firebase/firestore";
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { smashId } = params;
 	const docId = smashId;
 
-	const collectionId = DB_FIRESTORE_SMASH_COLLECTION_NAME;
+	const collectionId = DB_FIRESTORE_COLLECTION_NAMES.smash;
 	const data = await getDocByRef(
 		docRef<SmashCounterDocumentData>(collectionId, docId),
 	);
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // TODO: Must be restricted by Firestore security rules
 const incrementCount = async (docId: string) => {
 	try {
-		const collectionId = DB_FIRESTORE_SMASH_COLLECTION_NAME;
+		const collectionId = DB_FIRESTORE_COLLECTION_NAMES.smash;
 		const ref = docRef<SmashCounterDocumentData>(collectionId, docId);
 		const data = await getDocByRef(ref);
 

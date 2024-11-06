@@ -18,7 +18,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { DB_FIRESTORE_SMASH_COLLECTION_NAME } from "@/config/app";
+import { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
 import { useAuth } from "@/hooks/useAuth";
 import type { DBDocument } from "@/types/firebase/firestore";
 import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
@@ -63,7 +63,7 @@ const formSchema = z.object({
 
 const saveItem = async (id: string | null, v: z.infer<typeof formSchema>) => {
 	try {
-		const collectionId = DB_FIRESTORE_SMASH_COLLECTION_NAME;
+		const collectionId = DB_FIRESTORE_COLLECTION_NAMES.smash;
 		const collectionRef = collection(db, collectionId);
 
 		const values: Omit<
