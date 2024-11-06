@@ -1,4 +1,4 @@
-import { userAtom } from "@/utils/atoms";
+import type { AtomData } from "@/types/atoms";
 import {
 	auth,
 	onAuthStateChanged,
@@ -6,9 +6,13 @@ import {
 	signInWithPopup,
 	signOut,
 } from "@/utils/firebase-auth";
+import type { UserInfo } from "firebase/auth";
 import { useAtom } from "jotai";
+import { atom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+
+const userAtom = atom<AtomData<UserInfo>>(undefined);
 
 export const useAuth = () => {
 	const router = useRouter();
