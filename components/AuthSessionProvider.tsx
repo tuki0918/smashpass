@@ -2,9 +2,10 @@
 
 import { useAuth } from "@/hooks/useAuth";
 import type { UserInfo } from "firebase/auth";
+import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect } from "react";
-import type { PropsWithChildren } from "react";
+import type { FC, PropsWithChildren } from "react";
 
 export const AuthSessionContext = createContext<
 	| {
@@ -28,7 +29,7 @@ export const AuthSessionProvider = ({ children }: PropsWithChildren) => {
 
 	return (
 		<AuthSessionContext.Provider value={{ user, login, logout }}>
-			{children}
+			{isLoading ? <AuthWaitCompleted /> : children}
 		</AuthSessionContext.Provider>
 	);
 };
@@ -41,4 +42,12 @@ export const useAuthSession = () => {
 		);
 	}
 	return context;
+};
+
+const AuthWaitCompleted: FC = () => {
+	return (
+		<div className="min-h-screen flex items-center justify-center">
+			<LoaderCircle color="#999999" size={48} className="animate-spin" />
+		</div>
+	);
 };
