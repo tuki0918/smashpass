@@ -9,7 +9,6 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
 import { useFirestoreDocumentSync } from "@/hooks/useFirestore";
 import type {
 	CSDocumentWithId,
@@ -126,14 +125,7 @@ export default SmashCard;
 
 export const RealTimeSmashCard: FC<{ docId: string }> = ({ docId }) => {
 	// Prevent duplicate effect
-	const ref = useMemo(
-		() =>
-			docRef<SmashCounterDocumentData>(
-				DB_FIRESTORE_COLLECTION_NAMES.smash,
-				docId,
-			),
-		[docId],
-	);
+	const ref = useMemo(() => docRef("smash", docId), [docId]);
 	const data = useFirestoreDocumentSync(ref);
 	return <SmashCard data={data} />;
 };

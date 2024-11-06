@@ -1,7 +1,5 @@
 import Header from "@/components/Header";
 import SmashCounterForm from "@/components/SmashCounterForm";
-import { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
-import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
 import { docRef, getDocByRef } from "@/utils/firestore";
 import { Activity } from "lucide-react";
 import type { Metadata } from "next";
@@ -20,10 +18,7 @@ type Props = {
 
 export default async function Page({ params }: Props) {
 	const { smashId } = params;
-	const collectionId = DB_FIRESTORE_COLLECTION_NAMES.smash;
-	const data = await getDocByRef(
-		docRef<SmashCounterDocumentData>(collectionId, smashId),
-	);
+	const data = await getDocByRef(docRef("smash", smashId));
 
 	if (!data) {
 		notFound();

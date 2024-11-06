@@ -28,7 +28,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	addDoc,
 	collection,
-	doc,
 	serverTimestamp,
 	updateDoc,
 } from "firebase/firestore";
@@ -83,7 +82,7 @@ const saveItem = async (id: string | null, v: z.infer<typeof formSchema>) => {
 				updated_by_id: v.user_id,
 				updated_at: serverTimestamp() as Timestamp,
 			};
-			await updateDoc(docRef<SmashCounterDocumentData>(collectionId, id), data);
+			await updateDoc(docRef("smash", id), data);
 		} else {
 			// create
 			const data: DBDocument<SmashCounterDocumentData> = {

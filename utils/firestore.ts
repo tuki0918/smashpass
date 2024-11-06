@@ -1,4 +1,9 @@
+import { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
 import type { CSDocumentWithId, DBDocument } from "@/types/firebase/firestore";
+import type {
+	CollectionDocumentDataMap,
+	CollectionName,
+} from "@/types/firebase/firestore/models";
 import { db } from "@/utils/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import type {
@@ -7,7 +12,18 @@ import type {
 	QueryDocumentSnapshot,
 } from "firebase/firestore";
 
-export const docRef = <T extends DocumentData>(
+export const docRef = <
+	K extends CollectionName,
+	V extends DocumentData = CollectionDocumentDataMap[K],
+>(
+	collectionId: K,
+	docId: string,
+) => {
+	const name = DB_FIRESTORE_COLLECTION_NAMES[collectionId];
+	return _docRef<V>(name, docId);
+};
+
+const _docRef = <T extends DocumentData>(
 	collectionId: string,
 	docId: string,
 ) => {
