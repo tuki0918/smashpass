@@ -31,13 +31,13 @@ export const docRef = <
 const _docRef = <T extends DocumentData>(
 	collectionId: string,
 	docId: string,
-) => {
-	const ref = doc(db, collectionId, docId) as DocumentReference<
+): DocumentReference<CSDocumentWithId<T>, DBDocument<T>> => {
+	return doc(db, collectionId, docId).withConverter<
 		CSDocumentWithId<T>,
 		DBDocument<T>
-	>;
-	return ref.withConverter<CSDocumentWithId<T>, DBDocument<T>>({
-		toFirestore: (data: CSDocumentWithId<T>): DBDocument<T> => {
+	>({
+		toFirestore: (data) => {
+			// exclude client fields from the document
 			const {
 				id,
 				created_at_ms,
@@ -46,8 +46,10 @@ const _docRef = <T extends DocumentData>(
 				revised_at_ms,
 				...rest
 			} = data;
-			// TODO: mismatch created_at, updated_at, published_at, revised_at
-			return rest as unknown as DBDocument<T>;
+			return {
+				// contains server fields, but is not type-safe
+				...(rest as unknown as DBDocument<T>),
+			};
 		},
 		fromFirestore: (
 			snapshot: QueryDocumentSnapshot<DBDocument<T>>,
@@ -57,16 +59,15 @@ const _docRef = <T extends DocumentData>(
 			const { created_at, updated_at, published_at, revised_at, ...rest } =
 				snapshot.data(options);
 			return {
-				...rest,
+				...(rest as unknown as T),
 				created_at_ms: created_at.toMillis(),
 				updated_at_ms: updated_at.toMillis(),
 				published_at_ms: published_at?.toMillis(),
 				revised_at_ms: revised_at?.toMillis(),
 				id: snapshot.id,
-			} as unknown as CSDocumentWithId<T>;
+			};
 		},
-		// TODO: Refactor type
-	}) as DocumentReference<CSDocumentWithId<T>, DBDocument<T>>;
+	});
 };
 
 export const getDocByRef = async <T extends DocumentData>(
