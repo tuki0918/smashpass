@@ -17,10 +17,10 @@ export type DBCollection<T extends DocumentData> = DBDocument<T>[];
 
 export type CSDocumentId = DBDocumentId;
 export type CSDocumentDate = {
-	created_at: Date;
-	updated_at: Date;
-	published_at?: Date;
-	revised_at?: Date;
+	created_at_ms: number;
+	updated_at_ms: number;
+	published_at_ms?: number;
+	revised_at_ms?: number;
 };
 
 export type CSDocument<T extends DocumentData> = T & CSDocumentDate;

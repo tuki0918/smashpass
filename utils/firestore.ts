@@ -32,35 +32,38 @@ const _docRef = <T extends DocumentData>(
 	collectionId: string,
 	docId: string,
 ) => {
-	return (
-		doc(db, collectionId, docId) as DocumentReference<
-			CSDocumentWithId<T>,
-			DBDocument<T>
-		>
-	).withConverter({
-		toFirestore: (data: CSDocumentWithId<T>) => {
-			const { id, ...rest } = data;
-			return rest;
+	const ref = doc(db, collectionId, docId) as DocumentReference<
+		CSDocumentWithId<T>,
+		DBDocument<T>
+	>;
+	return ref.withConverter<CSDocumentWithId<T>, DBDocument<T>>({
+		toFirestore: (data: CSDocumentWithId<T>): DBDocument<T> => {
+			const {
+				id,
+				created_at_ms,
+				updated_at_ms,
+				published_at_ms,
+				revised_at_ms,
+				...rest
+			} = data;
+			// TODO: mismatch created_at, updated_at, published_at, revised_at
+			return rest as unknown as DBDocument<T>;
 		},
 		fromFirestore: (
 			snapshot: QueryDocumentSnapshot<DBDocument<T>>,
 			options,
-		) => {
-			// If the document does not exist, return null
-			if (!snapshot.exists()) {
-				return null;
-			}
-
+		): CSDocumentWithId<T> => {
 			// convert the document to a client side document
-			const data = snapshot.data(options);
+			const { created_at, updated_at, published_at, revised_at, ...rest } =
+				snapshot.data(options);
 			return {
-				...data,
-				created_at: data.created_at.toDate(),
-				updated_at: data.updated_at.toDate(),
-				published_at: data.published_at?.toDate(),
-				revised_at: data.revised_at?.toDate(),
+				...rest,
+				created_at_ms: created_at.toMillis(),
+				updated_at_ms: updated_at.toMillis(),
+				published_at_ms: published_at?.toMillis(),
+				revised_at_ms: revised_at?.toMillis(),
 				id: snapshot.id,
-			};
+			} as unknown as CSDocumentWithId<T>;
 		},
 		// TODO: Refactor type
 	}) as DocumentReference<CSDocumentWithId<T>, DBDocument<T>>;
