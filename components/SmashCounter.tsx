@@ -48,7 +48,7 @@ export default SmashCounter;
 
 export const RealTimeSmashCounter: FC<{ docId: string }> = ({ docId }) => {
 	// Prevent duplicate effect
-	const ref = useMemo(() => docRef("smash", docId), [docId]);
+	const ref = useMemo(() => docRef("view", docId), [docId]);
 	const data = useFirestoreDocumentSync(ref);
 	return <SmashCounter data={data} />;
 };

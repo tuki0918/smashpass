@@ -17,7 +17,7 @@ import { useCallback, useEffect, useState } from "react";
 const getDocsByUserId = async (
 	userId: string,
 ): Promise<DBDocumentWithId<SmashCounterDocumentData>[]> => {
-	const collectionId = DB_FIRESTORE_COLLECTION_NAMES.smash;
+	const collectionId = DB_FIRESTORE_COLLECTION_NAMES.view;
 	const q = query(
 		collection(db, collectionId),
 		where("created_by_id", "==", userId),

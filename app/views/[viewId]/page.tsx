@@ -21,7 +21,7 @@ export default async function Page({ params }: Props) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { viewId } = params;
-	const data = await getDocByRef(docRef("smash", viewId));
+	const data = await getDocByRef(docRef("view", viewId));
 
 	if (data) {
 		return {
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // TODO: Must be restricted by Firestore security rules
 const incrementCount = async (docId: string) => {
 	try {
-		const ref = docRef("smash", docId);
+		const ref = docRef("view", docId);
 		const data = await getDocByRef(ref);
 
 		if (data) {

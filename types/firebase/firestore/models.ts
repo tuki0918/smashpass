@@ -2,7 +2,7 @@ import type { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
 
 export type CollectionName = keyof typeof DB_FIRESTORE_COLLECTION_NAMES;
 export type CollectionDocumentDataMap = {
-	smash: SmashCounterDocumentData;
+	view: SmashCounterDocumentData;
 	graph: SmashGraphDocumentData;
 	graph_item: SmashGraphItemDocumentData;
 };

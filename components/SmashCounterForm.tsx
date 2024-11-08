@@ -62,7 +62,7 @@ const formSchema = z.object({
 
 const saveItem = async (id: string | null, v: z.infer<typeof formSchema>) => {
 	try {
-		const collectionId = DB_FIRESTORE_COLLECTION_NAMES.smash;
+		const collectionId = DB_FIRESTORE_COLLECTION_NAMES.view;
 		const collectionRef = collection(db, collectionId);
 
 		const values: Omit<
@@ -82,7 +82,7 @@ const saveItem = async (id: string | null, v: z.infer<typeof formSchema>) => {
 				updated_by_id: v.user_id,
 				updated_at: serverTimestamp() as Timestamp,
 			};
-			await updateDoc(docRef("smash", id), data);
+			await updateDoc(docRef("view", id), data);
 		} else {
 			// create
 			const data: DBDocument<SmashCounterDocumentData> = {

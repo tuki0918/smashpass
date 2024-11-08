@@ -125,7 +125,7 @@ export default SmashCard;
 
 export const RealTimeSmashCard: FC<{ docId: string }> = ({ docId }) => {
 	// Prevent duplicate effect
-	const ref = useMemo(() => docRef("smash", docId), [docId]);
+	const ref = useMemo(() => docRef("view", docId), [docId]);
 	const data = useFirestoreDocumentSync(ref);
 	return <SmashCard data={data} />;
 };

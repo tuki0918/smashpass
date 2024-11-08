@@ -18,7 +18,7 @@ type Props = {
 
 export default async function Page({ params }: Props) {
 	const { viewId } = params;
-	const data = await getDocByRef(docRef("smash", viewId));
+	const data = await getDocByRef(docRef("view", viewId));
 
 	if (!data) {
 		notFound();
