@@ -131,7 +131,7 @@ export const RealTimeSmashCard: FC<{ docId: string }> = ({ docId }) => {
 };
 
 export const RealTimeSmashCardList: FC<{
-	data: DBDocumentWithId<SmashViewCounterDocumentData>[];
+	data: CSDocumentWithId<SmashViewCounterDocumentData>[];
 }> = ({ data }) => {
 	if (data.length === 0) {
 		return (

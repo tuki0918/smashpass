@@ -3,36 +3,18 @@
 import { RealTimeSmashCardList } from "@/components/SmashCard";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
 import { useAuth } from "@/hooks/useAuth";
-import type { DBDocument, DBDocumentWithId } from "@/types/firebase/firestore";
+import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore/models";
-import { db } from "@/utils/firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { docsQuery, getDocsByQuery } from "@/utils/firestore";
+import { where } from "firebase/firestore";
 import { PlusCircleIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 
-const getDocsByUserId = async (
-	userId: string,
-): Promise<DBDocumentWithId<SmashViewCounterDocumentData>[]> => {
-	const collectionId = DB_FIRESTORE_COLLECTION_NAMES.view;
-	const q = query(
-		collection(db, collectionId),
-		where("created_by_id", "==", userId),
-	);
-	const querySnapshot = await getDocs(q);
-	const data = querySnapshot.docs.map((doc) => ({
-		...(doc.data() as DBDocument<SmashViewCounterDocumentData>),
-		id: doc.id,
-	}));
-
-	return data;
-};
-
 const SmashCardTabs: FC<{
-	data: DBDocumentWithId<SmashViewCounterDocumentData>[];
+	data: CSDocumentWithId<SmashViewCounterDocumentData>[];
 }> = ({ data }) => {
 	const router = useRouter();
 	const handleCreateItem = useCallback(() => {
@@ -76,7 +58,7 @@ export default SmashCardTabs;
 // TODO: server-side auth logic
 export const SmashCardTabsForLoggedInUser: FC = () => {
 	const [data, setData] = useState<
-		DBDocumentWithId<SmashViewCounterDocumentData>[]
+		CSDocumentWithId<SmashViewCounterDocumentData>[]
 	>([]);
 
 	const { user } = useAuth();
@@ -89,11 +71,10 @@ export const SmashCardTabsForLoggedInUser: FC = () => {
 
 		const uid = user.uid;
 		const fetchData = async () => {
-			const data = await getDocsByUserId(uid);
-			// Sort by updated_at desc (reason: Composite index required on firestore.)
-			const sortedData = data.sort(
-				(a, b) => b.updated_at.toMillis() - a.updated_at.toMillis(),
-			);
+			const q = docsQuery("view", [where("created_by_id", "==", uid)]);
+			const data = await getDocsByQuery(q);
+			// Sort by updated_at_ms desc (reason: Composite index required on firestore.)
+			const sortedData = data.sort((a, b) => b.updated_at_ms - a.updated_at_ms);
 			setData(sortedData);
 		};
 		fetchData();
