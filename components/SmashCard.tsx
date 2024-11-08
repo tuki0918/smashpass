@@ -1,6 +1,6 @@
 "use client";
 
-import SmashCounter from "@/components/SmashCounter";
+import SmashViewCounter from "@/components/SmashViewCounter";
 import { Badge } from "@/components/ui/badge";
 import {
 	Card,
@@ -29,7 +29,7 @@ const SmashCard: FC<{
 			<Card className="group overflow-hidden hover:shadow-xl transition-all duration-300">
 				<div className="aspect-video relative overflow-hidden bg-slate-200">
 					<div className="h-full flex items-center justify-center">
-						<SmashCounter data={data} />
+						<SmashViewCounter data={data} />
 					</div>
 
 					{/* Status badge */}
@@ -57,7 +57,7 @@ const SmashCard: FC<{
 			<Card className="group overflow-hidden hover:shadow-xl transition-all duration-300">
 				<div className="aspect-video relative overflow-hidden bg-slate-200">
 					<div className="h-full flex items-center justify-center">
-						<SmashCounter data={data} />
+						<SmashViewCounter data={data} />
 					</div>
 				</div>
 
@@ -75,7 +75,7 @@ const SmashCard: FC<{
 		<Card className="group overflow-hidden hover:shadow-xl transition-all duration-300">
 			<div className="aspect-video relative overflow-hidden bg-slate-200">
 				<div className="h-full flex items-center justify-center">
-					<SmashCounter data={data} />
+					<SmashViewCounter data={data} />
 				</div>
 
 				{/* Connecting animation */}

@@ -1,15 +1,14 @@
-import SmashCounter from "@/components/SmashCounter";
+import SmashViewCounter from "@/components/SmashViewCounter";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Timestamp } from "firebase/firestore";
 
-const meta: Meta<typeof SmashCounter> = {
-	title: "Smash/SmashCounter",
-	component: SmashCounter,
+const meta: Meta<typeof SmashViewCounter> = {
+	title: "Smash/SmashViewCounter",
+	component: SmashViewCounter,
 	tags: ["autodocs"],
 };
 
 export default meta;
-type Story = StoryObj<typeof SmashCounter>;
+type Story = StoryObj<typeof SmashViewCounter>;
 
 export const Default: Story = {
 	args: {

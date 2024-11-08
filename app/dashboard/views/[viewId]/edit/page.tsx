@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import SmashCounterForm from "@/components/SmashCounterForm";
+import SmashViewCounterForm from "@/components/SmashViewCounterForm";
 import { docRef, getDocByRef } from "@/utils/firestore";
 import { Activity } from "lucide-react";
 import type { Metadata } from "next";
@@ -42,7 +42,7 @@ export default async function Page({ params }: Props) {
 					</div>
 
 					<div className="flex items-center justify-center">
-						<SmashCounterForm itemId={viewId} defaultValues={data} />
+						<SmashViewCounterForm itemId={viewId} defaultValues={data} />
 					</div>
 				</div>
 			</div>

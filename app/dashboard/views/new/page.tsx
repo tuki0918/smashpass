@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import SmashCounterForm from "@/components/SmashCounterForm";
+import SmashViewCounterForm from "@/components/SmashViewCounterForm";
 import { Activity } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -29,7 +29,7 @@ export default async function Page() {
 					</div>
 
 					<div className="flex items-center justify-center">
-						<SmashCounterForm />
+						<SmashViewCounterForm />
 					</div>
 				</div>
 			</div>

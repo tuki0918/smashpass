@@ -99,7 +99,7 @@ const saveItem = async (id: string | null, v: z.infer<typeof formSchema>) => {
 	}
 };
 
-const SmashCounterForm: FC<{
+const SmashViewCounterForm: FC<{
 	itemId?: string;
 	defaultValues?: Partial<z.infer<typeof formSchema>>;
 }> = ({ itemId = null, defaultValues }) => {
@@ -229,4 +229,4 @@ const SmashCounterForm: FC<{
 	);
 };
 
-export default SmashCounterForm;
+export default SmashViewCounterForm;

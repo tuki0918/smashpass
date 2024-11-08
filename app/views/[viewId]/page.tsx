@@ -1,4 +1,4 @@
-import { RealTimeSmashCounter } from "@/components/SmashCounter";
+import { RealTimeSmashViewCounter } from "@/components/SmashViewCounter";
 import type { DBDocument } from "@/types/firebase/firestore";
 import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore/models";
 import { docRef, getDocByRef } from "@/utils/firestore";
@@ -14,7 +14,7 @@ export default async function Page({ params }: Props) {
 	await incrementCount(viewId);
 	return (
 		<div className="min-h-screen flex items-center justify-center">
-			<RealTimeSmashCounter docId={viewId} />
+			<RealTimeSmashViewCounter docId={viewId} />
 		</div>
 	);
 }

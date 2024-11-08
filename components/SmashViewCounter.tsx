@@ -8,7 +8,7 @@ import { docRef } from "@/utils/firestore";
 import { type FC, useMemo } from "react";
 import { animated, useSpring } from "react-spring";
 
-const SmashCounter: FC<{
+const SmashViewCounter: FC<{
 	/** undefined: loading, null: not found */
 	data: CSDocumentWithId<SmashViewCounterDocumentData> | undefined | null;
 }> = ({ data }) => {
@@ -44,11 +44,11 @@ const SmashCounter: FC<{
 	);
 };
 
-export default SmashCounter;
+export default SmashViewCounter;
 
-export const RealTimeSmashCounter: FC<{ docId: string }> = ({ docId }) => {
+export const RealTimeSmashViewCounter: FC<{ docId: string }> = ({ docId }) => {
 	// Prevent duplicate effect
 	const ref = useMemo(() => docRef("view", docId), [docId]);
 	const data = useFirestoreDocumentSync(ref);
-	return <SmashCounter data={data} />;
+	return <SmashViewCounter data={data} />;
 };
