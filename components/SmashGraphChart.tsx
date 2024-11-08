@@ -1,5 +1,6 @@
 "use client";
 
+import SmashGraphBarChart from "@/components/SmashGraphBarChart";
 import SmashGraphPieChart from "@/components/SmashGraphPieChart";
 import { useFirestoreDocumentSync } from "@/hooks/useFirestore";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
@@ -36,6 +37,10 @@ const SmashGraphChart: FC<{
 			fill: `hsl(var(--chart-${(i % 5) + 1}))`,
 		}));
 	}, [data.graph_items]);
+
+	if (data.graph.style === "bar-chart") {
+		return <SmashGraphBarChart data={chartData} />;
+	}
 
 	return <SmashGraphPieChart data={chartData} />;
 };
