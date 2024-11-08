@@ -2,6 +2,8 @@
 
 import {
 	ChartContainer,
+	ChartLegend,
+	ChartLegendContent,
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
@@ -53,8 +55,21 @@ const SmashGraphChart: FC<{
 		return items;
 	}, [data.graph_items]);
 
+	const config = useMemo(() => {
+		return pieChartData.reduce(
+			(acc, curr) => {
+				acc[curr.title] = {
+					label: curr.title,
+					color: curr.fill,
+				};
+				return acc;
+			},
+			{} as Record<string, { label: string; color: string }>,
+		);
+	}, [pieChartData]);
+
 	return (
-		<ChartContainer config={{}} className="h-[250px] w-full">
+		<ChartContainer config={config} className="h-[250px] w-full">
 			<PieChart>
 				<ChartTooltip
 					cursor={false}
@@ -97,6 +112,7 @@ const SmashGraphChart: FC<{
 						}}
 					/>
 				</Pie>
+				<ChartLegend content={<ChartLegendContent />} />
 			</PieChart>
 		</ChartContainer>
 	);
@@ -117,7 +133,8 @@ export const RealTimeSmashGraphChart: FC<{ docId: string }> = ({ docId }) => {
 			const fetchData = async () => {
 				const q = docsQuery("graph_item", [where("graph_id", "==", graph.id)]);
 				const data = await getDocsByQuery(q);
-				setItems(data);
+				const sorted_data = data.sort((a, b) => a.sort_order - b.sort_order);
+				setItems(sorted_data);
 			};
 			fetchData();
 		}

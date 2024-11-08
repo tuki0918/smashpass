@@ -32,6 +32,7 @@ export type SmashGraphItemDocumentData = {
 	title: string;
 	count: number;
 	graph_id: string;
+	sort_order: number;
 	created_by_id: string;
 	updated_by_id: string;
 };
