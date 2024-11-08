@@ -12,13 +12,16 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useFirestoreDocumentSync } from "@/hooks/useFirestore";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type {
 	SmashGraphDocumentData,
 	SmashGraphItemDocumentData,
 } from "@/types/firebase/firestore/models";
+import { docRef, docsQuery, getDocsByQuery } from "@/utils/firestore";
+import { where } from "firebase/firestore";
 import type { FC } from "react";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Label, Pie, PieChart } from "recharts";
 
 type SmashGraphChartData = {
@@ -36,7 +39,7 @@ const SmashGraphChart: FC<{
 	/** undefined: loading, null: not found */
 	data: SmashGraphChartData | undefined | null;
 }> = ({ data }) => {
-	if (!data) {
+	if (!data || data.graph_items.length === 0) {
 		return (
 			<div className="text-6xl font-bold text-gray-400">
 				<span>{data === undefined ? "..." : "="}</span>
@@ -122,5 +125,24 @@ const SmashGraphChart: FC<{
 export default SmashGraphChart;
 
 export const RealTimeSmashGraphChart: FC<{ docId: string }> = ({ docId }) => {
-	return <SmashGraphChart data={undefined} />;
+	// Prevent duplicate effect
+	const ref = useMemo(() => docRef("graph", docId), [docId]);
+	const graph = useFirestoreDocumentSync(ref);
+	const [items, setItems] = useState<
+		CSDocumentWithId<SmashGraphItemDocumentData>[]
+	>([]);
+
+	useEffect(() => {
+		if (graph) {
+			const fetchData = async () => {
+				const q = docsQuery("graph_item", [where("graph_id", "==", graph.id)]);
+				const data = await getDocsByQuery(q);
+				setItems(data);
+			};
+			fetchData();
+		}
+	}, [graph]);
+
+	const data = graph ? { graph, graph_items: items } : graph;
+	return <SmashGraphChart data={data} />;
 };
