@@ -36,7 +36,7 @@ const SmashCardTabs: FC<{
 }> = ({ data }) => {
 	const router = useRouter();
 	const handleCreateItem = useCallback(() => {
-		router.push("/dashboard/smash/new");
+		router.push("/dashboard/views/new");
 	}, [router]);
 
 	return (

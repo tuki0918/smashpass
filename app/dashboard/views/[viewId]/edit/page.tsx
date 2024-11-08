@@ -13,12 +13,12 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 type Props = {
-	params: { smashId: string };
+	params: { viewId: string };
 };
 
 export default async function Page({ params }: Props) {
-	const { smashId } = params;
-	const data = await getDocByRef(docRef("smash", smashId));
+	const { viewId } = params;
+	const data = await getDocByRef(docRef("smash", viewId));
 
 	if (!data) {
 		notFound();
@@ -42,7 +42,7 @@ export default async function Page({ params }: Props) {
 					</div>
 
 					<div className="flex items-center justify-center">
-						<SmashCounterForm itemId={smashId} defaultValues={data} />
+						<SmashCounterForm itemId={viewId} defaultValues={data} />
 					</div>
 				</div>
 			</div>

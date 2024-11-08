@@ -6,22 +6,22 @@ import { increment, serverTimestamp, setDoc } from "firebase/firestore";
 import type { Metadata } from "next";
 
 type Props = {
-	params: { smashId: string };
+	params: { viewId: string };
 };
 
 export default async function Page({ params }: Props) {
-	const { smashId } = params;
-	await incrementCount(smashId);
+	const { viewId } = params;
+	await incrementCount(viewId);
 	return (
 		<div className="min-h-screen flex items-center justify-center">
-			<RealTimeSmashCounter docId={smashId} />
+			<RealTimeSmashCounter docId={viewId} />
 		</div>
 	);
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const { smashId } = params;
-	const data = await getDocByRef(docRef("smash", smashId));
+	const { viewId } = params;
+	const data = await getDocByRef(docRef("smash", viewId));
 
 	if (data) {
 		return {

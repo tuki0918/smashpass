@@ -96,13 +96,13 @@ const SmashCard: FC<{
 				{/* Hover overlay with icons */}
 				<div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-8 backdrop-blur-sm">
 					<Link
-						href={`/smash/${data.id}`}
+						href={`/views/${data.id}`}
 						className="p-2 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 					>
 						<Eye className="h-10 w-10 md:h-6 md:w-6 text-gray-800" />
 					</Link>
 					<Link
-						href={`/dashboard/smash/${data.id}/edit`}
+						href={`/dashboard/views/${data.id}/edit`}
 						type="button"
 						className="p-2 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 					>
