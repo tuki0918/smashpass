@@ -21,7 +21,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
 import { useAuth } from "@/hooks/useAuth";
 import type { DBDocument } from "@/types/firebase/firestore";
-import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
+import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore/models";
 import { db } from "@/utils/firebase";
 import { docRef } from "@/utils/firestore";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -66,7 +66,7 @@ const saveItem = async (id: string | null, v: z.infer<typeof formSchema>) => {
 		const collectionRef = collection(db, collectionId);
 
 		const values: Omit<
-			SmashCounterDocumentData,
+			SmashViewCounterDocumentData,
 			"created_by_id" | "updated_by_id"
 		> = {
 			title: v.title,
@@ -77,7 +77,7 @@ const saveItem = async (id: string | null, v: z.infer<typeof formSchema>) => {
 
 		if (id) {
 			// update
-			const data: Partial<DBDocument<SmashCounterDocumentData>> = {
+			const data: Partial<DBDocument<SmashViewCounterDocumentData>> = {
 				...values,
 				updated_by_id: v.user_id,
 				updated_at: serverTimestamp() as Timestamp,
@@ -85,7 +85,7 @@ const saveItem = async (id: string | null, v: z.infer<typeof formSchema>) => {
 			await updateDoc(docRef("view", id), data);
 		} else {
 			// create
-			const data: DBDocument<SmashCounterDocumentData> = {
+			const data: DBDocument<SmashViewCounterDocumentData> = {
 				...values,
 				created_by_id: v.user_id,
 				updated_by_id: v.user_id,

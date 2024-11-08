@@ -1,6 +1,6 @@
 import { RealTimeSmashCounter } from "@/components/SmashCounter";
 import type { DBDocument } from "@/types/firebase/firestore";
-import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
+import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore/models";
 import { docRef, getDocByRef } from "@/utils/firestore";
 import { increment, serverTimestamp, setDoc } from "firebase/firestore";
 import type { Metadata } from "next";
@@ -52,7 +52,7 @@ const incrementCount = async (docId: string) => {
 				{
 					count: increment(1) as unknown as number,
 					updated_at: serverTimestamp(),
-				} as Partial<DBDocument<SmashCounterDocumentData>>,
+				} as Partial<DBDocument<SmashViewCounterDocumentData>>,
 				{ merge: true },
 			);
 		}

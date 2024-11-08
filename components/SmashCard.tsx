@@ -14,7 +14,7 @@ import type {
 	CSDocumentWithId,
 	DBDocumentWithId,
 } from "@/types/firebase/firestore";
-import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
+import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore/models";
 import { docRef } from "@/utils/firestore";
 import { Eye, Pencil, SearchX } from "lucide-react";
 import Link from "next/link";
@@ -22,7 +22,7 @@ import { type FC, useMemo } from "react";
 
 const SmashCard: FC<{
 	/** undefined: loading, null: not found */
-	data: CSDocumentWithId<SmashCounterDocumentData> | undefined | null;
+	data: CSDocumentWithId<SmashViewCounterDocumentData> | undefined | null;
 }> = ({ data }) => {
 	if (data === undefined) {
 		return (
@@ -131,7 +131,7 @@ export const RealTimeSmashCard: FC<{ docId: string }> = ({ docId }) => {
 };
 
 export const RealTimeSmashCardList: FC<{
-	data: DBDocumentWithId<SmashCounterDocumentData>[];
+	data: DBDocumentWithId<SmashViewCounterDocumentData>[];
 }> = ({ data }) => {
 	if (data.length === 0) {
 		return (

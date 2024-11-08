@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
 import { useAuth } from "@/hooks/useAuth";
 import type { DBDocument, DBDocumentWithId } from "@/types/firebase/firestore";
-import type { SmashCounterDocumentData } from "@/types/firebase/firestore/models";
+import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore/models";
 import { db } from "@/utils/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { PlusCircleIcon } from "lucide-react";
@@ -16,7 +16,7 @@ import { useCallback, useEffect, useState } from "react";
 
 const getDocsByUserId = async (
 	userId: string,
-): Promise<DBDocumentWithId<SmashCounterDocumentData>[]> => {
+): Promise<DBDocumentWithId<SmashViewCounterDocumentData>[]> => {
 	const collectionId = DB_FIRESTORE_COLLECTION_NAMES.view;
 	const q = query(
 		collection(db, collectionId),
@@ -24,7 +24,7 @@ const getDocsByUserId = async (
 	);
 	const querySnapshot = await getDocs(q);
 	const data = querySnapshot.docs.map((doc) => ({
-		...(doc.data() as DBDocument<SmashCounterDocumentData>),
+		...(doc.data() as DBDocument<SmashViewCounterDocumentData>),
 		id: doc.id,
 	}));
 
@@ -32,7 +32,7 @@ const getDocsByUserId = async (
 };
 
 const SmashCardTabs: FC<{
-	data: DBDocumentWithId<SmashCounterDocumentData>[];
+	data: DBDocumentWithId<SmashViewCounterDocumentData>[];
 }> = ({ data }) => {
 	const router = useRouter();
 	const handleCreateItem = useCallback(() => {
@@ -76,7 +76,7 @@ export default SmashCardTabs;
 // TODO: server-side auth logic
 export const SmashCardTabsForLoggedInUser: FC = () => {
 	const [data, setData] = useState<
-		DBDocumentWithId<SmashCounterDocumentData>[]
+		DBDocumentWithId<SmashViewCounterDocumentData>[]
 	>([]);
 
 	const { user } = useAuth();
