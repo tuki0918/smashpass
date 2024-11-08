@@ -22,3 +22,33 @@ export const useFirestoreDocumentSync = <T extends DocumentData>(
 
 	return data;
 };
+
+export const useFirestoreDocumentsSync = <T extends DocumentData>(
+	docRefs: DocumentReference<CSDocumentWithId<T>, DBDocument<T>>[],
+) => {
+	/** T: data, null: not found, undefined: loading data */
+	const [data, setData] = useState<(CSDocumentWithId<T> | null | undefined)[]>(
+		new Array(docRefs.length).fill(undefined),
+	);
+
+	useEffect(() => {
+		const unsubscribes = docRefs.map((docRef, index) =>
+			onSnapshot(docRef, (doc) => {
+				const newData = doc.exists() ? doc.data() : null;
+				setData((prevData) => {
+					const updatedData = [...prevData];
+					updatedData[index] = newData;
+					return updatedData;
+				});
+			}),
+		);
+
+		return () => {
+			for (const unsubscribe of unsubscribes) {
+				unsubscribe();
+			}
+		};
+	}, [docRefs]);
+
+	return data;
+};

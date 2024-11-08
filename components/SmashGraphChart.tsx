@@ -2,7 +2,10 @@
 
 import SmashGraphBarChart from "@/components/SmashGraphBarChart";
 import SmashGraphPieChart from "@/components/SmashGraphPieChart";
-import { useFirestoreDocumentSync } from "@/hooks/useFirestore";
+import {
+	useFirestoreDocumentSync,
+	useFirestoreDocumentsSync,
+} from "@/hooks/useFirestore";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type {
 	SmashGraphDocumentData,
@@ -66,7 +69,24 @@ export const RealTimeSmashGraphChart: FC<{ docId: string }> = ({ docId }) => {
 			fetchData();
 		}
 	}, [graph]);
-
 	const data = graph ? { graph, graph_items: items } : graph;
-	return <SmashGraphChart data={data} />;
+	return <RealTimeSmashGraphChartSync data={data} />;
+};
+
+export const RealTimeSmashGraphChartSync: FC<{
+	data: SmashGraphChartData | undefined | null;
+}> = ({ data }) => {
+	// Prevent duplicate effect
+	const docRefs = useMemo(() => {
+		if (data?.graph_items === undefined) return [];
+		return data.graph_items.map((item) => docRef("graph_item", item.id));
+	}, [data?.graph_items]);
+
+	const items = useFirestoreDocumentsSync(docRefs);
+	const filteredItems = items.filter((x) => !!x);
+
+	const chartData = data
+		? { graph: data.graph, graph_items: filteredItems }
+		: data;
+	return <SmashGraphChart data={chartData} />;
 };
