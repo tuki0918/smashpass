@@ -7,32 +7,38 @@ export type CollectionDocumentDataMap = {
 	graph_item: SmashGraphItemDocumentData;
 };
 
-export type SmashViewCounterStatus = "published" | "draft";
-export type SmashViewCounterDocumentData = {
-	title: string;
-	description: string;
-	count: number;
-	status: SmashViewCounterStatus;
+type OriginDocumentData = {
 	created_by_id: string;
 	updated_by_id: string;
+};
+
+type SmashOriginStatus = "published" | "draft";
+type SmashOriginType = "view" | "graph";
+type SmashOriginDocumentData = OriginDocumentData & {
+	title: string;
+	description: string;
+	status: SmashOriginStatus;
+	type: SmashOriginType;
+};
+
+// Origin types
+
+export type SmashViewCounterDocumentData = SmashOriginDocumentData & {
+	type: "view";
+	count: number;
 };
 
 export type SmashGraphStyle = "pie-chart" | "bar-chart";
-export type SmashGraphStatus = "published" | "draft";
-export type SmashGraphDocumentData = {
-	title: string;
-	description: string;
-	status: SmashGraphStatus;
+export type SmashGraphDocumentData = SmashOriginDocumentData & {
+	type: "graph";
 	style: SmashGraphStyle;
-	created_by_id: string;
-	updated_by_id: string;
 };
 
-export type SmashGraphItemDocumentData = {
+// Sub types
+
+export type SmashGraphItemDocumentData = OriginDocumentData & {
 	title: string;
 	count: number;
 	graph_id: string;
 	sort_order: number;
-	created_by_id: string;
-	updated_by_id: string;
 };

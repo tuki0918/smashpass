@@ -71,6 +71,7 @@ const saveItem = async (id: string | null, v: z.infer<typeof formSchema>) => {
 		> = {
 			title: v.title,
 			description: v.description,
+			type: "view",
 			count: v.count,
 			status: v.status,
 		};
