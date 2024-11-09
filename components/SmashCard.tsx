@@ -90,6 +90,13 @@ const SmashCard: FC<{
 					</div>
 				)}
 
+				{/* smash type */}
+				<div className="absolute bottom-4 left-4">
+					<Badge variant="outline" className="bg-white">
+						{data.type === "graph" ? "votes" : "views"}
+					</Badge>
+				</div>
+
 				{/* Status badge */}
 				<div className="absolute bottom-4 right-4">
 					<Badge variant="outline" className="bg-white">
