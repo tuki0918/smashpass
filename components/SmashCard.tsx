@@ -1,6 +1,9 @@
 "use client";
 
-import SmashViewCounter from "@/components/SmashViewCounter";
+import { RealTimeSmashGraphChart } from "@/components/SmashGraphChart";
+import SmashViewCounter, {
+	RealTimeSmashViewCounter,
+} from "@/components/SmashViewCounter";
 import { Badge } from "@/components/ui/badge";
 import {
 	Card,
@@ -9,27 +12,23 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useFirestoreDocumentSync } from "@/hooks/useFirestore";
-import type {
-	CSDocumentWithId,
-	DBDocumentWithId,
-} from "@/types/firebase/firestore";
-import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore/models";
-import { docRef } from "@/utils/firestore";
-import { Eye, Pencil, SearchX } from "lucide-react";
+import type { CSDocumentWithId } from "@/types/firebase/firestore";
+import type { SmashOriginDocumentData } from "@/types/firebase/firestore/models";
+import { Eye, Pencil } from "lucide-react";
 import Link from "next/link";
-import { type FC, useMemo } from "react";
+import type { FC } from "react";
 
 const SmashCard: FC<{
 	/** undefined: loading, null: not found */
-	data: CSDocumentWithId<SmashViewCounterDocumentData> | undefined | null;
+	data: CSDocumentWithId<SmashOriginDocumentData> | undefined | null;
 }> = ({ data }) => {
 	if (data === undefined) {
 		return (
 			<Card className="group overflow-hidden hover:shadow-xl transition-all duration-300">
 				<div className="aspect-video relative overflow-hidden bg-slate-200">
 					<div className="h-full flex items-center justify-center">
-						<SmashViewCounter data={data} />
+						{/* TODO: data.type check */}
+						<SmashViewCounter data={undefined} />
 					</div>
 
 					{/* Status badge */}
@@ -57,7 +56,8 @@ const SmashCard: FC<{
 			<Card className="group overflow-hidden hover:shadow-xl transition-all duration-300">
 				<div className="aspect-video relative overflow-hidden bg-slate-200">
 					<div className="h-full flex items-center justify-center">
-						<SmashViewCounter data={data} />
+						{/* TODO: data.type check */}
+						<SmashViewCounter data={null} />
 					</div>
 				</div>
 
@@ -75,7 +75,11 @@ const SmashCard: FC<{
 		<Card className="group overflow-hidden hover:shadow-xl transition-all duration-300">
 			<div className="aspect-video relative overflow-hidden bg-slate-200">
 				<div className="h-full flex items-center justify-center">
-					<SmashViewCounter data={data} />
+					{data.type === "graph" ? (
+						<RealTimeSmashGraphChart docId={data.id} />
+					) : (
+						<RealTimeSmashViewCounter docId={data.id} />
+					)}
 				</div>
 
 				{/* Connecting animation */}
@@ -96,13 +100,17 @@ const SmashCard: FC<{
 				{/* Hover overlay with icons */}
 				<div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-8 backdrop-blur-sm">
 					<Link
-						href={`/views/${data.id}`}
+						href={
+							data.type === "graph" ? `/graph/${data.id}` : `/views/${data.id}`
+						}
 						className="p-2 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 					>
 						<Eye className="h-10 w-10 md:h-6 md:w-6 text-gray-800" />
 					</Link>
 					<Link
-						href={`/dashboard/views/${data.id}/edit`}
+						href={
+							data.type === "graph" ? "/" : `/dashboard/views/${data.id}/edit`
+						}
 						type="button"
 						className="p-2 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 					>
@@ -122,35 +130,3 @@ const SmashCard: FC<{
 };
 
 export default SmashCard;
-
-export const RealTimeSmashCard: FC<{ docId: string }> = ({ docId }) => {
-	// Prevent duplicate effect
-	const ref = useMemo(() => docRef("view", docId), [docId]);
-	const data = useFirestoreDocumentSync(ref);
-	return <SmashCard data={data} />;
-};
-
-export const RealTimeSmashCardList: FC<{
-	data: CSDocumentWithId<SmashViewCounterDocumentData>[];
-}> = ({ data }) => {
-	if (data.length === 0) {
-		return (
-			<div className="flex h-[450px] shrink-0 items-center justify-center rounded-md border border-dashed">
-				<div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
-					<SearchX color="#999999" size={64} />
-					<h3 className="mt-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-						No items found.
-					</h3>
-				</div>
-			</div>
-		);
-	}
-
-	return (
-		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-			{data.map((doc) => (
-				<RealTimeSmashCard key={doc.id} docId={doc.id} />
-			))}
-		</div>
-	);
-};

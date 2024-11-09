@@ -14,7 +14,7 @@ type OriginDocumentData = {
 
 type SmashOriginStatus = "published" | "draft";
 type SmashOriginType = "view" | "graph";
-type SmashOriginDocumentData = OriginDocumentData & {
+export type SmashOriginDocumentData = OriginDocumentData & {
 	title: string;
 	description: string;
 	status: SmashOriginStatus;
