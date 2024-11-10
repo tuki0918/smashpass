@@ -5,20 +5,13 @@ import { cn } from "@/lib/utils";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore/models";
 import { docRef } from "@/utils/firestore";
+import { AnimatePresence, motion } from "framer-motion";
 import { type FC, useMemo } from "react";
-import { animated, useSpring } from "react-spring";
 
 const SmashViewCounter: FC<{
 	/** undefined: loading, null: not found */
 	data: CSDocumentWithId<SmashViewCounterDocumentData> | undefined | null;
 }> = ({ data }) => {
-	const animation = useSpring({
-		from: { opacity: 0.3, transform: "scale(0.5)" },
-		to: { opacity: 1, transform: "scale(1)" },
-		reset: true,
-		config: { tension: 300, friction: 10 },
-	});
-
 	const isPublished = data?.status === "published";
 
 	const content =
@@ -27,9 +20,16 @@ const SmashViewCounter: FC<{
 		) : data === null ? (
 			<span>=</span>
 		) : (
-			<animated.span style={animation}>
-				{new Intl.NumberFormat().format(data.count)}
-			</animated.span>
+			<AnimatePresence mode="popLayout">
+				<motion.div
+					key={data.count}
+					initial={{ y: 20, opacity: 0 }}
+					animate={{ y: 0, opacity: 1 }}
+					exit={{ y: -20, opacity: 0 }}
+				>
+					{new Intl.NumberFormat().format(data.count)}
+				</motion.div>
+			</AnimatePresence>
 		);
 
 	return (
