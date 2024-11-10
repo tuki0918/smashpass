@@ -73,7 +73,7 @@ const SmashCard: FC<{
 
 	return (
 		<Card className="group overflow-hidden hover:shadow-xl transition-all duration-300">
-			<div className="aspect-video relative overflow-hidden bg-slate-200">
+			<div className={"aspect-square relative overflow-hidden bg-slate-200"}>
 				<div className="h-full flex items-center justify-center">
 					{data.type === "graph" ? (
 						<RealTimeSmashGraphChart docId={data.id} />
@@ -90,17 +90,10 @@ const SmashCard: FC<{
 					</div>
 				)}
 
-				{/* smash type */}
-				<div className="absolute bottom-4 left-4">
-					<Badge variant="outline" className="bg-white">
-						{data.type === "graph" ? "votes" : "views"}
-					</Badge>
-				</div>
-
 				{/* Status badge */}
 				<div className="absolute bottom-4 right-4">
 					<Badge variant="outline" className="bg-white">
-						{data.status}
+						{data.type === "graph" ? "votes" : "views"}
 					</Badge>
 				</div>
 
