@@ -101,7 +101,7 @@ const SmashCard: FC<{
 				<div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-8 backdrop-blur-sm">
 					<Link
 						href={
-							data.type === "graph" ? `/graph/${data.id}` : `/views/${data.id}`
+							data.type === "graph" ? `/graphs/${data.id}` : `/views/${data.id}`
 						}
 						className="p-2 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 					>
