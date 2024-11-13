@@ -26,15 +26,17 @@ import type {
 	SmashGraphItemDocumentData,
 } from "@/types/firebase/firestore/models";
 import { db } from "@/utils/firebase";
-import { docRef } from "@/utils/firestore";
+import { docRef, docsQuery, getDocsByQuery } from "@/utils/firestore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	addDoc,
 	collection,
+	deleteDoc,
 	serverTimestamp,
 	updateDoc,
 } from "firebase/firestore";
 import type { Timestamp } from "firebase/firestore";
+import { where } from "firebase/firestore";
 import { LoaderCircle, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
@@ -145,6 +147,24 @@ const saveItem = async (id: string | null, v: z.infer<typeof formSchema>) => {
 	}
 };
 
+// TODO: server-side logic
+const deleteItem = async (id: string) => {
+	try {
+		const items = await getDocsByQuery(
+			docsQuery("graph_item", [where("graph_id", "==", id)]),
+		);
+		// TODO: transaction
+		await deleteDoc(docRef("graph", id));
+		await Promise.all(
+			items.map((item) => {
+				return deleteDoc(docRef("graph_item", item.id));
+			}),
+		);
+	} catch (err) {
+		console.error(err);
+	}
+};
+
 const SmashGraphChartForm: FC<{
 	itemId?: string;
 	defaultValues?: Partial<z.infer<typeof formSchema>>;
@@ -194,6 +214,20 @@ const SmashGraphChartForm: FC<{
 		},
 		[itemId, router],
 	);
+
+	const handleDelete = useCallback(async () => {
+		if (!itemId) {
+			return;
+		}
+
+		// TODO: dialog
+		if (confirm("Are you sure you want to delete this item?")) {
+			setIsLoading(true);
+			await deleteItem(itemId);
+			setIsLoading(false);
+			router.push("/dashboard");
+		}
+	}, [itemId, router]);
 
 	return (
 		<div className="w-4/5 md:w-3/5 lg:w-1/2">
@@ -341,10 +375,19 @@ const SmashGraphChartForm: FC<{
 						)}
 					/>
 
-					<Button type="submit" disabled={isLoading}>
-						{isLoading && <LoaderCircle className="animate-spin" />}
-						{isCreate ? "Create" : "Update"}
-					</Button>
+					<div className="flex items-center justify-between">
+						<Button type="submit" disabled={isLoading}>
+							{isLoading && <LoaderCircle className="animate-spin" />}
+							{isCreate ? "Create" : "Update"}
+						</Button>
+
+						{/* TODO: confirm */}
+						{!isCreate && (
+							<Button variant="destructive" onClick={handleDelete}>
+								Delete
+							</Button>
+						)}
+					</div>
 				</form>
 			</Form>
 		</div>
