@@ -109,7 +109,9 @@ const SmashCard: FC<{
 					</Link>
 					<Link
 						href={
-							data.type === "graph" ? "/" : `/dashboard/views/${data.id}/edit`
+							data.type === "graph"
+								? `/dashboard/graphs/${data.id}/edit`
+								: `/dashboard/views/${data.id}/edit`
 						}
 						type="button"
 						className="p-2 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"

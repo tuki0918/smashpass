@@ -21,7 +21,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
 import { useAuth } from "@/hooks/useAuth";
 import type { DBDocument } from "@/types/firebase/firestore";
-import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore/models";
+import type {
+	SmashGraphDocumentData,
+	SmashGraphItemDocumentData,
+} from "@/types/firebase/firestore/models";
 import { db } from "@/utils/firebase";
 import { docRef } from "@/utils/firestore";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,25 +35,22 @@ import {
 	updateDoc,
 } from "firebase/firestore";
 import type { Timestamp } from "firebase/firestore";
-import { LoaderCircle } from "lucide-react";
+import { LoaderCircle, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
+
+const MIN_ITEMS_LENGTH = 2;
 
 const formSchema = z.object({
 	title: z.string().min(2, {
 		message: "Title must be at least 2 characters.",
 	}),
 	description: z.string(),
-	count: z.preprocess(
-		(v) => Number(v) || 0,
-		z.number().int().nonnegative({
-			message: "Count must be a nonnegative (>= 0) integer.",
-		}),
-	),
 	status: z.enum(["published", "draft"]),
+	style: z.enum(["pie-chart", "bar-chart"]),
 	user_id: z
 		.string({
 			message: "You must be logged in.",
@@ -58,49 +58,94 @@ const formSchema = z.object({
 		.min(1, {
 			message: "You must be logged in.",
 		}),
+	items: z
+		.array(
+			z.object({
+				title: z.string().min(1, {
+					message: "Title must be at least 1 characters.",
+				}),
+			}),
+		)
+		.min(MIN_ITEMS_LENGTH, {
+			message: `At least ${MIN_ITEMS_LENGTH} items are required.`,
+		}),
 });
 
 const saveItem = async (id: string | null, v: z.infer<typeof formSchema>) => {
 	try {
-		const collectionId = DB_FIRESTORE_COLLECTION_NAMES.view;
+		const collectionId = DB_FIRESTORE_COLLECTION_NAMES.graph;
 		const collectionRef = collection(db, collectionId);
 
 		const values: Omit<
-			SmashViewCounterDocumentData,
+			SmashGraphDocumentData,
 			"created_by_id" | "updated_by_id"
 		> = {
 			title: v.title,
 			description: v.description,
-			type: "view",
-			count: v.count,
+			type: "graph",
+			style: v.style,
 			status: v.status,
 		};
 
 		if (id) {
 			// update
-			const data: Partial<DBDocument<SmashViewCounterDocumentData>> = {
+			const data: Partial<DBDocument<SmashGraphDocumentData>> = {
 				...values,
 				updated_by_id: v.user_id,
 				updated_at: serverTimestamp() as Timestamp,
 			};
-			await updateDoc(docRef("view", id), data);
+			await updateDoc(docRef("graph", id), data);
 		} else {
+			// TODO: transaction
+			const collectionItemId = DB_FIRESTORE_COLLECTION_NAMES.graph_item;
+			const collectionItemRef = collection(db, collectionItemId);
+
 			// create
-			const data: DBDocument<SmashViewCounterDocumentData> = {
+			const data: DBDocument<SmashGraphDocumentData> = {
 				...values,
 				created_by_id: v.user_id,
 				updated_by_id: v.user_id,
 				created_at: serverTimestamp() as Timestamp,
 				updated_at: serverTimestamp() as Timestamp,
 			};
-			await addDoc(collectionRef, data);
+
+			const doc = await addDoc(collectionRef, data);
+
+			const item_values: Omit<
+				SmashGraphItemDocumentData,
+				"created_by_id" | "updated_by_id"
+			>[] = v.items
+				// remove empty items
+				.filter((item) => item.title.length > 0)
+				// map to item values
+				.map((item, i) => ({
+					title: item.title,
+					// TODO: default count for graph
+					count: 1,
+					sort_order: i + 1,
+					graph_id: doc.id,
+				}));
+
+			// create graph and items
+			await Promise.all(
+				item_values.map((item) => {
+					const itemData: DBDocument<SmashGraphItemDocumentData> = {
+						...item,
+						created_by_id: v.user_id,
+						updated_by_id: v.user_id,
+						created_at: serverTimestamp() as Timestamp,
+						updated_at: serverTimestamp() as Timestamp,
+					};
+					return addDoc(collectionItemRef, itemData);
+				}),
+			);
 		}
 	} catch (err) {
 		console.error(err);
 	}
 };
 
-const SmashViewCounterForm: FC<{
+const SmashGraphChartForm: FC<{
 	itemId?: string;
 	defaultValues?: Partial<z.infer<typeof formSchema>>;
 }> = ({ itemId = null, defaultValues }) => {
@@ -114,10 +159,23 @@ const SmashViewCounterForm: FC<{
 		defaultValues: {
 			title: defaultValues?.title || "No title",
 			description: defaultValues?.description || "",
-			count: defaultValues?.count || 0,
 			status: defaultValues?.status || "draft",
+			style: defaultValues?.style || "pie-chart",
 			user_id: defaultValues?.user_id || "",
+			items: defaultValues?.items || [
+				{
+					title: "",
+				},
+				{
+					title: "",
+				},
+			],
 		},
+	});
+
+	const { fields, append, remove } = useFieldArray({
+		name: "items",
+		control: form.control,
 	});
 
 	useEffect(() => {
@@ -171,13 +229,24 @@ const SmashViewCounterForm: FC<{
 
 					<FormField
 						control={form.control}
-						name="count"
+						name="style"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Count</FormLabel>
-								<FormControl>
-									<Input type="number" placeholder="0" {...field} />
-								</FormControl>
+								<FormLabel>Style</FormLabel>
+								<Select
+									onValueChange={field.onChange}
+									defaultValue={field.value}
+								>
+									<FormControl>
+										<SelectTrigger>
+											<SelectValue placeholder="Select a style" />
+										</SelectTrigger>
+									</FormControl>
+									<SelectContent>
+										<SelectItem value="pie-chart">Pie Chart</SelectItem>
+										<SelectItem value="bar-chart">Bar Chart</SelectItem>
+									</SelectContent>
+								</Select>
 								<FormMessage />
 							</FormItem>
 						)}
@@ -208,6 +277,57 @@ const SmashViewCounterForm: FC<{
 						)}
 					/>
 
+					<div>
+						Items
+						<div className="flex items-center justify-between rounded-lg border px-4 my-2">
+							<div className="my-4">
+								{fields.map((field, index) => (
+									<div className="flex my-4 space-x-2" key={field.id}>
+										<FormField
+											control={form.control}
+											name={`items.${index}.title`}
+											render={({ field }) => (
+												<FormItem>
+													<FormControl>
+														<Input
+															{...field}
+															className="min-w-[320px]"
+															placeholder="name"
+															disabled={!isCreate}
+														/>
+													</FormControl>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
+										{isCreate && fields.length > MIN_ITEMS_LENGTH && (
+											<Button
+												type="button"
+												variant="outline"
+												onClick={() => remove(index)}
+											>
+												<Trash2 />
+											</Button>
+										)}
+									</div>
+								))}
+							</div>
+
+							{isCreate && (
+								<div className="mx-auto">
+									<Button
+										type="button"
+										variant="outline"
+										size="sm"
+										onClick={() => append({ title: "" })}
+									>
+										Add Item
+									</Button>
+								</div>
+							)}
+						</div>
+					</div>
+
 					<FormField
 						control={form.control}
 						name="user_id"
@@ -231,4 +351,4 @@ const SmashViewCounterForm: FC<{
 	);
 };
 
-export default SmashViewCounterForm;
+export default SmashGraphChartForm;
