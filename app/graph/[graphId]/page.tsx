@@ -10,7 +10,9 @@ export default async function Page({ params }: Props) {
 	const { graphId } = params;
 	return (
 		<div className="min-h-screen flex items-center justify-center">
-			<RealTimeSmashGraphChart docId={graphId} />
+			<div>
+				<RealTimeSmashGraphChart docId={graphId} />
+			</div>
 		</div>
 	);
 }
