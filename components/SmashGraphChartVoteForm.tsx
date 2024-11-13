@@ -10,6 +10,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useToast } from "@/hooks/use-toast";
 import {
 	useFirestoreDocumentSync,
 	useFirestoreDocumentsSync,
@@ -61,6 +62,7 @@ const SmashGraphChartVoteForm: FC<{
 }> = ({ data }) => {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
+	const { toast } = useToast();
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -72,9 +74,15 @@ const SmashGraphChartVoteForm: FC<{
 			setIsLoading(true);
 			await voteItem(values);
 			setIsLoading(false);
+
+			toast({
+				title: "Voted",
+				description: "Your vote has been counted.",
+			});
+
 			router.push(`/graphs/${data?.graph.id}`);
 		},
-		[data, router],
+		[data, toast, router],
 	);
 
 	if (!data || data.graph_items.length === 0) {
