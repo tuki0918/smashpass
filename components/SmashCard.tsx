@@ -14,7 +14,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashOriginDocumentData } from "@/types/firebase/firestore/models";
-import { Eye, Pencil } from "lucide-react";
+import { ExternalLink, Eye, Pencil } from "lucide-react";
 import Link from "next/link";
 import type { FC } from "react";
 
@@ -118,6 +118,17 @@ const SmashCard: FC<{
 					>
 						<Pencil className="h-10 w-10 md:h-6 md:w-6 text-gray-800" />
 					</Link>
+
+					{data.type === "graph" && (
+						<div className="absolute bottom-12">
+							<Link
+								href={`/graphs/${data.id}/vote`}
+								className="flex py-2 px-8 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
+							>
+								Vote Page <ExternalLink className="ml-2" />
+							</Link>
+						</div>
+					)}
 				</div>
 			</div>
 
