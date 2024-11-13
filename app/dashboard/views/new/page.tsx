@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import SmashViewCounterForm from "@/components/SmashViewCounterForm";
-import { Activity } from "lucide-react";
+import { Eye } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -20,7 +20,7 @@ export default async function Page() {
 					<div className="text-center mb-12">
 						<h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 flex justify-center">
 							<Link href={"/dashboard"}>
-								<Activity color="#333333" size={48} />
+								<Eye color="#333333" size={48} />
 							</Link>
 						</h1>
 						<p className="text-lg text-gray-600 dark:text-gray-300">

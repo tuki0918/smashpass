@@ -2,25 +2,26 @@
 
 import SmashCard from "@/components/SmashCard";
 import { Button } from "@/components/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashOriginDocumentData } from "@/types/firebase/firestore/models";
 import { docsQuery, getDocsByQuery } from "@/utils/firestore";
 import { where } from "firebase/firestore";
-import { PlusCircleIcon, SearchX } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { ChartBarDecreasing, Eye, PlusCircleIcon, SearchX } from "lucide-react";
+import Link from "next/link";
 import type { FC } from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const SmashCardTabs: FC<{
 	data: CSDocumentWithId<SmashOriginDocumentData>[];
 }> = ({ data }) => {
-	const router = useRouter();
-	const handleCreateItem = useCallback(() => {
-		router.push("/dashboard/views/new");
-	}, [router]);
-
 	return (
 		<Tabs defaultValue="all">
 			<div className="space-between flex items-center">
@@ -30,10 +31,28 @@ const SmashCardTabs: FC<{
 					<TabsTrigger value="draft">Draft</TabsTrigger>
 				</TabsList>
 				<div className="ml-auto">
-					<Button onClick={handleCreateItem}>
-						<PlusCircleIcon className="mr-2 h-4 w-4" />
-						Create item
-					</Button>
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button>
+								<PlusCircleIcon className="h-4 w-4" />
+								Create item
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent>
+							<Link href="/dashboard/views/new">
+								<DropdownMenuItem className="hover:cursor-pointer">
+									<Eye className="h-4 w-4" />
+									Views
+								</DropdownMenuItem>
+							</Link>
+							<Link href="/dashboard/graphs/new">
+								<DropdownMenuItem className="hover:cursor-pointer">
+									<ChartBarDecreasing className="h-4 w-4" />
+									Votes
+								</DropdownMenuItem>
+							</Link>
+						</DropdownMenuContent>
+					</DropdownMenu>
 				</div>
 			</div>
 			<TabsContent value="all">
