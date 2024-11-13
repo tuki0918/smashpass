@@ -28,6 +28,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	addDoc,
 	collection,
+	deleteDoc,
 	serverTimestamp,
 	updateDoc,
 } from "firebase/firestore";
@@ -100,6 +101,15 @@ const saveItem = async (id: string | null, v: z.infer<typeof formSchema>) => {
 	}
 };
 
+// TODO: server-side logic
+const deleteItem = async (id: string) => {
+	try {
+		await deleteDoc(docRef("view", id));
+	} catch (err) {
+		console.error(err);
+	}
+};
+
 const SmashViewCounterForm: FC<{
 	itemId?: string;
 	defaultValues?: Partial<z.infer<typeof formSchema>>;
@@ -136,6 +146,20 @@ const SmashViewCounterForm: FC<{
 		},
 		[itemId, router],
 	);
+
+	const handleDelete = useCallback(async () => {
+		if (!itemId) {
+			return;
+		}
+
+		// TODO: dialog
+		if (confirm("Are you sure you want to delete this item?")) {
+			setIsLoading(true);
+			await deleteItem(itemId);
+			setIsLoading(false);
+			router.push("/dashboard");
+		}
+	}, [itemId, router]);
 
 	return (
 		<div className="w-4/5 md:w-3/5 lg:w-1/2">
@@ -221,10 +245,19 @@ const SmashViewCounterForm: FC<{
 						)}
 					/>
 
-					<Button type="submit" disabled={isLoading}>
-						{isLoading && <LoaderCircle className="animate-spin" />}
-						{isCreate ? "Create" : "Update"}
-					</Button>
+					<div className="flex items-center justify-between">
+						<Button type="submit" disabled={isLoading}>
+							{isLoading && <LoaderCircle className="animate-spin" />}
+							{isCreate ? "Create" : "Update"}
+						</Button>
+
+						{/* TODO: confirm */}
+						{!isCreate && (
+							<Button variant="destructive" onClick={handleDelete}>
+								Delete
+							</Button>
+						)}
+					</div>
 				</form>
 			</Form>
 		</div>
