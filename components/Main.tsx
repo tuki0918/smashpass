@@ -37,7 +37,7 @@ const LoginForm: FC = () => {
 						<SiteTextLogo />
 					</div>
 
-					<p className="mb-8 text-gray-500">{t("description")}</p>
+					<p className="mb-8 text-gray-500 text-center">{t("description")}</p>
 
 					<div className="flex items-center justify-center mb-8">
 						<LoginButton />
@@ -47,17 +47,11 @@ const LoginForm: FC = () => {
 
 					<div className="my-4">
 						<p className="px-8 text-center text-sm text-muted-foreground">
-							<Link
-								href="/"
-								className="underline underline-offset-4 hover:text-primary"
-							>
+							<Link href="/" className="hover:text-primary">
 								{t("terms_of_service")}
 							</Link>{" "}
 							<span className="mx-2">|</span>{" "}
-							<Link
-								href="/"
-								className="underline underline-offset-4 hover:text-primary"
-							>
+							<Link href="/" className="hover:text-primary">
 								{t("privacy_policy")}
 							</Link>
 						</p>
