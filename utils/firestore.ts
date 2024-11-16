@@ -12,7 +12,40 @@ import type {
 	Query,
 	QueryConstraint,
 	QueryDocumentSnapshot,
+	SnapshotOptions,
 } from "firebase/firestore";
+
+const toFirestoreConverter = <T extends DocumentData>(
+	data: CSDocumentWithId<T>,
+): DBDocument<T> => {
+	const {
+		id,
+		created_at_ms,
+		updated_at_ms,
+		published_at_ms,
+		revised_at_ms,
+		...rest
+	} = data;
+	return {
+		...(rest as unknown as DBDocument<T>),
+	};
+};
+
+const fromFirestoreConverter = <T extends DocumentData>(
+	snapshot: QueryDocumentSnapshot<DBDocument<T>>,
+	options?: SnapshotOptions,
+): CSDocumentWithId<T> => {
+	const { created_at, updated_at, published_at, revised_at, ...rest } =
+		snapshot.data(options);
+	return {
+		...(rest as unknown as T),
+		created_at_ms: created_at.toMillis(),
+		updated_at_ms: updated_at.toMillis(),
+		published_at_ms: published_at?.toMillis(),
+		revised_at_ms: revised_at?.toMillis(),
+		id: snapshot.id,
+	};
+};
 
 export const docRef = <
 	K extends CollectionName,
@@ -34,42 +67,10 @@ const _docRef = <T extends DocumentData>(
 	collectionId: string,
 	docId: string,
 ): DocumentReference<CSDocumentWithId<T>, DBDocument<T>> => {
-	return doc(db, collectionId, docId).withConverter<
-		CSDocumentWithId<T>,
-		DBDocument<T>
-	>({
-		toFirestore: (data) => {
-			// exclude client fields from the document
-			const {
-				id,
-				created_at_ms,
-				updated_at_ms,
-				published_at_ms,
-				revised_at_ms,
-				...rest
-			} = data;
-			return {
-				// contains server fields, but is not type-safe
-				...(rest as unknown as DBDocument<T>),
-			};
-		},
-		fromFirestore: (
-			snapshot: QueryDocumentSnapshot<DBDocument<T>>,
-			options,
-		): CSDocumentWithId<T> => {
-			// convert the document to a client side document
-			const { created_at, updated_at, published_at, revised_at, ...rest } =
-				snapshot.data(options);
-			return {
-				...(rest as unknown as T),
-				created_at_ms: created_at.toMillis(),
-				updated_at_ms: updated_at.toMillis(),
-				published_at_ms: published_at?.toMillis(),
-				revised_at_ms: revised_at?.toMillis(),
-				id: snapshot.id,
-			};
-		},
-	});
+	return doc(db, collectionId, docId).withConverter({
+		toFirestore: toFirestoreConverter,
+		fromFirestore: fromFirestoreConverter,
+	}) as DocumentReference<CSDocumentWithId<T>, DBDocument<T>>;
 };
 
 export const getDocByRef = async <T extends DocumentData>(
@@ -101,43 +102,13 @@ export const docsQuery = <
 export const _docsQuery = <T extends DocumentData>(
 	collectionId: string,
 	queryConstraints: QueryConstraint[] = [],
-) => {
-	return query(collection(db, collectionId), ...queryConstraints).withConverter<
-		CSDocumentWithId<T>,
-		DBDocument<T>
-	>({
-		toFirestore: (data) => {
-			// exclude client fields from the document
-			const {
-				id,
-				created_at_ms,
-				updated_at_ms,
-				published_at_ms,
-				revised_at_ms,
-				...rest
-			} = data;
-			return {
-				// contains server fields, but is not type-safe
-				...(rest as unknown as DBDocument<T>),
-			};
+): Query<CSDocumentWithId<T>, DBDocument<T>> => {
+	return query(collection(db, collectionId), ...queryConstraints).withConverter(
+		{
+			toFirestore: toFirestoreConverter,
+			fromFirestore: fromFirestoreConverter,
 		},
-		fromFirestore: (
-			snapshot: QueryDocumentSnapshot<DBDocument<T>>,
-			options,
-		): CSDocumentWithId<T> => {
-			// convert the document to a client side document
-			const { created_at, updated_at, published_at, revised_at, ...rest } =
-				snapshot.data(options);
-			return {
-				...(rest as unknown as T),
-				created_at_ms: created_at.toMillis(),
-				updated_at_ms: updated_at.toMillis(),
-				published_at_ms: published_at?.toMillis(),
-				revised_at_ms: revised_at?.toMillis(),
-				id: snapshot.id,
-			};
-		},
-	});
+	) as Query<CSDocumentWithId<T>, DBDocument<T>>;
 };
 
 export const getDocsByQuery = async <T extends DocumentData>(
