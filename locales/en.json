@@ -4,6 +4,9 @@
 		"terms_of_service": "Terms of Service",
 		"privacy_policy": "Privacy Policy"
 	},
+	"Components/Header": {
+		"menu/logout": "Sign out"
+	},
 	"Components/Footer": {
 		"terms_of_service": "Terms of Service",
 		"privacy_policy": "Privacy Policy",

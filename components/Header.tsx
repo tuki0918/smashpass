@@ -13,11 +13,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link } from "@/utils/i18n/routing";
 import { LogOut } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { FC } from "react";
 import { useAuthSession } from "./AuthSessionProvider";
 
 const Header: FC = () => {
 	const { user, logout } = useAuthSession();
+	const t = useTranslations("Components/Header");
 
 	return (
 		<header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex justify-center items-center px-4 sm:px-6 lg:px-8">
@@ -60,7 +62,7 @@ const Header: FC = () => {
 								<DropdownMenuSeparator />
 								<DropdownMenuItem onClick={logout}>
 									<LogOut />
-									Sign out
+									{t("menu/logout")}
 								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</DropdownMenu>
