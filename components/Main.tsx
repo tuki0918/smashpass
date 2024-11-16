@@ -1,5 +1,6 @@
 "use client";
 
+import LanguageSelectMenu from "@/components/LanguageSelectMenu";
 import LoginButton from "@/components/LoginButton";
 import SiteTextLogo from "@/components/SiteTextLogo";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -21,7 +22,21 @@ const Main: FC = () => {
 	}, [router, user]);
 
 	if (user) return null;
-	return <>{isLoading ? <AuthWaitCompleted /> : <LoginForm />}</>;
+	return (
+		<>
+			{isLoading ? (
+				<AuthWaitCompleted />
+			) : (
+				<>
+					<LoginForm />
+
+					<div className="mt-12">
+						<LanguageSelectMenu />
+					</div>
+				</>
+			)}
+		</>
+	);
 };
 
 export default Main;
