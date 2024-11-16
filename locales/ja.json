@@ -13,6 +13,12 @@
 		"tokushoho": "特定商取引法に基づく表示",
 		"contact": "お問い合わせ"
 	},
+	"Components/SmashCard": {
+		"result/empty": "見つかりません。",
+		"type/votes": "投票",
+		"type/views": "観覧数",
+		"link/vote": "投票ページ"
+	},
 	"Components/SmashCardTabs": {
 		"tab/all": "すべて",
 		"tab/published": "公開",

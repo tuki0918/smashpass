@@ -16,12 +16,14 @@ import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashOriginDocumentData } from "@/types/firebase/firestore/models";
 import { Link } from "@/utils/i18n/routing";
 import { ExternalLink, Eye, Pencil } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { FC } from "react";
 
 const SmashCard: FC<{
 	/** undefined: loading, null: not found */
 	data: CSDocumentWithId<SmashOriginDocumentData> | undefined | null;
 }> = ({ data }) => {
+	const t = useTranslations("Components/SmashCard");
 	if (data === undefined) {
 		return (
 			<Card className="group overflow-hidden hover:shadow-xl transition-all duration-300">
@@ -64,7 +66,7 @@ const SmashCard: FC<{
 				<CardHeader>
 					<CardTitle className="text-2xl">Error</CardTitle>
 					<CardDescription className="text-sm text-gray-500 dark:text-gray-400">
-						Not found.
+						{t("result/empty")}
 					</CardDescription>
 				</CardHeader>
 			</Card>
@@ -93,7 +95,7 @@ const SmashCard: FC<{
 				{/* Status badge */}
 				<div className="absolute bottom-4 right-4">
 					<Badge variant="outline" className="bg-white">
-						{data.type === "graph" ? "votes" : "views"}
+						{data.type === "graph" ? t("type/votes") : t("type/views")}
 					</Badge>
 				</div>
 
@@ -125,7 +127,7 @@ const SmashCard: FC<{
 								href={`/graphs/${data.id}/vote`}
 								className="flex py-2 px-8 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 							>
-								Vote Page <ExternalLink className="ml-2" />
+								{t("link/vote")} <ExternalLink className="ml-2" />
 							</Link>
 						</div>
 					)}
