@@ -1,14 +1,11 @@
 "use server";
 
+import type { formSchema } from "@/components/SmashGraphChartVoteForm";
 import type { DBDocument } from "@/types/firebase/firestore";
 import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore/models";
 import { docRef } from "@/utils/firestore";
 import { increment, setDoc } from "firebase/firestore";
-import { z } from "zod";
-
-const formSchema = z.object({
-	id: z.string().min(1),
-});
+import type { z } from "zod";
 
 export const voteItem = async (v: z.infer<typeof formSchema>) => {
 	try {

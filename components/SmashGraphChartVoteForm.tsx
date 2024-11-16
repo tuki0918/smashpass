@@ -36,7 +36,7 @@ type SmashGraphChartData = {
 	graph_items: CSDocumentWithId<SmashGraphItemDocumentData>[];
 };
 
-const formSchema = z.object({
+export const formSchema = z.object({
 	id: z.string().min(1),
 });
 
