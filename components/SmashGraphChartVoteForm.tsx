@@ -1,5 +1,6 @@
 "use client";
 
+import { voteItem } from "@/actions/SmashGraphChartVoteActions";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -15,16 +16,15 @@ import {
 	useFirestoreDocumentSync,
 	useFirestoreDocumentsSync,
 } from "@/hooks/useFirestore";
-import type { CSDocumentWithId, DBDocument } from "@/types/firebase/firestore";
+import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type {
 	SmashGraphDocumentData,
 	SmashGraphItemDocumentData,
-	SmashViewCounterDocumentData,
 } from "@/types/firebase/firestore/models";
 import { docRef, docsQuery, getDocsByQuery } from "@/utils/firestore";
 import { useRouter } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { increment, setDoc, where } from "firebase/firestore";
+import { where } from "firebase/firestore";
 import { LoaderCircle } from "lucide-react";
 import type { FC } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -39,22 +39,6 @@ type SmashGraphChartData = {
 const formSchema = z.object({
 	id: z.string().min(1),
 });
-
-// TODO: server-side logic
-const voteItem = async (v: z.infer<typeof formSchema>) => {
-	try {
-		const ref = docRef("graph_item", v.id);
-		await setDoc(
-			ref,
-			{
-				count: increment(1) as unknown as number,
-			} as Partial<DBDocument<SmashViewCounterDocumentData>>,
-			{ merge: true },
-		);
-	} catch (err) {
-		console.error(err);
-	}
-};
 
 const SmashGraphChartVoteForm: FC<{
 	/** undefined: loading, null: not found */
