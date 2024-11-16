@@ -4,6 +4,12 @@
 		"terms_of_service": "利用規約",
 		"privacy_policy": "プライバシーポリシー"
 	},
+	"Components/Footer": {
+		"terms_of_service": "利用規約",
+		"privacy_policy": "プライバシーポリシー",
+		"tokushoho": "特定商取引法に基づく表示",
+		"contact": "お問い合わせ"
+	},
 	"Components/SmashCardTabs": {
 		"tab/all": "すべて",
 		"tab/published": "公開",

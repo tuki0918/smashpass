@@ -4,6 +4,12 @@
 		"terms_of_service": "Terms of Service",
 		"privacy_policy": "Privacy Policy"
 	},
+	"Components/Footer": {
+		"terms_of_service": "Terms of Service",
+		"privacy_policy": "Privacy Policy",
+		"tokushoho": "特定商取引法に基づく表示",
+		"contact": "Contact"
+	},
 	"Components/SmashCardTabs": {
 		"tab/all": "All",
 		"tab/published": "Published",

@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SmashCardTabsForLoggedInUser } from "@/components/SmashCardTabs";
 import { Activity } from "lucide-react";
@@ -21,6 +22,8 @@ export default async function Page() {
 					<SmashCardTabsForLoggedInUser />
 				</div>
 			</div>
+
+			<Footer />
 		</div>
 	);
 }
