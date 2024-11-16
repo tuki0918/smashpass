@@ -5,9 +5,9 @@ import SiteTextLogo from "@/components/SiteTextLogo";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/hooks/useAuth";
+import { Link } from "@/utils/i18n/routing";
+import { useRouter } from "@/utils/i18n/routing";
 import { LoaderCircle } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { type FC, useEffect } from "react";
 
 const Main: FC = () => {

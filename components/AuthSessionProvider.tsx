@@ -1,9 +1,9 @@
 "use client";
 
 import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "@/utils/i18n/routing";
 import type { UserInfo } from "firebase/auth";
 import { LoaderCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect } from "react";
 import type { FC, PropsWithChildren } from "react";
 

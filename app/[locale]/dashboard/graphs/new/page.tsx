@@ -1,44 +1,16 @@
 import Header from "@/components/Header";
 import SmashGraphChartForm from "@/components/SmashGraphChartForm";
-import {
-	docRef,
-	docsQuery,
-	getDocByRef,
-	getDocsByQuery,
-} from "@/utils/firestore";
-import { where } from "firebase/firestore";
+import { Link } from "@/utils/i18n/routing";
 import { ChartBarDecreasing } from "lucide-react";
 import type { Metadata } from "next";
-import Link from "next/link";
-import { notFound } from "next/navigation";
 
 export async function generateMetadata(): Promise<Metadata> {
 	return {
-		title: "Edit activity",
+		title: "Create activity",
 	};
 }
 
-type Props = {
-	params: { graphId: string };
-};
-
-export default async function Page({ params }: Props) {
-	const { graphId } = params;
-	const [data, items] = await Promise.all([
-		getDocByRef(docRef("graph", graphId)),
-		getDocsByQuery(docsQuery("graph_item", [where("graph_id", "==", graphId)])),
-	]);
-
-	if (!data) {
-		notFound();
-	}
-
-	const dataWithItems = {
-		...data,
-		// sort: asc
-		items: items.sort((a, b) => a.sort_order - b.sort_order),
-	};
-
+export default async function Page() {
 	return (
 		<div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
 			<Header />
@@ -52,15 +24,12 @@ export default async function Page({ params }: Props) {
 							</Link>
 						</h1>
 						<p className="text-lg text-gray-600 dark:text-gray-300">
-							Edit activity
+							New activity
 						</p>
 					</div>
 
 					<div className="flex items-center justify-center">
-						<SmashGraphChartForm
-							itemId={graphId}
-							defaultValues={dataWithItems}
-						/>
+						<SmashGraphChartForm />
 					</div>
 				</div>
 			</div>

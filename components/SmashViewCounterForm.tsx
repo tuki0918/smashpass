@@ -24,6 +24,7 @@ import type { DBDocument } from "@/types/firebase/firestore";
 import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore/models";
 import { db } from "@/utils/firebase";
 import { docRef } from "@/utils/firestore";
+import { useRouter } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	addDoc,
@@ -34,7 +35,6 @@ import {
 } from "firebase/firestore";
 import type { Timestamp } from "firebase/firestore";
 import { LoaderCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";

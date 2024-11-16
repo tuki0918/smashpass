@@ -13,9 +13,9 @@ import { useAuth } from "@/hooks/useAuth";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashOriginDocumentData } from "@/types/firebase/firestore/models";
 import { docsQuery, getDocsByQuery } from "@/utils/firestore";
+import { Link } from "@/utils/i18n/routing";
 import { where } from "firebase/firestore";
 import { ChartBarDecreasing, Eye, PlusCircleIcon, SearchX } from "lucide-react";
-import Link from "next/link";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
 

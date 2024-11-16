@@ -1,10 +1,24 @@
+import Providers from "@/components/Providers";
+import { Toaster } from "@/components/ui/toaster";
 import { routing } from "@/utils/i18n/routing";
 import type { Locale } from "@/utils/i18n/routing";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 
-export default async function LocaleLayout({
+const geistSans = localFont({
+	src: "./fonts/GeistVF.woff",
+	variable: "--font-geist-sans",
+	weight: "100 900",
+});
+const geistMono = localFont({
+	src: "./fonts/GeistMonoVF.woff",
+	variable: "--font-geist-mono",
+	weight: "100 900",
+});
+
+export default async function PageLayout({
 	children,
 	params: { locale },
 }: {
@@ -22,9 +36,12 @@ export default async function LocaleLayout({
 
 	return (
 		<html lang={locale}>
-			<body>
+			<body
+				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+			>
 				<NextIntlClientProvider messages={messages}>
-					{children}
+					<Providers>{children}</Providers>
+					<Toaster />
 				</NextIntlClientProvider>
 			</body>
 		</html>
