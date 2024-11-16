@@ -3,5 +3,14 @@
 		"description": "\"123++\" is a real-time online counter service that can be shared with the audience.",
 		"terms_of_service": "Terms of Service",
 		"privacy_policy": "Privacy Policy"
+	},
+	"Components/SmashCardTabs": {
+		"tab/all": "All",
+		"tab/published": "Published",
+		"tab/draft": "Draft",
+		"button/create": "Create New",
+		"button/menu/views": "Views Counter",
+		"button/menu/votes": "Votes Counter",
+		"results/empty": "No items found."
 	}
 }

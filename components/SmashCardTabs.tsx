@@ -16,39 +16,41 @@ import { docsQuery, getDocsByQuery } from "@/utils/firestore";
 import { Link } from "@/utils/i18n/routing";
 import { where } from "firebase/firestore";
 import { ChartBarDecreasing, Eye, PlusCircleIcon, SearchX } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
 
 const SmashCardTabs: FC<{
 	data: CSDocumentWithId<SmashOriginDocumentData>[];
 }> = ({ data }) => {
+	const t = useTranslations("Components/SmashCardTabs");
 	return (
 		<Tabs defaultValue="all">
 			<div className="space-between flex items-center">
 				<TabsList className="mb-2">
-					<TabsTrigger value="all">All</TabsTrigger>
-					<TabsTrigger value="published">Published</TabsTrigger>
-					<TabsTrigger value="draft">Draft</TabsTrigger>
+					<TabsTrigger value="all">{t("tab/all")}</TabsTrigger>
+					<TabsTrigger value="published">{t("tab/published")}</TabsTrigger>
+					<TabsTrigger value="draft">{t("tab/draft")}</TabsTrigger>
 				</TabsList>
 				<div className="ml-auto">
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button>
 								<PlusCircleIcon className="h-4 w-4" />
-								Create item
+								{t("button/create")}
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent>
 							<Link href="/dashboard/views/new">
 								<DropdownMenuItem className="hover:cursor-pointer">
 									<Eye className="h-4 w-4" />
-									Views
+									{t("button/menu/views")}
 								</DropdownMenuItem>
 							</Link>
 							<Link href="/dashboard/graphs/new">
 								<DropdownMenuItem className="hover:cursor-pointer">
 									<ChartBarDecreasing className="h-4 w-4" />
-									Votes
+									{t("button/menu/votes")}
 								</DropdownMenuItem>
 							</Link>
 						</DropdownMenuContent>
@@ -77,13 +79,14 @@ export default SmashCardTabs;
 export const RealTimeSmashCardList: FC<{
 	data: CSDocumentWithId<SmashOriginDocumentData>[];
 }> = ({ data }) => {
+	const t = useTranslations("Components/SmashCardTabs");
 	if (data.length === 0) {
 		return (
 			<div className="flex h-[450px] shrink-0 items-center justify-center rounded-md border border-dashed">
 				<div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
 					<SearchX color="#999999" size={64} />
 					<h3 className="mt-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-						No items found.
+						{t("results/empty")}
 					</h3>
 				</div>
 			</div>

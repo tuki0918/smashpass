@@ -3,5 +3,14 @@
 		"description": "\"123++\"は、みんなで共有できるリアルタイムのオンラインカウンターサービスです。",
 		"terms_of_service": "利用規約",
 		"privacy_policy": "プライバシーポリシー"
+	},
+	"Components/SmashCardTabs": {
+		"tab/all": "すべて",
+		"tab/published": "公開",
+		"tab/draft": "下書き",
+		"button/create": "新規作成",
+		"button/menu/views": "観覧数カウンター",
+		"button/menu/votes": "投票カウンター",
+		"results/empty": "アイテムが見つかりませんでした。"
 	}
 }
