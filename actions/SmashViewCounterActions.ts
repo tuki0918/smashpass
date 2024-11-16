@@ -5,12 +5,14 @@ import { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
 import type { DBDocument } from "@/types/firebase/firestore";
 import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore/models";
 import { db } from "@/utils/firebase";
-import { docRef } from "@/utils/firestore";
+import { docRef, getDocByRef } from "@/utils/firestore";
 import { deleteDoc } from "firebase/firestore";
 import {
 	addDoc,
 	collection,
+	increment,
 	serverTimestamp,
+	setDoc,
 	updateDoc,
 } from "firebase/firestore";
 import type { Timestamp } from "firebase/firestore";
@@ -61,6 +63,31 @@ export const saveItem = async (
 				updated_at: serverTimestamp() as Timestamp,
 			};
 			await addDoc(collectionRef, data);
+		}
+	} catch (err) {
+		console.error(err);
+	}
+};
+
+export const incrementCount = async (docId: string) => {
+	try {
+		const ref = docRef("view", docId);
+		const data = await getDocByRef(ref);
+
+		if (data) {
+			// Only increment if the document is published
+			if (data.status !== "published") {
+				return;
+			}
+
+			await setDoc(
+				ref,
+				{
+					count: increment(1) as unknown as number,
+					updated_at: serverTimestamp(),
+				} as Partial<DBDocument<SmashViewCounterDocumentData>>,
+				{ merge: true },
+			);
 		}
 	} catch (err) {
 		console.error(err);
