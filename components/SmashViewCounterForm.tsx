@@ -57,6 +57,7 @@ const SmashViewCounterForm: FC<{
 	const router = useRouter();
 	const { user } = useAuth();
 	const [isLoading, setIsLoading] = useState(false);
+	const [isLoadingDelete, setIsLoadingDelete] = useState(false);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -93,9 +94,9 @@ const SmashViewCounterForm: FC<{
 
 		// TODO: dialog
 		if (confirm("Are you sure you want to delete this item?")) {
-			setIsLoading(true);
+			setIsLoadingDelete(true);
 			await deleteItem(itemId);
-			setIsLoading(false);
+			setIsLoadingDelete(false);
 			router.push("/dashboard");
 		}
 	}, [itemId, router]);
@@ -192,7 +193,12 @@ const SmashViewCounterForm: FC<{
 
 						{/* TODO: confirm */}
 						{!isCreate && (
-							<Button variant="destructive" onClick={handleDelete}>
+							<Button
+								variant="destructive"
+								disabled={isLoadingDelete}
+								onClick={handleDelete}
+							>
+								{isLoadingDelete && <LoaderCircle className="animate-spin" />}
 								Delete
 							</Button>
 						)}
