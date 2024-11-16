@@ -27,6 +27,7 @@ import type {
 } from "@/types/firebase/firestore/models";
 import { db } from "@/utils/firebase";
 import { docRef, docsQuery, getDocsByQuery } from "@/utils/firestore";
+import { useRouter } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	addDoc,
@@ -38,7 +39,6 @@ import {
 import type { Timestamp } from "firebase/firestore";
 import { where } from "firebase/firestore";
 import { LoaderCircle, Trash2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";

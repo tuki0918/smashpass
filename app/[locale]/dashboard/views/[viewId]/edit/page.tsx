@@ -1,9 +1,9 @@
 import Header from "@/components/Header";
 import SmashViewCounterForm from "@/components/SmashViewCounterForm";
 import { docRef, getDocByRef } from "@/utils/firestore";
+import { Link } from "@/utils/i18n/routing";
 import { Eye } from "lucide-react";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata(): Promise<Metadata> {

@@ -6,10 +6,10 @@ import {
 	signInWithPopup,
 	signOut,
 } from "@/utils/firebase-auth";
+import { useRouter } from "@/utils/i18n/routing";
 import type { UserInfo } from "firebase/auth";
 import { useAtom } from "jotai";
 import { atom } from "jotai";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const userAtom = atom<AtomData<UserInfo>>(undefined);

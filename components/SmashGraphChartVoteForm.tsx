@@ -22,10 +22,10 @@ import type {
 	SmashViewCounterDocumentData,
 } from "@/types/firebase/firestore/models";
 import { docRef, docsQuery, getDocsByQuery } from "@/utils/firestore";
+import { useRouter } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { increment, setDoc, where } from "firebase/firestore";
 import { LoaderCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
 import type { FC } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";

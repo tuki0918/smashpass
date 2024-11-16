@@ -1,8 +1,8 @@
 import Header from "@/components/Header";
-import SmashGraphChartForm from "@/components/SmashGraphChartForm";
-import { ChartBarDecreasing } from "lucide-react";
+import SmashViewCounterForm from "@/components/SmashViewCounterForm";
+import { Link } from "@/utils/i18n/routing";
+import { Eye } from "lucide-react";
 import type { Metadata } from "next";
-import Link from "next/link";
 
 export async function generateMetadata(): Promise<Metadata> {
 	return {
@@ -20,7 +20,7 @@ export default async function Page() {
 					<div className="text-center mb-12">
 						<h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 flex justify-center">
 							<Link href={"/dashboard"}>
-								<ChartBarDecreasing color="#333333" size={48} />
+								<Eye color="#333333" size={48} />
 							</Link>
 						</h1>
 						<p className="text-lg text-gray-600 dark:text-gray-300">
@@ -29,7 +29,7 @@ export default async function Page() {
 					</div>
 
 					<div className="flex items-center justify-center">
-						<SmashGraphChartForm />
+						<SmashViewCounterForm />
 					</div>
 				</div>
 			</div>
