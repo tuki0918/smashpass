@@ -8,12 +8,12 @@ import { useAuth } from "@/hooks/useAuth";
 import { Link } from "@/utils/i18n/routing";
 import { useRouter } from "@/utils/i18n/routing";
 import { LoaderCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { type FC, useEffect } from "react";
 
 const Main: FC = () => {
 	const router = useRouter();
 	const { user, isLoading } = useAuth();
-
 	useEffect(() => {
 		if (user) {
 			router.replace("/dashboard");
@@ -27,6 +27,7 @@ const Main: FC = () => {
 export default Main;
 
 const LoginForm: FC = () => {
+	const t = useTranslations("Components/Main");
 	return (
 		<Card>
 			<CardHeader>{/* ... */}</CardHeader>
@@ -36,10 +37,7 @@ const LoginForm: FC = () => {
 						<SiteTextLogo />
 					</div>
 
-					<p className="mb-8 text-gray-500">
-						"123++" is a real-time online counter service that can be shared
-						with the audience.
-					</p>
+					<p className="mb-8 text-gray-500">{t("description")}</p>
 
 					<div className="flex items-center justify-center mb-8">
 						<LoginButton />
@@ -53,14 +51,14 @@ const LoginForm: FC = () => {
 								href="/"
 								className="underline underline-offset-4 hover:text-primary"
 							>
-								Terms of Service
+								{t("terms_of_service")}
 							</Link>{" "}
 							<span className="mx-2">|</span>{" "}
 							<Link
 								href="/"
 								className="underline underline-offset-4 hover:text-primary"
 							>
-								Privacy Policy
+								{t("privacy_policy")}
 							</Link>
 						</p>
 					</div>

@@ -1,6 +1,7 @@
 {
-	"HomePage": {
-		"title": "こんにちは",
-		"about": "アバウトページへ"
+	"Components/Main": {
+		"description": "\"123++\"は、みんなで共有できるリアルタイムのオンラインカウンターサービスです。",
+		"terms_of_service": "利用規約",
+		"privacy_policy": "プライバシーポリシー"
 	}
 }
