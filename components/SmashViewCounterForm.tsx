@@ -1,5 +1,6 @@
 "use client";
 
+import { deleteItem, saveItem } from "@/actions/SmashViewCounterActions";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -18,29 +19,16 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
 import { useAuth } from "@/hooks/useAuth";
-import type { DBDocument } from "@/types/firebase/firestore";
-import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore/models";
-import { db } from "@/utils/firebase";
-import { docRef } from "@/utils/firestore";
 import { useRouter } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-	addDoc,
-	collection,
-	deleteDoc,
-	serverTimestamp,
-	updateDoc,
-} from "firebase/firestore";
-import type { Timestamp } from "firebase/firestore";
 import { LoaderCircle } from "lucide-react";
 import type { FC } from "react";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const formSchema = z.object({
+export const formSchema = z.object({
 	title: z.string().min(2, {
 		message: "Title must be at least 2 characters.",
 	}),
@@ -60,55 +48,6 @@ const formSchema = z.object({
 			message: "You must be logged in.",
 		}),
 });
-
-const saveItem = async (id: string | null, v: z.infer<typeof formSchema>) => {
-	try {
-		const collectionId = DB_FIRESTORE_COLLECTION_NAMES.view;
-		const collectionRef = collection(db, collectionId);
-
-		const values: Omit<
-			SmashViewCounterDocumentData,
-			"created_by_id" | "updated_by_id"
-		> = {
-			title: v.title,
-			description: v.description,
-			type: "view",
-			count: v.count,
-			status: v.status,
-		};
-
-		if (id) {
-			// update
-			const data: Partial<DBDocument<SmashViewCounterDocumentData>> = {
-				...values,
-				updated_by_id: v.user_id,
-				updated_at: serverTimestamp() as Timestamp,
-			};
-			await updateDoc(docRef("view", id), data);
-		} else {
-			// create
-			const data: DBDocument<SmashViewCounterDocumentData> = {
-				...values,
-				created_by_id: v.user_id,
-				updated_by_id: v.user_id,
-				created_at: serverTimestamp() as Timestamp,
-				updated_at: serverTimestamp() as Timestamp,
-			};
-			await addDoc(collectionRef, data);
-		}
-	} catch (err) {
-		console.error(err);
-	}
-};
-
-// TODO: server-side logic
-const deleteItem = async (id: string) => {
-	try {
-		await deleteDoc(docRef("view", id));
-	} catch (err) {
-		console.error(err);
-	}
-};
 
 const SmashViewCounterForm: FC<{
 	itemId?: string;
