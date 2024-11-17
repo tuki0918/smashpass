@@ -105,9 +105,10 @@ const SmashCard: FC<{
 						href={
 							data.type === "graph" ? `/graphs/${data.id}` : `/views/${data.id}`
 						}
-						className="p-2 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
+						className="flex p-2 px-4 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 					>
-						<Eye className="h-10 w-10 md:h-6 md:w-6 text-gray-800" />
+						<Eye className="mr-2 h-10 w-10 md:h-6 md:w-6 text-gray-800" />{" "}
+						{t("link/view")}
 					</Link>
 					<Link
 						href={
@@ -116,16 +117,17 @@ const SmashCard: FC<{
 								: `/dashboard/views/${data.id}/edit`
 						}
 						type="button"
-						className="p-2 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
+						className="flex p-2 px-4 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 					>
-						<Pencil className="h-10 w-10 md:h-6 md:w-6 text-gray-800" />
+						<Pencil className="mr-2 h-10 w-10 md:h-6 md:w-6 text-gray-800" />{" "}
+						{t("link/edit")}
 					</Link>
 
 					{data.type === "graph" && (
 						<div className="absolute bottom-12">
 							<Link
 								href={`/graphs/${data.id}/vote`}
-								className="flex py-2 px-8 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
+								className="flex py-2 px-14 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 							>
 								{t("link/vote")} <ExternalLink className="ml-2" />
 							</Link>

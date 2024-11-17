@@ -17,6 +17,8 @@
 		"result/empty": "Not found.",
 		"type/votes": "votes",
 		"type/views": "views",
+		"link/view": "View",
+		"link/edit": "Edit",
 		"link/vote": "Vote Page"
 	},
 	"Components/SmashCardTabs": {

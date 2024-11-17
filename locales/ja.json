@@ -17,6 +17,8 @@
 		"result/empty": "見つかりません。",
 		"type/votes": "投票",
 		"type/views": "観覧数",
+		"link/view": "表示",
+		"link/edit": "編集",
 		"link/vote": "投票ページ"
 	},
 	"Components/SmashCardTabs": {
