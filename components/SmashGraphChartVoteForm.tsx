@@ -65,6 +65,7 @@ const SmashGraphChartVoteForm: FC<{
 			});
 
 			router.push(`/graphs/${data?.graph.id}`);
+			router.refresh();
 		},
 		[data, toast, router],
 	);

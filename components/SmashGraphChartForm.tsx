@@ -104,6 +104,7 @@ const SmashGraphChartForm: FC<{
 			await saveItem(itemId, values);
 			setIsLoading(false);
 			router.push("/dashboard");
+			router.refresh();
 		},
 		[itemId, router],
 	);
