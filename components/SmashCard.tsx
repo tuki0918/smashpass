@@ -143,8 +143,7 @@ const SmashCard: FC<{
 						})()}
 						className="flex p-2 px-4 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 					>
-						<Eye className="mr-2 h-10 w-10 md:h-6 md:w-6 text-gray-800" />{" "}
-						{t("link/view")}
+						<Eye className="mr-2 h-6 w-6 text-gray-800" /> {t("link/view")}
 					</Link>
 					<Link
 						href={(() => {
@@ -164,8 +163,7 @@ const SmashCard: FC<{
 						type="button"
 						className="flex p-2 px-4 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 					>
-						<Pencil className="mr-2 h-10 w-10 md:h-6 md:w-6 text-gray-800" />{" "}
-						{t("link/edit")}
+						<Pencil className="mr-2 h-6 w-6 text-gray-800" /> {t("link/edit")}
 					</Link>
 
 					{data.type === "graph" && (
