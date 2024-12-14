@@ -1,5 +1,8 @@
 "use client";
 
+import SmashClickCounter, {
+	RealTimeSmashClickCounter,
+} from "@/components/SmashClickCounter";
 import { RealTimeSmashGraphChart } from "@/components/SmashGraphChart";
 import SmashViewCounter, {
 	RealTimeSmashViewCounter,
@@ -77,11 +80,20 @@ const SmashCard: FC<{
 		<Card className="group overflow-hidden hover:shadow-xl transition-all duration-300">
 			<div className={"aspect-square relative overflow-hidden bg-slate-200"}>
 				<div className="h-full flex items-center justify-center">
-					{data.type === "graph" ? (
-						<RealTimeSmashGraphChart docId={data.id} />
-					) : (
-						<RealTimeSmashViewCounter docId={data.id} />
-					)}
+					{(() => {
+						switch (data.type) {
+							case "click":
+								return <RealTimeSmashClickCounter docId={data.id} />;
+							case "view":
+								return <RealTimeSmashViewCounter docId={data.id} />;
+							case "graph":
+								return <RealTimeSmashGraphChart docId={data.id} />;
+							default:
+								// biome-ignore lint/correctness/noSwitchDeclarations:
+								const _: never = data.type;
+								return <div>Error</div>;
+						}
+					})()}
 				</div>
 
 				{/* Connecting animation */}
@@ -95,27 +107,60 @@ const SmashCard: FC<{
 				{/* Status badge */}
 				<div className="absolute bottom-4 right-4">
 					<Badge variant="outline" className="bg-white">
-						{data.type === "graph" ? t("type/votes") : t("type/views")}
+						{(() => {
+							switch (data.type) {
+								case "click":
+									return t("type/clicks");
+								case "view":
+									return t("type/views");
+								case "graph":
+									return t("type/votes");
+								default:
+									// biome-ignore lint/correctness/noSwitchDeclarations:
+									const _: never = data.type;
+									return "unknown";
+							}
+						})()}
 					</Badge>
 				</div>
 
 				{/* Hover overlay with icons */}
 				<div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-8 backdrop-blur-sm">
 					<Link
-						href={
-							data.type === "graph" ? `/graphs/${data.id}` : `/views/${data.id}`
-						}
+						href={(() => {
+							switch (data.type) {
+								case "click":
+									return `/clicks/${data.id}`;
+								case "view":
+									return `/views/${data.id}`;
+								case "graph":
+									return `/graphs/${data.id}`;
+								default:
+									// biome-ignore lint/correctness/noSwitchDeclarations:
+									const _: never = data.type;
+									return "#";
+							}
+						})()}
 						className="flex p-2 px-4 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 					>
 						<Eye className="mr-2 h-10 w-10 md:h-6 md:w-6 text-gray-800" />{" "}
 						{t("link/view")}
 					</Link>
 					<Link
-						href={
-							data.type === "graph"
-								? `/dashboard/graphs/${data.id}/edit`
-								: `/dashboard/views/${data.id}/edit`
-						}
+						href={(() => {
+							switch (data.type) {
+								case "click":
+									return `/dashboard/clicks/${data.id}/edit`;
+								case "view":
+									return `/dashboard/views/${data.id}/edit`;
+								case "graph":
+									return `/dashboard/graphs/${data.id}/edit`;
+								default:
+									// biome-ignore lint/correctness/noSwitchDeclarations:
+									const _: never = data.type;
+									return "#";
+							}
+						})()}
 						type="button"
 						className="flex p-2 px-4 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 					>

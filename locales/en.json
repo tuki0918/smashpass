@@ -15,6 +15,7 @@
 	},
 	"Components/SmashCard": {
 		"result/empty": "Not found.",
+		"type/clicks": "clicks",
 		"type/votes": "votes",
 		"type/views": "views",
 		"link/view": "View",
@@ -26,6 +27,7 @@
 		"tab/published": "Published",
 		"tab/draft": "Draft",
 		"button/create": "Create New",
+		"button/menu/clicks": "Clicks Counter",
 		"button/menu/views": "Views Counter",
 		"button/menu/votes": "Votes Counter",
 		"results/empty": "No items found."

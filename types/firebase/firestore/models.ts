@@ -3,6 +3,7 @@ import type { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
 export type CollectionName = keyof typeof DB_FIRESTORE_COLLECTION_NAMES;
 export type CollectionDocumentDataMap = {
 	view: SmashViewCounterDocumentData;
+	click: SmashClickCounterDocumentData;
 	graph: SmashGraphDocumentData;
 	graph_item: SmashGraphItemDocumentData;
 };
@@ -13,7 +14,7 @@ type OriginDocumentData = {
 };
 
 type SmashOriginStatus = "published" | "draft";
-type SmashOriginType = "view" | "graph";
+type SmashOriginType = "view" | "click" | "graph";
 export type SmashOriginDocumentData = OriginDocumentData & {
 	title: string;
 	description: string;
@@ -25,6 +26,11 @@ export type SmashOriginDocumentData = OriginDocumentData & {
 
 export type SmashViewCounterDocumentData = SmashOriginDocumentData & {
 	type: "view";
+	count: number;
+};
+
+export type SmashClickCounterDocumentData = SmashOriginDocumentData & {
+	type: "click";
 	count: number;
 };
 

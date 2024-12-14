@@ -15,7 +15,13 @@ import type { SmashOriginDocumentData } from "@/types/firebase/firestore/models"
 import { docsQuery, getDocsByQuery } from "@/utils/firestore";
 import { Link } from "@/utils/i18n/routing";
 import { where } from "firebase/firestore";
-import { ChartBarDecreasing, Eye, PlusCircleIcon, SearchX } from "lucide-react";
+import {
+	ChartBarDecreasing,
+	Eye,
+	MousePointerClick,
+	PlusCircleIcon,
+	SearchX,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
@@ -41,6 +47,12 @@ const SmashCardTabs: FC<{
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent>
+							<Link href="/dashboard/clicks/new">
+								<DropdownMenuItem className="hover:cursor-pointer">
+									<MousePointerClick className="h-4 w-4" />
+									{t("button/menu/clicks")}
+								</DropdownMenuItem>
+							</Link>
 							<Link href="/dashboard/views/new">
 								<DropdownMenuItem className="hover:cursor-pointer">
 									<Eye className="h-4 w-4" />
@@ -119,12 +131,14 @@ export const SmashCardTabsForLoggedInUser: FC = () => {
 		const uid = user.uid;
 		const fetchData = async () => {
 			const q1 = docsQuery("view", [where("created_by_id", "==", uid)]);
-			const q2 = docsQuery("graph", [where("created_by_id", "==", uid)]);
-			const [data1, data2] = await Promise.all([
+			const q2 = docsQuery("click", [where("created_by_id", "==", uid)]);
+			const q3 = docsQuery("graph", [where("created_by_id", "==", uid)]);
+			const [data1, data2, data3] = await Promise.all([
 				getDocsByQuery(q1),
 				getDocsByQuery(q2),
+				getDocsByQuery(q3),
 			]);
-			const sortedData = [...data1, ...data2].sort(
+			const sortedData = [...data1, ...data2, ...data3].sort(
 				(a, b) => b.updated_at_ms - a.updated_at_ms,
 			);
 			setData(sortedData);
