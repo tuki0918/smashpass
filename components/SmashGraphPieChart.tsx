@@ -36,7 +36,7 @@ const SmashGraphPieChart: FC<{
 	}, [data]);
 
 	return (
-		<ChartContainer config={config} className="h-[250px] w-full">
+		<ChartContainer config={config} className="h-[250px] w-full select-none">
 			<PieChart>
 				<ChartTooltip
 					cursor={false}

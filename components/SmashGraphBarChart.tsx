@@ -29,7 +29,7 @@ const SmashGraphBarChart: FC<{
 		);
 	}, [data]);
 	return (
-		<ChartContainer config={config} className="h-[250px] w-11/12">
+		<ChartContainer config={config} className="h-[250px] w-11/12 select-none">
 			<BarChart
 				accessibilityLayer
 				data={data}

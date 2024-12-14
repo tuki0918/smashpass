@@ -34,7 +34,7 @@ const SmashViewCounter: FC<{
 
 	return (
 		<div
-			className={cn("text-6xl font-bold", {
+			className={cn("select-none text-6xl font-bold", {
 				"text-gray-600": isPublished, // active
 				"text-gray-400": !isPublished, // inactive
 			})}
