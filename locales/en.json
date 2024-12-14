@@ -20,7 +20,8 @@
 		"type/views": "views",
 		"link/view": "View",
 		"link/edit": "Edit",
-		"link/vote": "Vote Page"
+		"link/vote": "Vote Page",
+		"link/action": "Form"
 	},
 	"Components/SmashCardTabs": {
 		"tab/all": "All",
