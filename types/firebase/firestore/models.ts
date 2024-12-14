@@ -32,6 +32,7 @@ export type SmashViewCounterDocumentData = SmashOriginDocumentData & {
 export type SmashClickCounterDocumentData = SmashOriginDocumentData & {
 	type: "click";
 	count: number;
+	icon: string;
 };
 
 export type SmashGraphStyle = "pie-chart" | "bar-chart";

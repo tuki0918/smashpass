@@ -39,6 +39,7 @@ export const formSchema = z.object({
 			message: "Count must be a nonnegative (>= 0) integer.",
 		}),
 	),
+	icon: z.string(),
 	status: z.enum(["published", "draft"]),
 	user_id: z
 		.string({
@@ -65,6 +66,7 @@ const SmashClickCounterForm: FC<{
 			title: defaultValues?.title || "No title",
 			description: defaultValues?.description || "",
 			count: defaultValues?.count || 0,
+			icon: defaultValues?.icon || "",
 			status: defaultValues?.status || "draft",
 			user_id: defaultValues?.user_id || "",
 		},
@@ -141,6 +143,21 @@ const SmashClickCounterForm: FC<{
 								<FormLabel>Count</FormLabel>
 								<FormControl>
 									<Input type="number" placeholder="0" {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
+					{/* TODO: emoji picker */}
+					<FormField
+						control={form.control}
+						name="icon"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Icon</FormLabel>
+								<FormControl>
+									<Input placeholder="❤️" {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

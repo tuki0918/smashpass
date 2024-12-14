@@ -1,5 +1,6 @@
 "use client";
 
+import { incrementCount } from "@/actions/SmashClickCounterActions";
 import { useFirestoreDocumentSync } from "@/hooks/useFirestore";
 import { cn } from "@/lib/utils";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
@@ -11,8 +12,10 @@ import { type FC, useMemo } from "react";
 const SmashClickCounter: FC<{
 	/** undefined: loading, null: not found */
 	data: CSDocumentWithId<SmashClickCounterDocumentData> | undefined | null;
-}> = ({ data }) => {
+	isClick?: boolean;
+}> = ({ data, isClick = false }) => {
 	const isPublished = data?.status === "published";
+	const icon = data?.icon;
 
 	const content =
 		data === undefined ? (
@@ -33,22 +36,43 @@ const SmashClickCounter: FC<{
 		);
 
 	return (
-		<div
-			className={cn("text-6xl font-bold", {
-				"text-gray-600": isPublished, // active
-				"text-gray-400": !isPublished, // inactive
-			})}
-		>
-			{content}
+		<div className="flex items-center justify-center space-x-2 select-none">
+			<span
+				className={cn("text-6xl font-bold", {
+					"text-gray-600": isPublished, // active
+					"text-gray-400": !isPublished, // inactive
+				})}
+			>
+				{content}
+			</span>
+
+			{data?.status === "published" && isClick ? (
+				<AnimatePresence mode="popLayout">
+					<motion.span
+						className="text-5xl hover:cursor-pointer"
+						whileHover={{ scale: 1.1 }}
+						whileTap={{ scale: 0.9 }}
+						transition={{ type: "spring", stiffness: 400, damping: 17 }}
+						onClick={async () => await incrementCount(data.id)}
+					>
+						{icon}
+					</motion.span>
+				</AnimatePresence>
+			) : (
+				<span className="text-5xl">{icon}</span>
+			)}
 		</div>
 	);
 };
 
 export default SmashClickCounter;
 
-export const RealTimeSmashClickCounter: FC<{ docId: string }> = ({ docId }) => {
+export const RealTimeSmashClickCounter: FC<{
+	docId: string;
+	isClick?: boolean;
+}> = ({ docId, isClick = false }) => {
 	// Prevent duplicate effect
 	const ref = useMemo(() => docRef("click", docId), [docId]);
 	const data = useFirestoreDocumentSync(ref);
-	return <SmashClickCounter data={data} />;
+	return <SmashClickCounter data={data} isClick={isClick} />;
 };

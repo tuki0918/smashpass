@@ -42,6 +42,7 @@ export const saveItem = async (
 			description: v.description,
 			type: "click",
 			count: v.count,
+			icon: v.icon,
 			status: v.status,
 		};
 
