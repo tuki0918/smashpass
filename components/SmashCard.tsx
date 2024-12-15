@@ -141,6 +141,7 @@ const SmashCard: FC<{
 									return "#";
 							}
 						})()}
+						target="_blank"
 						className="flex p-2 px-4 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 					>
 						<Eye className="mr-2 h-6 w-6 text-gray-800" /> {t("link/view")}
@@ -170,6 +171,7 @@ const SmashCard: FC<{
 						<div className="absolute bottom-12">
 							<Link
 								href={`/clicks/${data.id}?act=true`}
+								target="_blank"
 								className="flex py-2 px-14 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 							>
 								{t("link/action")} <ExternalLink className="ml-2" />
@@ -181,6 +183,7 @@ const SmashCard: FC<{
 						<div className="absolute bottom-12">
 							<Link
 								href={`/graphs/${data.id}?act=true`}
+								target="_blank"
 								className="flex py-2 px-14 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 							>
 								{t("link/vote")} <ExternalLink className="ml-2" />
