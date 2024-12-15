@@ -71,11 +71,7 @@ const SmashGraphChartVoteForm: FC<{
 	);
 
 	if (!data || data.graph_items.length === 0) {
-		return (
-			<div className="text-6xl font-bold text-gray-400">
-				<span>{data === undefined ? "..." : "="}</span>
-			</div>
-		);
+		return null;
 	}
 
 	return (
