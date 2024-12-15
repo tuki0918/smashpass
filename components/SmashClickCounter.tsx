@@ -7,13 +7,14 @@ import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashClickCounterDocumentData } from "@/types/firebase/firestore/models";
 import { docRef } from "@/utils/firestore";
 import { AnimatePresence, motion } from "framer-motion";
+import { useSearchParams } from "next/navigation";
 import { type FC, useMemo } from "react";
 
 const SmashClickCounter: FC<{
 	/** undefined: loading, null: not found */
 	data: CSDocumentWithId<SmashClickCounterDocumentData> | undefined | null;
-	isClick?: boolean;
-}> = ({ data, isClick = false }) => {
+	isAct?: boolean;
+}> = ({ data, isAct = false }) => {
 	const isPublished = data?.status === "published";
 	const icon = data?.icon;
 
@@ -46,7 +47,7 @@ const SmashClickCounter: FC<{
 				{content}
 			</span>
 
-			{data?.status === "published" && isClick ? (
+			{data?.status === "published" && isAct ? (
 				<AnimatePresence mode="popLayout">
 					<motion.span
 						className="text-5xl hover:cursor-pointer"
@@ -69,10 +70,11 @@ export default SmashClickCounter;
 
 export const RealTimeSmashClickCounter: FC<{
 	docId: string;
-	isClick?: boolean;
-}> = ({ docId, isClick = false }) => {
+}> = ({ docId }) => {
+	const searchParams = useSearchParams();
+	const isAct = searchParams.get("act") === "true";
 	// Prevent duplicate effect
 	const ref = useMemo(() => docRef("click", docId), [docId]);
 	const data = useFirestoreDocumentSync(ref);
-	return <SmashClickCounter data={data} isClick={isClick} />;
+	return <SmashClickCounter data={data} isAct={isAct} />;
 };

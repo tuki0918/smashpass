@@ -169,7 +169,7 @@ const SmashCard: FC<{
 					{data.type === "click" && (
 						<div className="absolute bottom-12">
 							<Link
-								href={`/clicks/${data.id}/action`}
+								href={`/clicks/${data.id}?act=true`}
 								className="flex py-2 px-14 bg-white/90 rounded-full hover:bg-white transform hover:scale-110 transition-all duration-200"
 							>
 								{t("link/action")} <ExternalLink className="ml-2" />
