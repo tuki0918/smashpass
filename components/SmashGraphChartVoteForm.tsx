@@ -21,6 +21,7 @@ import type {
 	SmashGraphDocumentData,
 	SmashGraphItemDocumentData,
 } from "@/types/firebase/firestore/models";
+import { handleErrorWithLoading } from "@/utils/errorHandler";
 import { docRef, docsQuery, getDocsByQuery } from "@/utils/firestore";
 import { useRouter } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,6 +48,10 @@ const SmashGraphChartVoteForm: FC<{
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
 	const { toast } = useToast();
+	const handleError = useCallback(
+		handleErrorWithLoading(toast, setIsLoading),
+		[],
+	);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -55,19 +60,21 @@ const SmashGraphChartVoteForm: FC<{
 
 	const onSubmit = useCallback(
 		async (values: z.infer<typeof formSchema>) => {
-			setIsLoading(true);
-			await voteItem(values);
-			setIsLoading(false);
-
-			toast({
-				title: "Voted",
-				description: "Your vote has been counted.",
-			});
-
-			router.push(`/graphs/${data?.graph.id}`);
-			router.refresh();
+			await handleError(
+				async () => {
+					await voteItem(values);
+				},
+				(toast) => {
+					toast({
+						title: "Voted",
+						description: "Your vote has been counted.",
+					});
+					router.push(`/graphs/${data?.graph.id}`);
+					router.refresh();
+				},
+			);
 		},
-		[data, toast, router],
+		[data, handleError, router],
 	);
 
 	if (!data || data.graph_items.length === 0) {

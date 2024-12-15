@@ -19,7 +19,9 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
+import { handleErrorWithLoading } from "@/utils/errorHandler";
 import { useRouter } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle } from "lucide-react";
@@ -58,6 +60,15 @@ const SmashViewCounterForm: FC<{
 	const { user } = useAuth();
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+	const { toast } = useToast();
+	const handleError = useCallback(
+		handleErrorWithLoading(toast, setIsLoading),
+		[],
+	);
+	const handleErrorDelete = useCallback(
+		handleErrorWithLoading(toast, setIsLoadingDelete),
+		[],
+	);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -79,13 +90,23 @@ const SmashViewCounterForm: FC<{
 
 	const onSubmit = useCallback(
 		async (values: z.infer<typeof formSchema>) => {
-			setIsLoading(true);
-			await saveItem(itemId, values);
-			setIsLoading(false);
-			router.push("/dashboard");
-			router.refresh();
+			await handleError(
+				async () => {
+					await saveItem(itemId, values);
+				},
+				(toast) => {
+					toast({
+						title: "Success",
+						description: isCreate
+							? `Item created: ${values.title}`
+							: `Item updated: ${values.title}`,
+					});
+					router.push("/dashboard");
+					router.refresh();
+				},
+			);
 		},
-		[itemId, router],
+		[itemId, handleError, router, isCreate],
 	);
 
 	const handleDelete = useCallback(async () => {
@@ -95,12 +116,21 @@ const SmashViewCounterForm: FC<{
 
 		// TODO: dialog
 		if (confirm("Are you sure you want to delete this item?")) {
-			setIsLoadingDelete(true);
-			await deleteItem(itemId);
-			setIsLoadingDelete(false);
-			router.push("/dashboard");
+			await handleErrorDelete(
+				async () => {
+					await deleteItem(itemId);
+				},
+				(toast) => {
+					toast({
+						title: "Success",
+						description: "Item deleted",
+					});
+					router.push("/dashboard");
+					router.refresh();
+				},
+			);
 		}
-	}, [itemId, router]);
+	}, [itemId, handleErrorDelete, router]);
 
 	return (
 		<div className="w-4/5 md:w-3/5 lg:w-1/2">
