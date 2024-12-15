@@ -7,7 +7,6 @@ import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashClickCounterDocumentData } from "@/types/firebase/firestore/models";
 import { docRef } from "@/utils/firestore";
 import { AnimatePresence, motion } from "framer-motion";
-import { useSearchParams } from "next/navigation";
 import { type FC, useMemo } from "react";
 
 const SmashClickCounter: FC<{
@@ -70,9 +69,8 @@ export default SmashClickCounter;
 
 export const RealTimeSmashClickCounter: FC<{
 	docId: string;
-}> = ({ docId }) => {
-	const searchParams = useSearchParams();
-	const isAct = searchParams.get("act") === "true";
+	isAct?: boolean;
+}> = ({ docId, isAct = false }) => {
 	// Prevent duplicate effect
 	const ref = useMemo(() => docRef("click", docId), [docId]);
 	const data = useFirestoreDocumentSync(ref);

@@ -4,13 +4,15 @@ import type { Metadata } from "next";
 
 type Props = {
 	params: { clickId: string };
+	searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export default async function Page({ params }: Props) {
+export default async function Page({ params, searchParams }: Props) {
 	const { clickId } = params;
+	const isAct = searchParams.act === "true";
 	return (
 		<div className="min-h-screen flex items-center justify-center">
-			<RealTimeSmashClickCounter docId={clickId} />
+			<RealTimeSmashClickCounter docId={clickId} isAct={isAct} />
 		</div>
 	);
 }
