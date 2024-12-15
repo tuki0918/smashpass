@@ -1,6 +1,6 @@
 "use client";
 
-import { Link } from "@/utils/i18n/routing";
+// import { Link } from "@/utils/i18n/routing";
 import { useTranslations } from "next-intl";
 
 export default function Footer() {
@@ -9,7 +9,7 @@ export default function Footer() {
 		<footer className="bg-gray-50 p-8">
 			<div className="container mx-auto">
 				<p className="px-8 text-center text-sm text-muted-foreground">
-					<Link href="/" className="hover:text-primary">
+					{/* <Link href="/" className="hover:text-primary">
 						{t("terms_of_service")}
 					</Link>{" "}
 					<span className="mx-2">|</span>{" "}
@@ -23,7 +23,7 @@ export default function Footer() {
 					<span className="mx-2">|</span>{" "}
 					<Link href="/" className="hover:text-primary">
 						{t("contact")}
-					</Link>
+					</Link> */}
 				</p>
 			</div>
 		</footer>
