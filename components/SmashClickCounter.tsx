@@ -2,7 +2,7 @@
 
 import { incrementCount } from "@/actions/SmashClickCounterActions";
 import { useFirestoreDocumentSync } from "@/hooks/useFirestore";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashClickCounterDocumentData } from "@/types/firebase/firestore/models";
 import { docRef } from "@/utils/firestore";
