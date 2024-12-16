@@ -77,7 +77,7 @@ const SmashClickCounterForm: FC<{
 			title: defaultValues?.title || "No title",
 			description: defaultValues?.description || "",
 			count: defaultValues?.count || 0,
-			icon: defaultValues?.icon || "",
+			icon: defaultValues?.icon || "★",
 			status: defaultValues?.status || "draft",
 			user_id: defaultValues?.user_id || "",
 		},
@@ -188,7 +188,7 @@ const SmashClickCounterForm: FC<{
 							<FormItem>
 								<FormLabel>Icon</FormLabel>
 								<FormControl>
-									<Input placeholder="❤️" {...field} />
+									<Input placeholder="..." {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
