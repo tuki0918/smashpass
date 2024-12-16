@@ -20,6 +20,7 @@ import type { z } from "zod";
 
 export const deleteItem = async (id: string) => {
 	try {
+		// TODO: check permission
 		await deleteDoc(docRef("click", id));
 	} catch (err) {
 		console.error(err);
@@ -31,6 +32,7 @@ export const saveItem = async (
 	v: z.infer<typeof formSchema>,
 ) => {
 	try {
+		// TODO: check permission
 		const collectionId = DB_FIRESTORE_COLLECTION_NAMES.click;
 		const collectionRef = collection(db, collectionId);
 

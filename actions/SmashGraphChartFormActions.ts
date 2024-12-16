@@ -25,6 +25,7 @@ export const saveItem = async (
 	v: z.infer<typeof formSchema>,
 ) => {
 	try {
+		// TODO: check permission
 		const collectionId = DB_FIRESTORE_COLLECTION_NAMES.graph;
 		const collectionRef = collection(db, collectionId);
 
@@ -99,6 +100,7 @@ export const saveItem = async (
 
 export const deleteItem = async (id: string) => {
 	try {
+		// TODO: check permission
 		const items = await getDocsByQuery(
 			docsQuery("graph_item", [where("graph_id", "==", id)]),
 		);
