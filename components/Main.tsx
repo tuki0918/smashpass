@@ -5,8 +5,13 @@ import LoginButton from "@/components/LoginButton";
 import SiteTextLogo from "@/components/SiteTextLogo";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useAuth } from "@/hooks/useAuth";
-import { Link } from "@/utils/i18n/routing";
 import { useRouter } from "@/utils/i18n/routing";
 import { LoaderCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -62,13 +67,27 @@ const LoginForm: FC = () => {
 
 					<div className="my-4">
 						<p className="px-8 text-center text-sm text-muted-foreground">
-							<Link href="/" className="hover:text-primary">
-								{t("terms_of_service")}
-							</Link>{" "}
+							<TooltipProvider>
+								<Tooltip>
+									<TooltipTrigger className="hover:text-primary">
+										{t("terms_of_service")}
+									</TooltipTrigger>
+									<TooltipContent>
+										<p>This app is a demo</p>
+									</TooltipContent>
+								</Tooltip>
+							</TooltipProvider>
 							<span className="mx-2">|</span>{" "}
-							<Link href="/" className="hover:text-primary">
-								{t("privacy_policy")}
-							</Link>
+							<TooltipProvider>
+								<Tooltip>
+									<TooltipTrigger className="hover:text-primary">
+										{t("privacy_policy")}
+									</TooltipTrigger>
+									<TooltipContent>
+										<p>This app is a demo</p>
+									</TooltipContent>
+								</Tooltip>
+							</TooltipProvider>
 						</p>
 					</div>
 				</div>
