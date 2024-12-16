@@ -10,6 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
+	// TODO: check registration limit
 	return (
 		<div className="py-12 px-4 sm:px-6 lg:px-8">
 			<div className="max-w-7xl mx-auto">

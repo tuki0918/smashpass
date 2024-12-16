@@ -9,6 +9,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { GUEST_LIMIT_CONTENTS } from "@/config/app";
 import { useAuth } from "@/hooks/useAuth";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashOriginDocumentData } from "@/types/firebase/firestore/models";
@@ -18,6 +19,7 @@ import { where } from "firebase/firestore";
 import {
 	ChartBarDecreasing,
 	Eye,
+	LockKeyhole,
 	MousePointerClick,
 	PlusCircleIcon,
 	SearchX,
@@ -28,7 +30,8 @@ import { useEffect, useState } from "react";
 
 const SmashCardTabs: FC<{
 	data: CSDocumentWithId<SmashOriginDocumentData>[];
-}> = ({ data }) => {
+	isLocked?: boolean;
+}> = ({ data, isLocked = false }) => {
 	const t = useTranslations("Components/SmashCardTabs");
 	return (
 		<Tabs defaultValue="all">
@@ -39,34 +42,41 @@ const SmashCardTabs: FC<{
 					<TabsTrigger value="draft">{t("tab/draft")}</TabsTrigger>
 				</TabsList>
 				<div className="ml-auto">
-					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
-							<Button>
-								<PlusCircleIcon className="h-4 w-4" />
-								{t("button/create")}
-							</Button>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent>
-							<Link href="/dashboard/clicks/new">
-								<DropdownMenuItem className="hover:cursor-pointer">
-									<MousePointerClick className="h-4 w-4" />
-									{t("button/menu/clicks")}
-								</DropdownMenuItem>
-							</Link>
-							<Link href="/dashboard/views/new">
-								<DropdownMenuItem className="hover:cursor-pointer">
-									<Eye className="h-4 w-4" />
-									{t("button/menu/views")}
-								</DropdownMenuItem>
-							</Link>
-							<Link href="/dashboard/graphs/new">
-								<DropdownMenuItem className="hover:cursor-pointer">
-									<ChartBarDecreasing className="h-4 w-4" />
-									{t("button/menu/votes")}
-								</DropdownMenuItem>
-							</Link>
-						</DropdownMenuContent>
-					</DropdownMenu>
+					{isLocked ? (
+						<Button disabled>
+							<LockKeyhole className="h-4 w-4" />
+							{t("button/create")}
+						</Button>
+					) : (
+						<DropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<Button>
+									<PlusCircleIcon className="h-4 w-4" />
+									{t("button/create")}
+								</Button>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent>
+								<Link href="/dashboard/clicks/new">
+									<DropdownMenuItem className="hover:cursor-pointer">
+										<MousePointerClick className="h-4 w-4" />
+										{t("button/menu/clicks")}
+									</DropdownMenuItem>
+								</Link>
+								<Link href="/dashboard/views/new">
+									<DropdownMenuItem className="hover:cursor-pointer">
+										<Eye className="h-4 w-4" />
+										{t("button/menu/views")}
+									</DropdownMenuItem>
+								</Link>
+								<Link href="/dashboard/graphs/new">
+									<DropdownMenuItem className="hover:cursor-pointer">
+										<ChartBarDecreasing className="h-4 w-4" />
+										{t("button/menu/votes")}
+									</DropdownMenuItem>
+								</Link>
+							</DropdownMenuContent>
+						</DropdownMenu>
+					)}
 				</div>
 			</div>
 			<TabsContent value="all">
@@ -146,5 +156,6 @@ export const SmashCardTabsForLoggedInUser: FC = () => {
 		fetchData();
 	}, [user]);
 
-	return <SmashCardTabs data={data} />;
+	const isLocked = data.length >= GUEST_LIMIT_CONTENTS;
+	return <SmashCardTabs data={data} isLocked={isLocked} />;
 };
