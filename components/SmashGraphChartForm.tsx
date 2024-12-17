@@ -31,6 +31,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 
 const MIN_ITEMS_LENGTH = 2;
+const MAX_ITEMS_LENGTH = 5;
 
 export const formSchema = z.object({
 	title: z.string().min(2, {
@@ -39,6 +40,7 @@ export const formSchema = z.object({
 	description: z.string(),
 	status: z.enum(["published", "draft"]),
 	style: z.enum(["pie-chart", "bar-chart"]),
+	sort: z.enum(["default", "ranking"]),
 	user_id: z
 		.string({
 			message: "You must be logged in.",
@@ -56,6 +58,9 @@ export const formSchema = z.object({
 		)
 		.min(MIN_ITEMS_LENGTH, {
 			message: `At least ${MIN_ITEMS_LENGTH} items are required.`,
+		})
+		.max(MAX_ITEMS_LENGTH, {
+			message: `At most ${MAX_ITEMS_LENGTH} items are allowed.`,
 		}),
 });
 
@@ -85,6 +90,7 @@ const SmashGraphChartForm: FC<{
 			description: defaultValues?.description || "",
 			status: defaultValues?.status || "draft",
 			style: defaultValues?.style || "pie-chart",
+			sort: defaultValues?.sort || "default",
 			user_id: defaultValues?.user_id || "",
 			items: defaultValues?.items || [
 				{
@@ -212,6 +218,31 @@ const SmashGraphChartForm: FC<{
 
 					<FormField
 						control={form.control}
+						name="sort"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Sort</FormLabel>
+								<Select
+									onValueChange={field.onChange}
+									defaultValue={field.value}
+								>
+									<FormControl>
+										<SelectTrigger>
+											<SelectValue placeholder="Select a sort" />
+										</SelectTrigger>
+									</FormControl>
+									<SelectContent>
+										<SelectItem value="default">Default</SelectItem>
+										<SelectItem value="ranking">Ranking</SelectItem>
+									</SelectContent>
+								</Select>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
+					<FormField
+						control={form.control}
 						name="status"
 						render={({ field }) => (
 							<FormItem>
@@ -271,7 +302,7 @@ const SmashGraphChartForm: FC<{
 								))}
 							</div>
 
-							{isCreate && (
+							{isCreate && fields.length < MAX_ITEMS_LENGTH && (
 								<div className="mx-auto">
 									<Button
 										type="button"

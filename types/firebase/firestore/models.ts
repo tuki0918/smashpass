@@ -36,9 +36,11 @@ export type SmashClickCounterDocumentData = SmashOriginDocumentData & {
 };
 
 export type SmashGraphStyle = "pie-chart" | "bar-chart";
+export type SmashGraphSort = "default" | "ranking";
 export type SmashGraphDocumentData = SmashOriginDocumentData & {
 	type: "graph";
 	style: SmashGraphStyle;
+	sort: SmashGraphSort;
 };
 
 // Sub types

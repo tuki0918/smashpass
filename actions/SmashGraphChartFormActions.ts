@@ -37,6 +37,7 @@ export const saveItem = async (
 			description: v.description,
 			type: "graph",
 			style: v.style,
+			sort: v.sort,
 			status: v.status,
 		};
 

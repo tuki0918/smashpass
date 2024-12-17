@@ -34,10 +34,10 @@ const SmashGraphChart: FC<{
 	}
 
 	const chartData = useMemo(() => {
-		return data.graph_items.map((item, i) => ({
+		return data.graph_items.map((item) => ({
 			title: item.title,
 			count: item.count,
-			fill: `hsl(var(--chart-${(i % 5) + 1}))`,
+			fill: `hsl(var(--chart-${(item.sort_order % 5) + 1}))`,
 		}));
 	}, [data.graph_items]);
 
@@ -63,8 +63,7 @@ export const RealTimeSmashGraphChart: FC<{ docId: string }> = ({ docId }) => {
 			const fetchData = async () => {
 				const q = docsQuery("graph_item", [where("graph_id", "==", graph.id)]);
 				const data = await getDocsByQuery(q);
-				const sorted_data = data.sort((a, b) => a.sort_order - b.sort_order);
-				setItems(sorted_data);
+				setItems(data);
 			};
 			fetchData();
 		}
@@ -84,9 +83,13 @@ export const RealTimeSmashGraphChartSync: FC<{
 
 	const items = useFirestoreDocumentsSync(docRefs);
 	const filteredItems = items.filter((x) => !!x);
+	const sortedItems =
+		data?.graph.sort === "ranking"
+			? filteredItems.sort((a, b) => b.count - a.count)
+			: filteredItems.sort((a, b) => a.sort_order - b.sort_order);
 
 	const chartData = data
-		? { graph: data.graph, graph_items: filteredItems }
+		? { graph: data.graph, graph_items: sortedItems }
 		: data;
 	return <SmashGraphChart data={chartData} />;
 };
