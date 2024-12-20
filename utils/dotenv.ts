@@ -1,6 +1,8 @@
-import { g, validateEnv } from "@/libs/dotenv";
 import { schema as publicSchema } from "@/utils/dotenv.public";
+import { zenv } from "dotenv-zod-validator";
 
-const schema = g.envObject({});
+const schema = zenv.object({
+	//
+});
 
-export const env = validateEnv(publicSchema.merge(schema));
+export const ENV = zenv.validate(publicSchema.merge(schema));
