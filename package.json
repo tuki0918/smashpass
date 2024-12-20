@@ -36,6 +36,7 @@
 		"@radix-ui/react-tooltip": "^1.1.5",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
+		"dotenv-zod-validator": "^1.3.0",
 		"firebase": "^11.0.1",
 		"framer-motion": "^11.11.11",
 		"input-otp": "^1.4.1",
