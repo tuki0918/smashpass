@@ -1,11 +1,12 @@
 "use client";
 
-import { incrementCount } from "@/actions/SmashClickCounterActions";
 import { useFirestoreDocumentSync } from "@/hooks/useFirestore";
 import { cn } from "@/libs/utils";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
+import type { DBDocument } from "@/types/firebase/firestore";
 import type { SmashClickCounterDocumentData } from "@/types/firebase/firestore/models";
-import { docRef } from "@/utils/firestore";
+import { docRef, getDocByRef } from "@/utils/firestore";
+import { increment, serverTimestamp, setDoc } from "firebase/firestore";
 import { AnimatePresence, motion } from "framer-motion";
 import { type FC, useMemo } from "react";
 
@@ -75,4 +76,30 @@ export const RealTimeSmashClickCounter: FC<{
 	const ref = useMemo(() => docRef("click", docId), [docId]);
 	const data = useFirestoreDocumentSync(ref);
 	return <SmashClickCounter data={data} isAct={isAct} />;
+};
+
+// Consider network latency and execute on the client side (firestore rules)
+const incrementCount = async (docId: string) => {
+	try {
+		const ref = docRef("click", docId);
+		const data = await getDocByRef(ref);
+		console.log("data", docId);
+
+		if (data) {
+			// Only increment if the document is published
+			if (data.status !== "published") {
+				return;
+			}
+
+			await setDoc(
+				ref,
+				{
+					count: increment(1) as unknown as number,
+				} as Partial<DBDocument<SmashClickCounterDocumentData>>,
+				{ merge: true },
+			);
+		}
+	} catch (err) {
+		console.error(err);
+	}
 };
