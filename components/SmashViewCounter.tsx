@@ -5,7 +5,7 @@ import { cn } from "@/libs/utils";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore/models";
 import { docRef } from "@/utils/firestore";
-import { AnimatePresence, motion } from "framer-motion";
+import NumberFlow from "@number-flow/react";
 import { type FC, useMemo } from "react";
 
 const SmashViewCounter: FC<{
@@ -20,16 +20,7 @@ const SmashViewCounter: FC<{
 		) : data === null ? (
 			<span>=</span>
 		) : (
-			<AnimatePresence mode="popLayout">
-				<motion.div
-					key={data.count}
-					initial={{ y: 20, opacity: 0 }}
-					animate={{ y: 0, opacity: 1 }}
-					exit={{ y: -20, opacity: 0 }}
-				>
-					{new Intl.NumberFormat().format(data.count)}
-				</motion.div>
-			</AnimatePresence>
+			<NumberFlow value={data.count} aria-hidden="true" willChange />
 		);
 
 	return (
