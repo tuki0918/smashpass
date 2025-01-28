@@ -3,7 +3,7 @@
 import { useFirestoreDocumentSync } from "@/hooks/useFirestore";
 import { cn } from "@/lib/utils";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
-import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore/models";
+import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore";
 import { docRef } from "@/utils/firestore";
 import NumberFlow from "@number-flow/react";
 import { type FC, useMemo } from "react";

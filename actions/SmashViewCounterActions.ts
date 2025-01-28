@@ -3,7 +3,7 @@
 import type { formSchema } from "@/components/SmashViewCounterForm";
 import { DB_FIRESTORE_COLLECTION_NAMES } from "@/constants";
 import type { DBDocument } from "@/types/firebase/firestore";
-import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore/models";
+import type { SmashViewCounterDocumentData } from "@/types/firebase/firestore";
 import { db } from "@/utils/firebase";
 import { docRef, getDocByRef } from "@/utils/firestore";
 import { deleteDoc } from "firebase/firestore";

@@ -6,7 +6,7 @@ import type { DBDocument } from "@/types/firebase/firestore";
 import type {
 	SmashGraphDocumentData,
 	SmashGraphItemDocumentData,
-} from "@/types/firebase/firestore/models";
+} from "@/types/firebase/firestore";
 import { db } from "@/utils/firebase";
 import { docRef, docsQuery, getDocsByQuery } from "@/utils/firestore";
 import {

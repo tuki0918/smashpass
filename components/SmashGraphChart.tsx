@@ -10,7 +10,7 @@ import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type {
 	SmashGraphDocumentData,
 	SmashGraphItemDocumentData,
-} from "@/types/firebase/firestore/models";
+} from "@/types/firebase/firestore";
 import { docRef, docsQuery, getDocsByQuery } from "@/utils/firestore";
 import { where } from "firebase/firestore";
 import type { FC } from "react";

@@ -2,7 +2,7 @@
 
 import type { formSchema } from "@/components/SmashGraphChartVoteForm";
 import type { DBDocument } from "@/types/firebase/firestore";
-import type { SmashGraphItemDocumentData } from "@/types/firebase/firestore/models";
+import type { SmashGraphItemDocumentData } from "@/types/firebase/firestore";
 import { docRef } from "@/utils/firestore";
 import { increment, serverTimestamp, setDoc } from "firebase/firestore";
 import type { z } from "zod";

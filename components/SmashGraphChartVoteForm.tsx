@@ -20,7 +20,7 @@ import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type {
 	SmashGraphDocumentData,
 	SmashGraphItemDocumentData,
-} from "@/types/firebase/firestore/models";
+} from "@/types/firebase/firestore";
 import { handleErrorWithLoading } from "@/utils/errorHandler";
 import { docRef, docsQuery, getDocsByQuery } from "@/utils/firestore";
 import { useRouter } from "@/utils/i18n";

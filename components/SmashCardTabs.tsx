@@ -12,7 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GUEST_LIMIT_CONTENTS } from "@/constants";
 import { useAuth } from "@/hooks/useAuth";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
-import type { SmashOriginDocumentData } from "@/types/firebase/firestore/models";
+import type { SmashOriginDocumentData } from "@/types/firebase/firestore";
 import { docsQuery, getDocsByQuery } from "@/utils/firestore";
 import { Link } from "@/utils/i18n";
 import { where } from "firebase/firestore";

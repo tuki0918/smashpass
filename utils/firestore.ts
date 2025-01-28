@@ -3,7 +3,7 @@ import type { CSDocumentWithId, DBDocument } from "@/types/firebase/firestore";
 import type {
 	CollectionDocumentDataMap,
 	CollectionName,
-} from "@/types/firebase/firestore/models";
+} from "@/types/firebase/firestore";
 import { db } from "@/utils/firebase";
 import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
 import type {

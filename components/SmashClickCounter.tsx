@@ -4,7 +4,7 @@ import { useFirestoreDocumentSync } from "@/hooks/useFirestore";
 import { cn } from "@/lib/utils";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { DBDocument } from "@/types/firebase/firestore";
-import type { SmashClickCounterDocumentData } from "@/types/firebase/firestore/models";
+import type { SmashClickCounterDocumentData } from "@/types/firebase/firestore";
 import { docRef, getDocByRef } from "@/utils/firestore";
 import NumberFlow from "@number-flow/react";
 import { increment, serverTimestamp, setDoc } from "firebase/firestore";
