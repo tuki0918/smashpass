@@ -88,10 +88,10 @@ const SmashCard: FC<{
 								return <RealTimeSmashViewCounter docId={data.id} />;
 							case "graph":
 								return <RealTimeSmashGraphChart docId={data.id} />;
-							default:
-								// biome-ignore lint/correctness/noSwitchDeclarations:
+							default: {
 								const _: never = data.type;
 								return <div>Error</div>;
+							}
 						}
 					})()}
 				</div>
@@ -115,10 +115,10 @@ const SmashCard: FC<{
 									return t("type/views");
 								case "graph":
 									return t("type/votes");
-								default:
-									// biome-ignore lint/correctness/noSwitchDeclarations:
+								default: {
 									const _: never = data.type;
 									return "unknown";
+								}
 							}
 						})()}
 					</Badge>
@@ -135,10 +135,10 @@ const SmashCard: FC<{
 									return `/views/${data.id}`;
 								case "graph":
 									return `/graphs/${data.id}`;
-								default:
-									// biome-ignore lint/correctness/noSwitchDeclarations:
+								default: {
 									const _: never = data.type;
 									return "#";
+								}
 							}
 						})()}
 						target="_blank"
@@ -155,10 +155,10 @@ const SmashCard: FC<{
 									return `/dashboard/views/${data.id}/edit`;
 								case "graph":
 									return `/dashboard/graphs/${data.id}/edit`;
-								default:
-									// biome-ignore lint/correctness/noSwitchDeclarations:
+								default: {
 									const _: never = data.type;
 									return "#";
+								}
 							}
 						})()}
 						type="button"
