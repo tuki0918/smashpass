@@ -1,7 +1,7 @@
 "use client";
 
 import { useFirestoreDocumentSync } from "@/hooks/useFirestore";
-import { cn } from "@/libs/utils";
+import { cn } from "@/lib/utils";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { DBDocument } from "@/types/firebase/firestore";
 import type { SmashClickCounterDocumentData } from "@/types/firebase/firestore/models";

@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/libs/utils";
+import { cn } from "@/lib/utils";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import * as ToastPrimitives from "@radix-ui/react-toast";
 import { type VariantProps, cva } from "class-variance-authority";
