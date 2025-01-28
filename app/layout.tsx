@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
-import { SITE_DESCRIPTION, SITE_NAME } from "@/config/app";
+import { SITE_DESCRIPTION, SITE_NAME } from "@/constants";
 
 export const metadata: Metadata = {
 	title: {

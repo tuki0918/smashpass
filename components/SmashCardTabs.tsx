@@ -9,7 +9,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { GUEST_LIMIT_CONTENTS } from "@/config/app";
+import { GUEST_LIMIT_CONTENTS } from "@/constants";
 import { useAuth } from "@/hooks/useAuth";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashOriginDocumentData } from "@/types/firebase/firestore/models";

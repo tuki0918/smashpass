@@ -1,4 +1,4 @@
-import type { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
+import type { DB_FIRESTORE_COLLECTION_NAMES } from "@/constants";
 
 export type CollectionName = keyof typeof DB_FIRESTORE_COLLECTION_NAMES;
 export type CollectionDocumentDataMap = {

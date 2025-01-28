@@ -1,7 +1,7 @@
 "use server";
 
 import type { formSchema } from "@/components/SmashGraphChartForm";
-import { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
+import { DB_FIRESTORE_COLLECTION_NAMES } from "@/constants";
 import type { DBDocument } from "@/types/firebase/firestore";
 import type {
 	SmashGraphDocumentData,

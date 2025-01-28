@@ -1,7 +1,7 @@
 import { AuthSessionProvider } from "@/components/AuthSessionProvider";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { SITE_DESCRIPTION, SITE_NAME } from "@/config/app";
+import { SITE_DESCRIPTION, SITE_NAME } from "@/constants";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

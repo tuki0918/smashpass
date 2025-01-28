@@ -1,4 +1,4 @@
-import { DB_FIRESTORE_COLLECTION_NAMES } from "@/config/app";
+import { DB_FIRESTORE_COLLECTION_NAMES } from "@/constants";
 import type { CSDocumentWithId, DBDocument } from "@/types/firebase/firestore";
 import type {
 	CollectionDocumentDataMap,
