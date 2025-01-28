@@ -60,10 +60,10 @@ export const docRef = <
 		throw new Error(`Collection name not found for ${collectionId}`);
 	}
 
-	return _docRef<V>(name, docId);
+	return _doc<V>(name, docId);
 };
 
-const _docRef = <T extends DocumentData>(
+const _doc = <T extends DocumentData>(
 	collectionId: string,
 	docId: string,
 ): DocumentReference<CSDocumentWithId<T>, DBDocument<T>> => {
@@ -96,10 +96,10 @@ export const docsQuery = <
 		throw new Error(`Collection name not found for ${collectionId}`);
 	}
 
-	return _docsQuery<V>(name, queryConstraints);
+	return _query<V>(name, queryConstraints);
 };
 
-export const _docsQuery = <T extends DocumentData>(
+export const _query = <T extends DocumentData>(
 	collectionId: string,
 	queryConstraints: QueryConstraint[] = [],
 ): Query<CSDocumentWithId<T>, DBDocument<T>> => {
