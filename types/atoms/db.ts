@@ -3,5 +3,5 @@ import type { DocumentData } from "firebase/firestore";
 import type { AtomData } from "./atom";
 
 export type AtomDBDocumentData<T extends DocumentData> = AtomData<
-	DBDocumentWithId<T>
+  DBDocumentWithId<T>
 >;

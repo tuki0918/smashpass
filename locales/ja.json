@@ -1,36 +1,36 @@
 {
-	"Components/Main": {
-		"description": "\"123++\"は、みんなで共有できるリアルタイムのオンラインカウンターサービスです。",
-		"terms_of_service": "利用規約",
-		"privacy_policy": "プライバシーポリシー"
-	},
-	"Components/Header": {
-		"menu/logout": "ログアウト"
-	},
-	"Components/Footer": {
-		"terms_of_service": "利用規約",
-		"privacy_policy": "プライバシーポリシー",
-		"tokushoho": "特定商取引法に基づく表示",
-		"contact": "お問い合わせ"
-	},
-	"Components/SmashCard": {
-		"result/empty": "見つかりません。",
-		"type/clicks": "クリック",
-		"type/votes": "投票",
-		"type/views": "観覧数",
-		"link/view": "表示",
-		"link/edit": "編集",
-		"link/vote": "投票ページ",
-		"link/action": "フォーム"
-	},
-	"Components/SmashCardTabs": {
-		"tab/all": "すべて",
-		"tab/published": "公開",
-		"tab/draft": "下書き",
-		"button/create": "新規作成",
-		"button/menu/clicks": "クリックカウンター",
-		"button/menu/views": "観覧数カウンター",
-		"button/menu/votes": "投票カウンター",
-		"results/empty": "アイテムが見つかりませんでした。"
-	}
+  "Components/Main": {
+    "description": "\"123++\"は、みんなで共有できるリアルタイムのオンラインカウンターサービスです。",
+    "terms_of_service": "利用規約",
+    "privacy_policy": "プライバシーポリシー"
+  },
+  "Components/Header": {
+    "menu/logout": "ログアウト"
+  },
+  "Components/Footer": {
+    "terms_of_service": "利用規約",
+    "privacy_policy": "プライバシーポリシー",
+    "tokushoho": "特定商取引法に基づく表示",
+    "contact": "お問い合わせ"
+  },
+  "Components/SmashCard": {
+    "result/empty": "見つかりません。",
+    "type/clicks": "クリック",
+    "type/votes": "投票",
+    "type/views": "観覧数",
+    "link/view": "表示",
+    "link/edit": "編集",
+    "link/vote": "投票ページ",
+    "link/action": "フォーム"
+  },
+  "Components/SmashCardTabs": {
+    "tab/all": "すべて",
+    "tab/published": "公開",
+    "tab/draft": "下書き",
+    "button/create": "新規作成",
+    "button/menu/clicks": "クリックカウンター",
+    "button/menu/views": "観覧数カウンター",
+    "button/menu/votes": "投票カウンター",
+    "results/empty": "アイテムが見つかりませんでした。"
+  }
 }
