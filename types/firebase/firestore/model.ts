@@ -8,28 +8,28 @@ export type CollectionDocumentDataMap = {
 	graph_item: SmashGraphItemDocumentData;
 };
 
-type OriginDocumentData = {
+type DocumentMetaData = {
 	created_by_id: string;
 	updated_by_id: string;
 };
 
-type SmashOriginStatus = "published" | "draft";
-type SmashOriginType = "view" | "click" | "graph";
-export type SmashOriginDocumentData = OriginDocumentData & {
+type SmashStatus = "published" | "draft";
+type SmashType = "view" | "click" | "graph";
+export type SmashDocumentCommonData = DocumentMetaData & {
 	title: string;
 	description: string;
-	status: SmashOriginStatus;
-	type: SmashOriginType;
+	status: SmashStatus;
+	type: SmashType;
 };
 
-// Origin types
+// Model types
 
-export type SmashViewCounterDocumentData = SmashOriginDocumentData & {
+export type SmashViewCounterDocumentData = SmashDocumentCommonData & {
 	type: "view";
 	count: number;
 };
 
-export type SmashClickCounterDocumentData = SmashOriginDocumentData & {
+export type SmashClickCounterDocumentData = SmashDocumentCommonData & {
 	type: "click";
 	count: number;
 	icon: string;
@@ -37,15 +37,15 @@ export type SmashClickCounterDocumentData = SmashOriginDocumentData & {
 
 export type SmashGraphStyle = "pie-chart" | "bar-chart";
 export type SmashGraphSort = "default" | "ranking";
-export type SmashGraphDocumentData = SmashOriginDocumentData & {
+export type SmashGraphDocumentData = SmashDocumentCommonData & {
 	type: "graph";
 	style: SmashGraphStyle;
 	sort: SmashGraphSort;
 };
 
-// Sub types
+// Sub Model types
 
-export type SmashGraphItemDocumentData = OriginDocumentData & {
+export type SmashGraphItemDocumentData = DocumentMetaData & {
 	title: string;
 	count: number;
 	graph_id: string;

@@ -12,7 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GUEST_LIMIT_CONTENTS } from "@/constants";
 import { useAuth } from "@/hooks/useAuth";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
-import type { SmashOriginDocumentData } from "@/types/firebase/firestore";
+import type { SmashDocumentCommonData } from "@/types/firebase/firestore";
 import { docsQuery, getDocsByQuery } from "@/utils/firestore";
 import { Link } from "@/utils/i18n";
 import { where } from "firebase/firestore";
@@ -29,7 +29,7 @@ import type { FC } from "react";
 import { useEffect, useState } from "react";
 
 const SmashCardTabs: FC<{
-	data: CSDocumentWithId<SmashOriginDocumentData>[];
+	data: CSDocumentWithId<SmashDocumentCommonData>[];
 	isLocked?: boolean;
 }> = ({ data, isLocked = false }) => {
 	const t = useTranslations("Components/SmashCardTabs");
@@ -99,7 +99,7 @@ const SmashCardTabs: FC<{
 export default SmashCardTabs;
 
 export const RealTimeSmashCardList: FC<{
-	data: CSDocumentWithId<SmashOriginDocumentData>[];
+	data: CSDocumentWithId<SmashDocumentCommonData>[];
 }> = ({ data }) => {
 	const t = useTranslations("Components/SmashCardTabs");
 	if (data.length === 0) {
@@ -126,7 +126,7 @@ export const RealTimeSmashCardList: FC<{
 
 // TODO: server-side auth logic
 export const SmashCardTabsForLoggedInUser: FC = () => {
-	const [data, setData] = useState<CSDocumentWithId<SmashOriginDocumentData>[]>(
+	const [data, setData] = useState<CSDocumentWithId<SmashDocumentCommonData>[]>(
 		[],
 	);
 

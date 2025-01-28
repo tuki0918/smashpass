@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
-import type { SmashOriginDocumentData } from "@/types/firebase/firestore";
+import type { SmashDocumentCommonData } from "@/types/firebase/firestore";
 import { Link } from "@/utils/i18n";
 import { ExternalLink, Eye, Pencil } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -24,7 +24,7 @@ import type { FC } from "react";
 
 const SmashCard: FC<{
 	/** undefined: loading, null: not found */
-	data: CSDocumentWithId<SmashOriginDocumentData> | undefined | null;
+	data: CSDocumentWithId<SmashDocumentCommonData> | undefined | null;
 }> = ({ data }) => {
 	const t = useTranslations("Components/SmashCard");
 	if (data === undefined) {
