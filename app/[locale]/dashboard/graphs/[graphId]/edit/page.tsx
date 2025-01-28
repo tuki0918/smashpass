@@ -5,7 +5,7 @@ import {
 	getDocByRef,
 	getDocsByQuery,
 } from "@/utils/firestore";
-import { Link } from "@/utils/i18n/routing";
+import { Link } from "@/utils/i18n";
 import { where } from "firebase/firestore";
 import { ChartBarDecreasing } from "lucide-react";
 import type { Metadata } from "next";

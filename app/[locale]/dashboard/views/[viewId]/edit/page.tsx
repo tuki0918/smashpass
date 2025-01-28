@@ -1,6 +1,6 @@
 import SmashViewCounterForm from "@/components/SmashViewCounterForm";
 import { docRef, getDocByRef } from "@/utils/firestore";
-import { Link } from "@/utils/i18n/routing";
+import { Link } from "@/utils/i18n";
 import { Eye } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "@/utils/i18n/routing";
+import { useRouter } from "@/utils/i18n";
 import type { UserInfo } from "firebase/auth";
 import { LoaderCircle } from "lucide-react";
 import { createContext, useContext, useEffect } from "react";

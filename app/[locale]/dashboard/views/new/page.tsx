@@ -1,5 +1,5 @@
 import SmashViewCounterForm from "@/components/SmashViewCounterForm";
-import { Link } from "@/utils/i18n/routing";
+import { Link } from "@/utils/i18n";
 import { Eye } from "lucide-react";
 import type { Metadata } from "next";
 

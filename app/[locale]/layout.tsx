@@ -1,7 +1,7 @@
 import Providers from "@/components/Providers";
 import { Toaster } from "@/components/ui/toaster";
-import { routing } from "@/utils/i18n/routing";
-import type { Locale } from "@/utils/i18n/routing";
+import { routing } from "@/utils/i18n";
+import type { Locale } from "@/utils/i18n";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import localFont from "next/font/local";

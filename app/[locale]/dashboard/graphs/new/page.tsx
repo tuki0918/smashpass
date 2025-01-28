@@ -1,5 +1,5 @@
 import SmashGraphChartForm from "@/components/SmashGraphChartForm";
-import { Link } from "@/utils/i18n/routing";
+import { Link } from "@/utils/i18n";
 import { ChartBarDecreasing } from "lucide-react";
 import type { Metadata } from "next";
 

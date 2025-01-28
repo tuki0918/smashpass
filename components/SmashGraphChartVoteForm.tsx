@@ -23,7 +23,7 @@ import type {
 } from "@/types/firebase/firestore/models";
 import { handleErrorWithLoading } from "@/utils/errorHandler";
 import { docRef, docsQuery, getDocsByQuery } from "@/utils/firestore";
-import { useRouter } from "@/utils/i18n/routing";
+import { useRouter } from "@/utils/i18n";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { where } from "firebase/firestore";
 import { LoaderCircle } from "lucide-react";

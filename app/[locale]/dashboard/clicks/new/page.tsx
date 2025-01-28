@@ -1,5 +1,5 @@
 import SmashClickCounterForm from "@/components/SmashClickCounterForm";
-import { Link } from "@/utils/i18n/routing";
+import { Link } from "@/utils/i18n";
 import { MousePointerClick } from "lucide-react";
 import type { Metadata } from "next";
 

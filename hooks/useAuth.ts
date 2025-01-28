@@ -6,7 +6,7 @@ import {
 	signInWithPopup,
 	signOut,
 } from "@/utils/firebase-auth";
-import { useRouter } from "@/utils/i18n/routing";
+import { useRouter } from "@/utils/i18n";
 import type { UserInfo } from "firebase/auth";
 import { useAtom } from "jotai";
 import { atom } from "jotai";

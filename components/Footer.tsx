@@ -1,6 +1,6 @@
 "use client";
 
-// import { Link } from "@/utils/i18n/routing";
+// import { Link } from "@/utils/i18n";
 import { useTranslations } from "next-intl";
 
 export default function Footer() {

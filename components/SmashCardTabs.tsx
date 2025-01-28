@@ -14,7 +14,7 @@ import { useAuth } from "@/hooks/useAuth";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashOriginDocumentData } from "@/types/firebase/firestore/models";
 import { docsQuery, getDocsByQuery } from "@/utils/firestore";
-import { Link } from "@/utils/i18n/routing";
+import { Link } from "@/utils/i18n";
 import { where } from "firebase/firestore";
 import {
 	ChartBarDecreasing,

@@ -7,8 +7,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { routing, usePathname, useRouter } from "@/utils/i18n/routing";
-import type { Locale } from "@/utils/i18n/routing";
+import { routing, usePathname, useRouter } from "@/utils/i18n";
+import type { Locale } from "@/utils/i18n";
 import { useLocale } from "next-intl";
 import { type FC, useCallback, useMemo } from "react";
 

@@ -11,7 +11,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Link } from "@/utils/i18n/routing";
+import { Link } from "@/utils/i18n";
 import { LogOut } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { FC } from "react";

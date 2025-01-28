@@ -22,7 +22,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { handleErrorWithLoading } from "@/utils/errorHandler";
-import { useRouter } from "@/utils/i18n/routing";
+import { useRouter } from "@/utils/i18n";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle } from "lucide-react";
 import type { FC } from "react";

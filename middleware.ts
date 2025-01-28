@@ -1,4 +1,4 @@
-import { routing } from "@/utils/i18n/routing";
+import { routing } from "@/utils/i18n";
 import createMiddleware from "next-intl/middleware";
 
 export default createMiddleware(routing);

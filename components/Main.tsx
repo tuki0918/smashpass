@@ -12,7 +12,7 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "@/utils/i18n/routing";
+import { useRouter } from "@/utils/i18n";
 import { LoaderCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { type FC, useEffect } from "react";

@@ -17,7 +17,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import type { CSDocumentWithId } from "@/types/firebase/firestore";
 import type { SmashOriginDocumentData } from "@/types/firebase/firestore/models";
-import { Link } from "@/utils/i18n/routing";
+import { Link } from "@/utils/i18n";
 import { ExternalLink, Eye, Pencil } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { FC } from "react";
