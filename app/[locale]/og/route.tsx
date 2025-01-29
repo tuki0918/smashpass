@@ -9,22 +9,81 @@ const size = {
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const text = searchParams.get("text");
+  const title = searchParams.get("title");
 
   return new ImageResponse(
     <div
       style={{
-        fontSize: 64,
-        background: "white",
-        width: "100%",
-        height: "100%",
         display: "flex",
-        textAlign: "center",
-        alignItems: "center",
-        justifyContent: "center",
+        width: size.width,
+        height: size.height,
       }}
     >
-      {text || "No Title"}
+      <div
+        style={{
+          width: "50%",
+          height: "100%",
+          backgroundColor: "black",
+          color: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+          }}
+        >
+          <span
+            style={{
+              fontSize: "64px",
+              fontWeight: "bold",
+            }}
+          >
+            123
+          </span>
+          <div
+            style={{
+              display: "flex",
+              fontSize: "32px",
+            }}
+          >
+            <span
+              style={{
+                position: "relative",
+                top: "-6px",
+              }}
+            >
+              +
+            </span>
+            <span
+              style={{
+                position: "relative",
+                top: "-6px",
+              }}
+            >
+              +
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={{
+          width: "50%",
+          height: "100%",
+          backgroundColor: "white",
+          color: "black",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "48px",
+          fontWeight: "bold",
+          padding: "0 2rem",
+        }}
+      >
+        {title}
+      </div>
     </div>,
     size,
   );
