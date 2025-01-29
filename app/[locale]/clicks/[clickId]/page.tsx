@@ -1,5 +1,6 @@
 import { RealTimeSmashClickCounter } from "@/components/SmashClickCounter";
 import { docRef, getDocByRef } from "@/utils/firestore";
+import { ogpImageUrl, size } from "@/utils/ogp";
 import type { Metadata } from "next";
 
 type Props = {
@@ -25,6 +26,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
       title: data.title,
       description: data.description,
+      openGraph: {
+        title: data.title,
+        description: data.description,
+        images: [
+          {
+            ...size,
+            url: ogpImageUrl({ title: data.title }),
+          },
+        ],
+      },
     };
   }
 
