@@ -20,7 +20,15 @@ const SmashViewCounter: FC<{
     ) : data === null ? (
       <span>=</span>
     ) : (
-      <NumberFlow value={data.count} aria-hidden="true" willChange />
+      <div
+        style={{
+          fontVariantNumeric: "tabular-nums",
+          // @ts-ignore
+          "--number-flow-char-height": "0.85em",
+        }}
+      >
+        <NumberFlow value={data.count} aria-hidden="true" willChange />
+      </div>
     );
 
   return (
