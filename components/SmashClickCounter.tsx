@@ -50,11 +50,52 @@ const SmashClickCounter: FC<{
       {data?.status === "published" && isAct ? (
         <AnimatePresence mode="popLayout">
           <motion.span
-            className="text-5xl hover:cursor-pointer"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            className="text-5xl hover:cursor-pointer relative"
+            whileHover={{
+              scale: 1.2,
+              rotate: [0, -10, 10, -5, 0],
+              transition: {
+                type: "spring",
+                stiffness: 400,
+                damping: 12,
+                rotate: {
+                  duration: 0.6,
+                  ease: "easeInOut",
+                },
+              },
+            }}
+            whileTap={{
+              scale: 0.8,
+              rotate: 360,
+              boxShadow: "0 0 20px rgba(59, 130, 246, 0.8)",
+              filter: "brightness(1.5) hue-rotate(45deg)",
+              transition: {
+                type: "spring",
+                stiffness: 600,
+                damping: 10,
+                rotate: {
+                  duration: 0.3,
+                  ease: "easeOut",
+                },
+              },
+            }}
+            animate={{
+              filter: ["brightness(1)", "brightness(1.1)", "brightness(1)"],
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 17,
+              filter: {
+                duration: 2,
+                repeat: Number.POSITIVE_INFINITY,
+                ease: "easeInOut",
+              },
+            }}
             onClick={async () => await incrementCount(data.id)}
+            style={{
+              textShadow: "0 0 10px rgba(59, 130, 246, 0.3)",
+            }}
           >
             {icon}
           </motion.span>
